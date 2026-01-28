@@ -1,4 +1,7 @@
 import Link from "next/link";
+import Breadcrumbs from "../../components/Breadcrumbs";
+import Container from "../../components/Container";
+import Section from "../../components/Section";
 
 export default function Page() {
   const jsonLd = {
@@ -23,45 +26,45 @@ export default function Page() {
   };
 
   return (
-    <section className="space-y-6">
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <Section className="pt-20 pb-12 sm:pt-24 sm:pb-16">
+        <Container>
+          <div className="space-y-6">
+            <Breadcrumbs items={[{ label: "Главная", href: "/" }, { label: "Адвокаты", href: "/attorneys" }, { label: "Ольга Немцева" }]} />
 
-      <div className="text-sm text-white/60">
-        <Link className="hover:text-white" href="/attorneys">
-          Адвокаты
-        </Link>{" "}
-        <span className="text-white/40">/</span> Ольга Немцева
-      </div>
+            <h1 className="text-3xl font-semibold">Ольга Немцева</h1>
 
-      <h1 className="text-3xl font-semibold">Ольга Немцева</h1>
+            <div className="rounded-xl border border-white/10 bg-white/5 p-7 space-y-2 text-white/70">
+              <div className="text-white/50 text-sm">Заместитель председателя</div>
+              <div>Регистрационный номер в реестре адвокатов города Москвы: 77/10945</div>
+              <div>Стаж: 28 лет</div>
+              <div className="pt-2">
+                <span className="text-white/50">Основные специализации:</span>{" "}
+                Арбитраж, семейные дела, гражданские споры, наследство, уголовные дела.
+              </div>
+            </div>
 
-      <div className="rounded-3xl border border-white/10 bg-white/5 p-7 space-y-2 text-white/70">
-        <div className="text-white/50 text-sm">Заместитель председателя</div>
-        <div>Регистрационный номер в реестре адвокатов города Москвы: 77/10945</div>
-        <div>Стаж: 28 лет</div>
-        <div className="pt-2">
-          <span className="text-white/50">Основные специализации:</span>{" "}
-          Арбитраж, семейные дела, гражданские споры, наследство, уголовные дела.
-        </div>
-      </div>
-
-      <div className="flex flex-wrap gap-3">
-        <Link
-          href="/contacts"
-          className="rounded-full bg-white px-5 py-3 text-sm font-medium text-black hover:bg-white/90 transition"
-        >
-          Записаться на консультацию
-        </Link>
-        <a
-          href="tel:+74954106600"
-          className="rounded-full border border-white/15 px-5 py-3 text-sm font-medium text-white hover:border-white/30 hover:bg-white/5 transition"
-        >
-          Позвонить
-        </a>
-      </div>
-    </section>
+            <div className="flex flex-wrap gap-3">
+              <Link
+                href="/contacts"
+                className="rounded-xl bg-white px-5 py-3 text-sm font-medium text-black hover:bg-white/90 transition"
+              >
+                Записаться на консультацию
+              </Link>
+              <a
+                href="tel:+74954106600"
+                className="rounded-xl border border-white/15 px-5 py-3 text-sm font-medium text-white hover:border-white/30 hover:bg-white/5 transition"
+              >
+                Позвонить
+              </a>
+            </div>
+          </div>
+        </Container>
+      </Section>
+    </>
   );
 }

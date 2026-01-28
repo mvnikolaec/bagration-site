@@ -1,29 +1,114 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Proxity-inspired цветовая система - тёмные сине-зелёные оттенки */
+  
+  /* Фоны - глубокие сине-чёрные и нефритовые */
+  --bg-primary: #061725;            /* Очень тёмный сине-зелёный (основной фон) */
+  --bg-secondary: #071E2E;          /* Второй слой - чуть светлее */
+  --bg-tertiary: #0A2A3C;           /* Карточки/панели */
+  --bg-hover: #0D344A;              /* Hover состояния */
+  
+  /* Текст - молочно-белый и холодный светло-серый */
+  --text-primary: rgba(255, 255, 255, 0.92);    /* Основной текст - молочно-белый */
+  --text-secondary: rgba(255, 255, 255, 0.72);  /* Вторичный текст - приглушённый */
+  --text-muted: rgba(255, 255, 255, 0.55);      /* Мутный текст */
+  
+  /* Акцентный цвет - цвет логотипа (#42C8F5) */
+  --accent-primary: #42C8F5;        /* Бирюзовый/cyan из логотипа */
+  --accent-hover: #35B0D9;          /* Акцент при hover - темнее */
+  --accent-light: #5DD5F7;          /* Светлый акцент */
+  
+  /* Pill для активного пункта меню */
+  --pill: rgba(66, 200, 245, 0.12);
+  
+  /* Границы - тонкие, полупрозрачные */
+  --border-subtle: rgba(255, 255, 255, 0.10);
+  --border-muted: rgba(255, 255, 255, 0.08);
+  
+  /* Пятна градиентов для блуждающего фона */
+  --teal-spot: #19B7B0;             /* Бирюзовое пятно */
+  --blue-spot: #2F66FF;             /* Синее пятно */
+  --cyan-spot: #1A7EA8;             /* Холодный голубой */
+  
+  /* Тени */
+  --shadow-primary: 0 10px 30px rgba(66, 200, 245, 0.35);
+  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.3);
+
+  /* Hero: высота хедера (переопределяется HeaderHeightInit по факту); первый отступ 30px */
+  --header-h: 64px;
+  --hero-gap: 30px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes drift-1 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.3;
+  }
+  33% {
+    transform: translate(40px, -30px) scale(1.1);
+    opacity: 0.35;
+  }
+  66% {
+    transform: translate(-30px, 40px) scale(0.95);
+    opacity: 0.25;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes drift-2 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.25;
+  }
+  50% {
+    transform: translate(-50px, 50px) scale(1.15);
+    opacity: 0.3;
+  }
 }
+
+@keyframes drift-3 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.2;
+  }
+  25% {
+    transform: translate(60px, 30px) scale(0.9);
+    opacity: 0.25;
+  }
+  75% {
+    transform: translate(-40px, -50px) scale(1.05);
+    opacity: 0.22;
+  }
+}
+
+@keyframes scroll-wheel {
+  0% {
+    transform: translateY(0);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(1.5px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 0.6;
+  }
+}
+
+.animate-scroll-wheel {
+  animation: scroll-wheel 3s ease-in-out infinite;
+}
+
+body {
+  background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  color: var(--text-primary);
+  font-family: system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
 :root {
   color-scheme: dark;
 }

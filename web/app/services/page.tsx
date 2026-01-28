@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Container from "../components/Container";
+import Section from "../components/Section";
 
 const items = [
   {
@@ -55,30 +57,34 @@ const items = [
 
 export default function Page() {
   return (
-    <section className="space-y-6">
-      <div className="space-y-2">
-        <h1 className="text-3xl font-semibold">Юридические услуги</h1>
-        <p className="text-white/70">
-          Практики коллегии «Багратион». Москва и онлайн. Ниже — основные направления,
-          каждое с отдельной страницей и детализацией.
-        </p>
-      </div>
+    <Section className="pt-20 pb-12 sm:pt-24 sm:pb-16">
+      <Container>
+        <div className="space-y-6">
+          <div className="space-y-2">
+            <h1 className="text-3xl font-semibold">Юридические услуги</h1>
+            <p className="text-[var(--text-secondary)]">
+              Практики коллегии «Багратион». Москва и онлайн. Ниже — основные направления,
+              каждое с отдельной страницей и детализацией.
+            </p>
+          </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
-        {items.map((i) => (
-          <Link
-            key={i.href}
-            href={i.href}
-            className="group rounded-3xl border border-white/10 bg-white/5 p-6 hover:border-white/20 hover:bg-white/10 transition"
-          >
-            <div className="text-base font-medium">{i.title}</div>
-            <div className="mt-2 text-sm text-white/70">{i.desc}</div>
-            <div className="mt-4 text-sm text-white/60 group-hover:text-white/80 transition">
-              Перейти →
-            </div>
-          </Link>
-        ))}
-      </div>
-    </section>
+          <div className="grid gap-4 md:grid-cols-2">
+            {items.map((i) => (
+              <Link
+                key={i.href}
+                href={i.href}
+                className="group rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-tertiary)] p-6 hover:border-white/20 hover:bg-[var(--bg-hover)] transition"
+              >
+                <div className="text-base font-medium text-[var(--text-primary)]">{i.title}</div>
+                <div className="mt-2 text-sm text-[var(--text-secondary)]">{i.desc}</div>
+                <div className="mt-4 text-sm text-[var(--text-muted)] group-hover:text-[var(--accent-primary)] transition">
+                  Перейти →
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </Container>
+    </Section>
   );
 }
