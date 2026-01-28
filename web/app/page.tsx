@@ -1,23 +1,25 @@
 import Image from "next/image";
 import Button from "./components/Button";
+import PracticesSection from "./components/PracticesSection";
+import WhyChooseUsSection from "./components/WhyChooseUsSection";
 
 export default function Home() {
   return (
     <>
-      {/* Hero — 30px от хедера; ≥1024px: высота = 100dvh − хедер; фон: фото + overlay + фирменный 30% */}
+      {/* Hero — 30px от хедера; ≥1024px: высота = 100dvh − хедер; фон: фото + overlay + фирменный 90% */}
       <section
         className="relative flex flex-col overflow-hidden pb-6 sm:pb-8 md:pb-10 lg:h-[calc(100dvh-var(--header-h))]"
         style={{ boxSizing: "border-box" }}
       >
-        {/* Фоновые слои (z-0): placeholder → фото → overlay → фирменный 30%. Контент поверх z-10. */}
+        {/* Фоновые слои (z-0): placeholder → фото → overlay → фирменный 90%. Контент поверх z-10. */}
         <div
           className="pointer-events-none absolute inset-0 z-0"
           aria-hidden="true"
         >
           {/* Placeholder: градиент до загрузки фото (без мигания на медленном интернете) */}
           <div className="absolute inset-0 bg-gradient-to-br from-[var(--bg-primary)] via-[var(--bg-secondary)] to-[var(--bg-tertiary)]" />
-          {/* Фото: center center, cover */}
-          <div className="absolute inset-0">
+          {/* Фото: center center, cover; прозрачность 15% (видно на 15%) */}
+          <div className="absolute inset-0 opacity-[0.15]">
             <Image
               src="/images/hero/hero-bg.png"
               alt=""
@@ -30,9 +32,9 @@ export default function Home() {
           </div>
           {/* Затемняющий overlay для читаемости текста (деликатный) */}
           <div className="absolute inset-0 bg-black/30" />
-          {/* Фирменный фон (градиент/пятна), opacity 30% — только слой, не текст */}
+          {/* Фирменный фон (градиент/пятна), opacity 90% — фото тонировано фирменным слоем */}
           <div
-            className="absolute inset-0 opacity-30"
+            className="absolute inset-0 opacity-90"
             style={{
               background:
                 "linear-gradient(135deg, var(--bg-primary) 0%, transparent 50%), radial-gradient(ellipse 80% 50% at 20% 40%, rgba(66, 200, 245, 0.15) 0%, transparent 50%), radial-gradient(ellipse 60% 40% at 80% 60%, rgba(10, 42, 60, 0.4) 0%, transparent 50%)",
@@ -73,6 +75,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <PracticesSection />
+      <WhyChooseUsSection />
     </>
   );
 }
