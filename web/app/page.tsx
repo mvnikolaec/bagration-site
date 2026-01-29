@@ -2,6 +2,7 @@ import Image from "next/image";
 import Button from "./components/Button";
 import PracticesSection from "./components/PracticesSection";
 import WhyChooseUsSection from "./components/WhyChooseUsSection";
+import ReviewsSection from "./components/ReviewsSection";
 import ApproachSection from "./components/ApproachSection";
 import GeographySection from "./components/GeographySection";
 import FaqSection from "./components/FaqSection";
@@ -88,6 +89,7 @@ export default function Home() {
 
       <PracticesSection />
       <WhyChooseUsSection />
+      <ReviewsSection />
       <ApproachSection />
       <GeographySection />
       <FaqSection />
