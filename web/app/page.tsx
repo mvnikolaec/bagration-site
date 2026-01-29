@@ -2,6 +2,8 @@ import Image from "next/image";
 import Button from "./components/Button";
 import PracticesSection from "./components/PracticesSection";
 import WhyChooseUsSection from "./components/WhyChooseUsSection";
+import ApproachSection from "./components/ApproachSection";
+import GeographySection from "./components/GeographySection";
 
 export default function Home() {
   return (
@@ -78,6 +80,8 @@ export default function Home() {
 
       <PracticesSection />
       <WhyChooseUsSection />
+      <ApproachSection />
+      <GeographySection />
     </>
   );
 }
