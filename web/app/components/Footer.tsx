@@ -26,18 +26,18 @@ const DISCLAIMER_2 =
 export default function Footer() {
   return (
     <footer className="border-t border-[var(--border-subtle)] bg-[var(--bg-secondary)]/60" role="contentinfo">
-      <Container className="py-12 sm:py-14 lg:py-16">
+      <Container className="py-10 sm:py-11 lg:py-12">
         {/* Верхний уровень — 3 колонки на desktop */}
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-10">
           {/* Колонка A — Бренд, реквизиты, контакты, CTA */}
-          <div className="space-y-5">
+          <div className="space-y-4">
             <p className="text-base font-semibold leading-tight text-[var(--text-primary)] sm:text-lg">
               Коллегия адвокатов города Москвы «Багратион»
             </p>
             <p className="text-xs leading-relaxed text-[var(--text-muted)] sm:text-sm">
               ИНН 9705175976 | ОГРН 1227700505757
             </p>
-            <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
+            <ul className="space-y-1.5 text-sm text-[var(--text-secondary)]">
               <li>
                 Телефон:{" "}
                 <a
@@ -57,7 +57,7 @@ export default function Footer() {
                 </a>
               </li>
             </ul>
-            <div className="pt-2">
+            <div className="pt-1">
               <Button href="/contacts" variant="primary" className="w-full sm:w-auto">
                 Записаться на консультацию
               </Button>
@@ -69,7 +69,7 @@ export default function Footer() {
             <h3 className="text-sm font-medium uppercase tracking-wider text-[var(--text-muted)]">
               Навигация
             </h3>
-            <ul className="mt-4 space-y-3">
+            <ul className="mt-3 space-y-2">
               {FOOTER_NAV.map(({ href, label }) => (
                 <li key={href}>
                   <Link
@@ -88,8 +88,8 @@ export default function Footer() {
             <h3 className="text-sm font-medium uppercase tracking-wider text-[var(--text-muted)]">
               Практики
             </h3>
-            <div className="mt-4 grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2 lg:grid-cols-1 lg:gap-y-3">
-              <ul className="space-y-3">
+            <div className="mt-3 grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-2 lg:grid-cols-1">
+              <ul className="space-y-2">
                 {SERVICES_ITEMS.slice(0, 5).map(({ href, label }) => (
                   <li key={href}>
                     <Link
@@ -101,7 +101,7 @@ export default function Footer() {
                   </li>
                 ))}
               </ul>
-              <ul className="space-y-3">
+              <ul className="space-y-2">
                 {SERVICES_ITEMS.slice(5, 10).map(({ href, label }) => (
                   <li key={href}>
                     <Link
@@ -118,7 +118,7 @@ export default function Footer() {
         </div>
 
         {/* Юридическая оговорка */}
-        <div className="mt-10 border-t border-[var(--border-subtle)]/70 pt-8 sm:mt-12 lg:mt-14">
+        <div className="mt-8 border-t border-[var(--border-subtle)]/70 pt-6 sm:mt-8 sm:pt-7">
           <p className="max-w-2xl text-xs leading-relaxed text-[var(--text-muted)] sm:text-sm">
             {DISCLAIMER_1}
             <br />
@@ -127,7 +127,7 @@ export default function Footer() {
         </div>
 
         {/* Нижняя полоса (bottom bar) */}
-        <div className="mt-8 flex flex-col items-start justify-between gap-4 border-t border-[var(--border-subtle)]/70 pt-8 sm:flex-row sm:items-center sm:gap-6 lg:mt-10 lg:pt-10">
+        <div className="mt-6 flex flex-col items-start justify-between gap-3 border-t border-[var(--border-subtle)]/70 pt-6 sm:flex-row sm:items-center sm:gap-4 sm:pt-7">
           <p className="text-xs text-[var(--text-muted)] sm:text-sm">
             © 2023 КАМ «Багратион»
           </p>

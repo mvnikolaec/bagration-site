@@ -13,7 +13,7 @@ export default function Home() {
     <>
       {/* Hero — 30px от хедера; ≥1024px: высота = 100dvh − хедер; фон: фото + overlay + фирменный 90% */}
       <section
-        className="relative flex flex-col overflow-hidden pb-6 sm:pb-8 md:pb-10 lg:h-[calc(100dvh-var(--header-h))]"
+        className="relative flex flex-col overflow-hidden pb-6 sm:pb-7 md:pb-8 lg:h-[calc(100dvh-var(--header-h))]"
         style={{ boxSizing: "border-box" }}
       >
         {/* Фоновые слои (z-0): placeholder → фото → overlay → фирменный 90%. Контент поверх z-10. */}
@@ -57,7 +57,7 @@ export default function Home() {
         />
 
         <div className="relative z-10 mx-auto flex min-h-0 w-full max-w-7xl flex-1 flex-col justify-center px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col gap-[30px] md:gap-10">
+          <div className="flex flex-col gap-5 sm:gap-6 md:gap-6" style={{ gap: "var(--hero-gap)" }}>
             <div className="inline-flex w-fit items-center gap-2 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-tertiary)] px-3 py-1.5 text-xs font-medium text-[var(--text-secondary)] sm:px-4 sm:py-2 md:text-sm">
               Москва • регионы России • дистанционный формат
             </div>

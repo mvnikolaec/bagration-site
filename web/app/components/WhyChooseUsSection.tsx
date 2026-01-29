@@ -34,11 +34,11 @@ const REASONS = [
 export default function WhyChooseUsSection() {
   return (
     <section
-      className="py-16 sm:py-20 lg:py-24"
+      className="section-py"
       aria-labelledby="why-choose-heading"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <header className="mb-12 sm:mb-14 lg:mb-16 max-w-3xl">
+        <header className="section-header max-w-3xl">
           <h2
             id="why-choose-heading"
             className="text-xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-2xl lg:text-3xl"
@@ -47,10 +47,10 @@ export default function WhyChooseUsSection() {
           </h2>
         </header>
 
-        <ul className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
           {REASONS.map(({ title, description }, i) => (
             <li key={i}>
-              <article className="flex h-full gap-4 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-secondary)]/60 px-5 py-6 sm:gap-5 sm:px-6 sm:py-7">
+              <article className="flex h-full gap-4 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-secondary)]/60 px-5 py-5 sm:px-6 sm:py-6">
                 <span
                   className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-tertiary)]/80 text-xs font-medium tabular-nums text-[var(--text-muted)] sm:h-9 sm:w-9 sm:text-sm"
                   aria-hidden

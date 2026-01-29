@@ -14,7 +14,11 @@
   --accent-hover: #35b0d9;
   --border-subtle: rgba(255, 255, 255, 0.1);
   --header-h: 64px;
-  --hero-gap: 30px;
+  --hero-gap: 24px;
+  /* Единый стандарт вертикальных отступов секций */
+  --section-py-mobile: 44px;
+  --section-py-tablet: 56px;
+  --section-py-desktop: 64px;
 }
 
 @theme inline {
@@ -27,4 +31,59 @@ body {
   color: var(--text-primary);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Единый стандарт вертикальных отступов секций: mobile 44px, tablet 56px, desktop 64px */
+.section-py {
+  padding-top: var(--section-py-mobile);
+  padding-bottom: var(--section-py-mobile);
+}
+@media (min-width: 640px) {
+  .section-py {
+    padding-top: var(--section-py-tablet);
+    padding-bottom: var(--section-py-tablet);
+  }
+}
+@media (min-width: 1024px) {
+  .section-py {
+    padding-top: var(--section-py-desktop);
+    padding-bottom: var(--section-py-desktop);
+  }
+}
+
+/* Заголовок ↔ подзаголовок 12–16px; подзаголовок ↔ контент 20–24px */
+.section-header {
+  margin-bottom: 20px;
+}
+@media (min-width: 640px) {
+  .section-header {
+    margin-bottom: 24px;
+  }
+}
+.section-title-sub {
+  margin-top: 12px;
+}
+@media (min-width: 640px) {
+  .section-title-sub {
+    margin-top: 14px;
+  }
+}
+
+/* Кнопка Яндекс.Отзывы: SVG наследует color; только надпись «Отзывы» меняет цвет при hover */
+.yandex-reviews-link {
+  color: var(--text-secondary);
+  transition: color 0.2s ease-out;
+}
+.yandex-reviews-link:hover {
+  color: var(--text-primary);
+}
+.yandex-reviews-link path,
+.yandex-reviews-link .yandex-reviews-text {
+  transition: fill 0.2s ease-out, color 0.2s ease-out;
+}
+.yandex-reviews-link .yandex-reviews-text {
+  color: var(--text-secondary);
+}
+.yandex-reviews-link:hover .yandex-reviews-text {
+  color: var(--accent-primary);
 }

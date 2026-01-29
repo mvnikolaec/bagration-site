@@ -30,26 +30,26 @@ const FOOTNOTE =
 export default function ApproachSection() {
   return (
     <section
-      className="py-16 sm:py-20 lg:py-24"
+      className="section-py"
       aria-labelledby="approach-heading"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <header className="mb-10 sm:mb-12 lg:mb-14 max-w-3xl">
+        <header className="section-header max-w-3xl">
           <h2
             id="approach-heading"
             className="text-xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-2xl lg:text-3xl"
           >
             Подход к работе
           </h2>
-          <p className="mt-4 text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base lg:mt-5">
+          <p className="section-title-sub text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base">
             {INTRO}
           </p>
         </header>
 
-        <ol className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2">
+        <ol className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-6">
           {STEPS.map(({ title, description }, i) => (
             <li key={i}>
-              <article className="flex h-full gap-4 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-secondary)]/60 px-5 py-6 sm:gap-5 sm:px-6 sm:py-7">
+              <article className="flex h-full gap-4 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-secondary)]/60 px-5 py-5 sm:px-6 sm:py-6">
                 <span
                   className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-tertiary)]/80 text-sm font-medium tabular-nums text-[var(--text-muted)] sm:h-11 sm:w-11 sm:text-base"
                   aria-hidden
@@ -69,7 +69,7 @@ export default function ApproachSection() {
           ))}
         </ol>
 
-        <p className="mt-8 max-w-2xl text-xs leading-relaxed text-[var(--text-muted)] sm:mt-10 sm:text-sm">
+        <p className="mt-6 max-w-2xl text-xs leading-relaxed text-[var(--text-muted)] sm:text-sm">
           {FOOTNOTE}
         </p>
       </div>

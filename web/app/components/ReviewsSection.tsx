@@ -35,7 +35,7 @@ const REVIEWS = [
   },
 ] as const;
 
-const YANDEX_REVIEWS_URL = "https://yandex.ru/maps/-/CLxXNOKr";
+const YANDEX_REVIEWS_URL = "https://yandex.ru/maps/-/CLx-YA0R";
 
 function StarIcon({ className }: { className?: string }) {
   return (
@@ -50,30 +50,7 @@ function StarIcon({ className }: { className?: string }) {
   );
 }
 
-function YandexReviewsLogo({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 50 24"
-      fill="none"
-      aria-hidden
-    >
-      <title>Яндекс.Отзывы</title>
-      <path
-        d="M1 2v20h3V12l6 10h4L8 12l6-10H9L4 12z"
-        fill="currentColor"
-      />
-      <path
-        d="M22 6h16l6 6-6 6H22V6z"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
+const YANDEX_LOGO_SRC = "/icons/yandex-reviews.svg";
 const MD_BREAKPOINT = 768;
 
 export default function ReviewsSection() {
@@ -81,9 +58,18 @@ export default function ReviewsSection() {
   const [maxSlide, setMaxSlide] = useState(2);
   const [isMd, setIsMd] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
+  const [yandexLogoSvg, setYandexLogoSvg] = useState<string | null>(null);
+  const [yandexLogoError, setYandexLogoError] = useState(false);
   const trackRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
+
+  useEffect(() => {
+    fetch(YANDEX_LOGO_SRC)
+      .then((r) => (r.ok ? r.text() : Promise.reject(new Error("Failed to load"))))
+      .then(setYandexLogoSvg)
+      .catch(() => setYandexLogoError(true));
+  }, []);
 
   const updateBreakpoint = useCallback(() => {
     if (typeof window === "undefined") return;
@@ -130,18 +116,18 @@ export default function ReviewsSection() {
 
   return (
     <section
-      className="py-16 sm:py-20 lg:py-24"
+      className="section-py"
       aria-labelledby="reviews-heading"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <header className="mb-10 sm:mb-12 lg:mb-14 max-w-3xl">
+        <header className="section-header max-w-3xl">
           <h2
             id="reviews-heading"
             className="text-xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-2xl lg:text-3xl"
           >
             Отзывы о работе коллегии
           </h2>
-          <p className="mt-2 text-sm text-[var(--text-secondary)] sm:text-base">
+          <p className="section-title-sub text-sm text-[var(--text-secondary)] sm:text-base">
             Реальные отзывы из Яндекс.Карт
           </p>
         </header>
@@ -193,7 +179,7 @@ export default function ReviewsSection() {
             </div>
           </div>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4 sm:gap-6">
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-4 sm:gap-5">
             <div className="flex items-center gap-2">
               <button
                 type="button"
@@ -221,11 +207,18 @@ export default function ReviewsSection() {
               href={YANDEX_REVIEWS_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex h-10 min-w-[10rem] shrink-0 items-center justify-center rounded-xl border border-[var(--border-subtle)] bg-transparent px-6 py-3 text-[var(--accent-primary)] transition-[color,background-color,border-color,box-shadow,transform] duration-200 hover:border-[var(--accent-primary)]/50 hover:bg-[var(--bg-secondary)]/50 hover:shadow-[0_0_20px_rgba(66,200,245,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-primary)] active:scale-[0.98] sm:min-w-[12rem]"
+              className="yandex-reviews-link group inline-flex h-10 min-w-0 shrink-0 items-center justify-center gap-2 rounded-xl border border-[var(--border-subtle)] bg-transparent py-1.5 px-6 transition-[color,background-color,border-color,box-shadow,transform] duration-200 hover:border-[var(--accent-primary)]/50 hover:bg-[var(--bg-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-primary)] active:scale-[0.98]"
               aria-label="Яндекс.Отзывы"
               title="Яндекс.Отзывы"
             >
-              <YandexReviewsLogo className="h-6 w-auto max-h-full max-w-full shrink-0 sm:h-7" />
+              {yandexLogoSvg ? (
+                <span
+                  className="flex h-full min-h-0 w-full items-center justify-center [&>svg]:h-full [&>svg]:max-h-[2.5rem] [&>svg]:w-auto [&>svg]:object-contain"
+                  dangerouslySetInnerHTML={{ __html: yandexLogoSvg }}
+                />
+              ) : yandexLogoError ? (
+                <span className="text-sm font-medium">Яндекс.Отзывы</span>
+              ) : null}
             </a>
           </div>
         </div>
