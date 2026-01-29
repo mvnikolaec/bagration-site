@@ -4,6 +4,8 @@ import PracticesSection from "./components/PracticesSection";
 import WhyChooseUsSection from "./components/WhyChooseUsSection";
 import ApproachSection from "./components/ApproachSection";
 import GeographySection from "./components/GeographySection";
+import FaqSection from "./components/FaqSection";
+import FinalCtaSection from "./components/FinalCtaSection";
 
 export default function Home() {
   return (
@@ -20,7 +22,8 @@ export default function Home() {
         >
           {/* Placeholder: градиент до загрузки фото (без мигания на медленном интернете) */}
           <div className="absolute inset-0 bg-gradient-to-br from-[var(--bg-primary)] via-[var(--bg-secondary)] to-[var(--bg-tertiary)]" />
-          {/* Фото: center center, cover; прозрачность 15% (видно на 15%) */}
+
+          {/* Фото: center center, cover; прозрачность 15% */}
           <div className="absolute inset-0 opacity-[0.15]">
             <Image
               src="/images/hero/hero-bg.png"
@@ -32,9 +35,11 @@ export default function Home() {
               quality={85}
             />
           </div>
-          {/* Затемняющий overlay для читаемости текста (деликатный) */}
+
+          {/* Затемняющий overlay для читаемости текста */}
           <div className="absolute inset-0 bg-black/30" />
-          {/* Фирменный фон (градиент/пятна), opacity 90% — фото тонировано фирменным слоем */}
+
+          {/* Фирменный фон (opacity 90%) */}
           <div
             className="absolute inset-0 opacity-90"
             style={{
@@ -44,8 +49,11 @@ export default function Home() {
           />
         </div>
 
-        {/* Отступ 30px от нижней границы хедера (без margin‑collapse) */}
-        <div className="relative z-10 h-[30px] w-full shrink-0" aria-hidden="true" />
+        {/* Отступ 30px от нижней границы хедера */}
+        <div
+          className="relative z-10 h-[30px] w-full shrink-0"
+          aria-hidden="true"
+        />
 
         <div className="relative z-10 mx-auto flex min-h-0 w-full max-w-7xl flex-1 flex-col justify-center px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col gap-[30px] md:gap-10">
@@ -54,8 +62,8 @@ export default function Home() {
             </div>
 
             <h1 className="min-w-0 text-xl font-semibold leading-tight tracking-tight text-[var(--text-primary)] sm:text-2xl md:text-3xl lg:text-4xl xl:text-[2.25rem] 2xl:text-[2.5rem]">
-              Юридическая защита интересов частных лиц и бизнеса в Москве и по
-              всей России
+              Юридическая защита интересов частных лиц и бизнеса в Москве и по всей
+              России
             </h1>
 
             <p className="min-w-0 max-w-3xl text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base md:text-lg">
@@ -82,6 +90,8 @@ export default function Home() {
       <WhyChooseUsSection />
       <ApproachSection />
       <GeographySection />
+      <FaqSection />
+      <FinalCtaSection />
     </>
   );
 }

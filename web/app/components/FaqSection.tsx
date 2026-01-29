@@ -1,0 +1,120 @@
+"use client";
+
+import { useId, useState } from "react";
+
+const FAQ = [
+  {
+    q: "Как проходит первичная консультация?",
+    a: "Консультация начинается с уточнения задачи и анализа исходных документов. По итогам мы предлагаем возможные варианты действий и согласуем дальнейший формат работы.",
+  },
+  {
+    q: "Можно ли обратиться дистанционно?",
+    a: "Да. Дистанционно проводим консультации, правовой анализ и подготовку документов. При необходимости очного участия работаем в Москве и других регионах России.",
+  },
+  {
+    q: "С какими делами вы работаете?",
+    a: "Коллегия сопровождает дела частных лиц и бизнеса по основным направлениям практики, указанным на сайте. Если задача выходит за рамки этих направлений, мы скажем об этом на первичном этапе.",
+  },
+  {
+    q: "Гарантируете ли вы результат?",
+    a: "Нет. В юридической работе результат зависит от обстоятельств дела, доказательств и позиции другой стороны. Мы гарантируем профессиональный подход, конфиденциальность и добросовестное сопровождение.",
+  },
+  {
+    q: "Как формируется стоимость услуг?",
+    a: "Стоимость зависит от сложности задачи, объёма работ и стадии процесса. После первичного анализа мы предлагаем понятный формат взаимодействия и согласуем условия.",
+  },
+  {
+    q: "Как обеспечивается конфиденциальность?",
+    a: "Мы соблюдаем адвокатскую тайну и профессиональную этику. Информация и документы доверителя используются только для работы по делу.",
+  },
+] as const;
+
+export default function FaqSection() {
+  const baseId = useId();
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  return (
+    <section className="py-16 sm:py-20 lg:py-24" aria-labelledby="faq-heading">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <header className="mb-10 sm:mb-12 lg:mb-14 max-w-3xl">
+          <h2
+            id="faq-heading"
+            className="text-xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-2xl lg:text-3xl"
+          >
+            Частые вопросы
+          </h2>
+        </header>
+
+        <div className="mx-auto max-w-3xl">
+          <ul className="divide-y divide-[var(--border-subtle)]/70">
+            {FAQ.map(({ q, a }, idx) => {
+              const isOpen = openIndex === idx;
+              const contentId = `${baseId}-faq-panel-${idx}`;
+              const buttonId = `${baseId}-faq-button-${idx}`;
+
+              return (
+                <li key={idx} className="py-1">
+                  <button
+                    id={buttonId}
+                    type="button"
+                    className={`group flex w-full items-center justify-between gap-4 rounded-lg px-3 py-4 text-left transition-colors sm:px-4 ${
+                      isOpen ? "bg-[var(--bg-secondary)]/40" : "hover:bg-[var(--bg-secondary)]/25"
+                    }`}
+                    aria-expanded={isOpen}
+                    aria-controls={contentId}
+                    onClick={() => setOpenIndex(isOpen ? null : idx)}
+                  >
+                    <span className="min-w-0">
+                      <span className="block text-sm font-medium leading-snug text-[var(--text-primary)] sm:text-base">
+                        {q}
+                      </span>
+                    </span>
+
+                    <span
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-tertiary)]/30 text-[var(--text-secondary)] transition-colors group-hover:text-[var(--accent-primary)]"
+                      aria-hidden
+                    >
+                      <svg
+                        className={`h-4 w-4 transition-transform duration-200 ${
+                          isOpen ? "rotate-180" : "rotate-0"
+                        }`}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+
+                  <div
+                    id={contentId}
+                    role="region"
+                    aria-labelledby={buttonId}
+                    className={`grid transition-[grid-template-rows] duration-200 ease-out ${
+                      isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="px-3 pb-4 pt-0 sm:px-4">
+                        <p className="text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base">
+                          {a}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}
+
