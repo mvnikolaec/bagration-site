@@ -17,12 +17,12 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <body className="antialiased relative">
-        {/* Плавающие световые пятна (под контентом, z-0) */}
+        {/* Плавающие световые пятна (под контентом, z-0) — wandering gradient blobs */}
         <div className="floating-spots" aria-hidden="true">
-          <div className="floating-spot floating-spot-1" />
-          <div className="floating-spot floating-spot-2" />
-          <div className="floating-spot floating-spot-3" />
-          <div className="floating-spot floating-spot-4" />
+          <div className="floating-spot floating-spot-1"></div>
+          <div className="floating-spot floating-spot-2"></div>
+          <div className="floating-spot floating-spot-3"></div>
+          <div className="floating-spot floating-spot-4"></div>
         </div>
         {/* Контент поверх пятен */}
         <div className="relative z-10">

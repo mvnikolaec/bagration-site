@@ -11,19 +11,17 @@ import FinalCtaSection from "./components/FinalCtaSection";
 export default function Home() {
   return (
     <>
-    {/* Hero под хедером: отрицательный margin поднимает блок, фон Hero виден за хедером */}
+    {/* Hero: фон общий (body + плавающие пятна), overlay только смягчает изображение — без обрубания */}
     <div className="hero-flow-bg -mt-[var(--header-h)]">
       <section
         className="relative flex flex-col overflow-hidden pb-6 sm:pb-7 md:pb-8 min-h-[100dvh] lg:min-h-[100dvh]"
         style={{ boxSizing: "border-box" }}
       >
-        {/* Фон Hero: от верхней границы секции (inset-0), т.е. от верха viewport под хедером */}
         <div
           className="pointer-events-none absolute inset-0 z-0"
           aria-hidden="true"
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-[var(--bg-primary)] via-[var(--bg-secondary)] to-[var(--bg-tertiary)]" />
-          <div className="absolute inset-0 opacity-[0.15]">
+          <div className="absolute inset-0 opacity-[0.12]">
             <Image
               src="/images/hero/hero-bg.png"
               alt=""
@@ -34,12 +32,11 @@ export default function Home() {
               quality={85}
             />
           </div>
-          <div className="absolute inset-0 bg-black/18" />
           <div
-            className="absolute inset-0 opacity-[0.9]"
+            className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(165deg, var(--bg-primary) 0%, transparent 42%), linear-gradient(180deg, transparent 48%, var(--bg-secondary) 72%, var(--bg-secondary) 100%), radial-gradient(ellipse 80% 50% at 22% 38%, rgba(0, 200, 255, 0.08) 0%, transparent 50%), radial-gradient(ellipse 60% 40% at 78% 58%, rgba(8, 20, 32, 0.4) 0%, transparent 50%)",
+                "linear-gradient(180deg, rgba(3, 8, 16, 0.3) 0%, transparent 40%, transparent 100%)",
             }}
           />
         </div>
@@ -51,7 +48,7 @@ export default function Home() {
         />
         <div className="relative z-10 mx-auto flex min-h-0 w-full max-w-7xl flex-1 flex-col justify-center px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col gap-[30px] sm:gap-10">
-            <div className="inline-flex w-fit items-center gap-2 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-tertiary)] px-3 py-1.5 text-xs font-medium text-[var(--text-secondary)] sm:px-4 sm:py-2 md:text-sm">
+            <div className="inline-flex w-fit items-center gap-2 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-tertiary)]/60 px-3 py-1.5 text-xs font-medium text-[var(--text-secondary)] sm:px-4 sm:py-2 md:text-sm backdrop-blur-sm">
               Москва • регионы России • дистанционный формат
             </div>
             <h1 className="min-w-0 text-xl font-semibold leading-tight tracking-tight text-[var(--text-primary)] sm:text-2xl md:text-3xl lg:text-4xl xl:text-[2.25rem] 2xl:text-[2.5rem]">
