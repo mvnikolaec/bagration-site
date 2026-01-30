@@ -5,6 +5,7 @@ interface ButtonProps {
   children: React.ReactNode;
   variant?: "primary" | "secondary";
   className?: string;
+  disabled?: boolean;
 }
 
 export default function Button({
@@ -12,16 +13,32 @@ export default function Button({
   children,
   variant = "primary",
   className = "",
+  disabled = false,
 }: ButtonProps) {
   const base =
-    "inline-flex items-center justify-center rounded-xl px-5 py-2.5 text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-primary)]";
-  const styles =
+    "btn-proxity-base inline-flex items-center justify-center rounded-[var(--btn-radius)] px-5 py-2.5 text-sm font-medium focus-visible:outline-none";
+  const variants =
     variant === "primary"
-      ? "bg-[var(--accent-primary)] text-[var(--bg-primary)] hover:bg-[var(--accent-hover)]"
-      : "border border-[var(--border-subtle)] bg-transparent text-[var(--text-primary)] hover:border-[var(--accent-primary)]/50 hover:bg-[var(--bg-hover)]";
+      ? "btn-proxity-primary"
+      : "btn-proxity-secondary";
+
+  if (disabled) {
+    return (
+      <span
+        role="button"
+        aria-disabled="true"
+        className={`${base} ${variants} cursor-not-allowed opacity-50 ${className}`.trim()}
+      >
+        {children}
+      </span>
+    );
+  }
 
   return (
-    <Link href={href} className={`${base} ${styles} ${className}`.trim()}>
+    <Link
+      href={href}
+      className={`${base} ${variants} ${className}`.trim()}
+    >
       {children}
     </Link>
   );

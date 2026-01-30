@@ -47,17 +47,17 @@ export default function WhyChooseUsSection() {
           </h2>
         </header>
 
-        <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+        <ul className="grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-4 xl:gap-5">
           {REASONS.map(({ title, description }, i) => (
             <li key={i}>
-              <article className="flex h-full gap-4 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-secondary)]/60 px-5 py-5 sm:px-6 sm:py-6">
+              <article className="card-proxity flex h-full gap-3 px-4 py-4 sm:gap-4 sm:px-5 sm:py-5">
                 <span
-                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-tertiary)]/80 text-xs font-medium tabular-nums text-[var(--text-muted)] sm:h-9 sm:w-9 sm:text-sm"
+                  className="card-proxity-inner flex h-8 w-8 shrink-0 items-center justify-center text-xs font-medium tabular-nums text-[var(--text-muted)] sm:h-9 sm:w-9 sm:text-sm"
                   aria-hidden
                 >
                   {i + 1}
                 </span>
-                <div className="min-w-0 flex-1 space-y-2 sm:space-y-3">
+                <div className="min-w-0 flex-1 space-y-1.5 sm:space-y-2">
                   <p className="text-base font-medium leading-tight text-[var(--text-primary)] sm:text-lg">
                     {title}
                   </p>

@@ -13,7 +13,7 @@ export default function FinalCtaSection() {
       aria-labelledby="final-cta-heading"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-secondary)]/80 px-5 py-10 text-center sm:px-8 sm:py-12 lg:px-10 lg:py-14">
+        <div className="card-proxity mx-auto max-w-2xl px-5 py-8 text-center sm:px-8 sm:py-10 lg:px-10 lg:py-12">
           <h2
             id="final-cta-heading"
             className="text-xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-2xl lg:text-3xl"
@@ -23,7 +23,7 @@ export default function FinalCtaSection() {
           <p className="section-title-sub text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base">
             {INTRO}
           </p>
-          <div className="mt-6 sm:mt-8">
+          <div className="mt-5 sm:mt-6">
             <Button
               href="/contacts"
               variant="primary"
@@ -32,7 +32,7 @@ export default function FinalCtaSection() {
               Записаться на консультацию
             </Button>
           </div>
-          <p className="mt-4 text-xs leading-relaxed text-[var(--text-muted)] sm:text-sm">
+          <p className="mt-3 text-xs leading-relaxed text-[var(--text-muted)] sm:text-sm">
             {FOOTNOTE}
           </p>
         </div>

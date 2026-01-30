@@ -1,24 +1,55 @@
 @import "tailwindcss";
 
 :root {
-  --background: #061725;
+  /* Палитра по референсу Proxity: глубокий тёмный фон, cyan-акцент */
+  --background: #030810;
   --foreground: rgba(255, 255, 255, 0.92);
-  --bg-primary: #061725;
-  --bg-secondary: #071e2e;
-  --bg-tertiary: #0a2a3c;
-  --bg-hover: #0d344a;
+  --bg-primary: #030810;
+  --bg-secondary: #050e18;
+  --bg-tertiary: #081420;
+  --bg-hover: #0a1828;
   --text-primary: rgba(255, 255, 255, 0.92);
   --text-secondary: rgba(255, 255, 255, 0.72);
-  --text-muted: rgba(255, 255, 255, 0.55);
-  --accent-primary: #42c8f5;
-  --accent-hover: #35b0d9;
-  --border-subtle: rgba(255, 255, 255, 0.1);
+  --text-muted: rgba(255, 255, 255, 0.48);
+  --accent-primary: #00c8ff;
+  --accent-hover: #00a8dd;
+  --border-subtle: rgba(255, 255, 255, 0.07);
   --header-h: 64px;
   --hero-gap: 24px;
-  /* Единый стандарт вертикальных отступов секций */
-  --section-py-mobile: 44px;
-  --section-py-tablet: 56px;
-  --section-py-desktop: 64px;
+  --hero-gap-mobile: 30px;
+  --hero-gap-desktop: 40px;
+  /* Единый стандарт вертикальных отступов секций (компактный ритм) */
+  --section-py-mobile: 40px;
+  --section-py-tablet: 48px;
+  --section-py-desktop: 56px;
+  /* Карточки по референсу: стекло, мягкие радиусы */
+  --card-radius: 16px;
+  --card-bg: rgba(5, 14, 24, 0.45);
+  --card-border: rgba(255, 255, 255, 0.06);
+  --card-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.25);
+  --card-hover-bg: rgba(10, 24, 40, 0.5);
+  --card-hover-border: rgba(0, 200, 255, 0.18);
+  --card-hover-shadow: 0 8px 32px -4px rgba(0, 200, 255, 0.1);
+  --card-glow: 0 0 40px -8px rgba(0, 200, 255, 0.15);
+  /* Кнопки по референсу Proxity */
+  --btn-radius: 12px;
+  --btn-primary-bg: var(--accent-primary);
+  --btn-primary-text: #030810;
+  --btn-primary-hover-bg: var(--accent-hover);
+  --btn-primary-hover-glow: 0 4px 24px -2px rgba(0, 200, 255, 0.4);
+  --btn-primary-active-scale: 0.98;
+  --btn-secondary-border: rgba(255, 255, 255, 0.15);
+  --btn-secondary-bg: transparent;
+  --btn-secondary-hover-border: rgba(0, 200, 255, 0.45);
+  --btn-secondary-hover-bg: var(--bg-hover);
+  --btn-secondary-active-scale: 0.98;
+  --btn-ghost-hover-bg: var(--bg-hover);
+  --focus-ring: 2px solid var(--accent-primary);
+  --focus-ring-offset: 2px;
+  /* Световые пятна по референсу: cyan-засветления */
+  --spot-light: rgba(0, 200, 255, 0.1);
+  --spot-light-soft: rgba(0, 200, 255, 0.05);
+  --spot-dark: rgba(8, 20, 32, 0.5);
 }
 
 @theme inline {
@@ -26,11 +57,297 @@
   --color-foreground: var(--foreground);
 }
 
+/* Фон по референсу Proxity: глубокий тёмный градиент */
 body {
-  background: var(--bg-primary);
+  min-height: 100vh;
   color: var(--text-primary);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
+  background-color: var(--bg-primary);
+  background-image: linear-gradient(
+    180deg,
+    var(--bg-primary) 0%,
+    #041018 18%,
+    var(--bg-secondary) 42%,
+    #061220 58%,
+    var(--bg-tertiary) 85%,
+    #0a1828 100%
+  );
+}
+
+.hero-flow-bg {
+  background-image: linear-gradient(
+    180deg,
+    var(--bg-primary) 0%,
+    #041018 18%,
+    var(--bg-secondary) 42%,
+    #061220 58%,
+    var(--bg-tertiary) 85%,
+    #0a1828 100%
+  );
+}
+
+/* Плавающие световые пятна: слой поверх страницы, не блокирует клики */
+.floating-spots {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Анимация засветления: мягкое «дыхание» световых пятен */
+@keyframes spot-glow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 0.85; }
+}
+
+.floating-spot {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.7;
+  will-change: transform;
+}
+
+/* Плавающие световые пятна: цвета из референса Proxity, повторяющийся плавающий градиент */
+.floating-spot-1 {
+  width: 90vmax;
+  height: 70vmax;
+  left: -25%;
+  top: -15%;
+  background: radial-gradient(
+    ellipse 80% 80% at 50% 50%,
+    var(--spot-light) 0%,
+    transparent 70%
+  );
+  animation: float-spot-1 28s ease-in-out infinite, spot-glow 8s ease-in-out infinite;
+}
+
+.floating-spot-2 {
+  width: 75vmax;
+  height: 75vmax;
+  left: 45%;
+  top: 25%;
+  background: radial-gradient(
+    ellipse 80% 80% at 50% 50%,
+    var(--spot-light-soft) 0%,
+    transparent 70%
+  );
+  animation: float-spot-2 32s ease-in-out infinite, spot-glow 10s ease-in-out infinite 1s;
+}
+
+.floating-spot-3 {
+  width: 85vmax;
+  height: 60vmax;
+  left: -10%;
+  top: 55%;
+  background: radial-gradient(
+    ellipse 80% 80% at 50% 50%,
+    var(--spot-dark) 0%,
+    transparent 70%
+  );
+  animation: float-spot-3 26s ease-in-out infinite, spot-glow 9s ease-in-out infinite 0.5s;
+}
+
+.floating-spot-4 {
+  width: 70vmax;
+  height: 55vmax;
+  left: 35%;
+  top: -20%;
+  background: radial-gradient(
+    ellipse 80% 80% at 50% 50%,
+    var(--spot-light) 0%,
+    transparent 70%
+  );
+  animation: float-spot-4 30s ease-in-out infinite, spot-glow 7s ease-in-out infinite 0.2s;
+}
+
+@keyframes float-spot-1 {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(4%, 3%); }
+  50% { transform: translate(-3%, -2%); }
+  75% { transform: translate(2%, 4%); }
+}
+
+@keyframes float-spot-2 {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(-5%, 2%); }
+  66% { transform: translate(3%, -3%); }
+}
+
+@keyframes float-spot-3 {
+  0%, 100% { transform: translate(0, 0); }
+  40% { transform: translate(3%, -4%); }
+  80% { transform: translate(-4%, 2%); }
+}
+
+@keyframes float-spot-4 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-2%, 5%); }
+}
+
+/* Состояние atTop (scrollY <= 20): хедер полностью прозрачный — без фона, blur, границы, тени */
+.header-at-top {
+  background: transparent !important;
+  border-bottom: 1px solid transparent !important;
+  box-shadow: none !important;
+}
+
+/* Фон хедера: появляется плавно за первые 20px прокрутки */
+.header-bg-reveal {
+  border-bottom-width: 1px;
+  transition: opacity 0.15s ease-out;
+}
+
+/* Фон футера: изначально нет, появляется плавно за 20px при входе футера в viewport */
+.footer-bg-reveal {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(7, 30, 46, 0.5) 15%,
+    rgba(7, 30, 46, 0.85) 100%
+  );
+  border-top-width: 1px;
+  transition: opacity 0.15s ease-out;
+}
+
+/* Анимация колеса мыши (scroll indicator) */
+@keyframes scroll-wheel {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(4px);
+  }
+}
+.scroll-wheel-animate {
+  animation: scroll-wheel 2s ease-in-out infinite;
+}
+
+/* Карточки Proxity (референс): стекло, мягкие радиусы, анимированное засветление при hover */
+@keyframes card-glow-pulse {
+  0%, 100% { box-shadow: var(--card-hover-shadow); }
+  50% { box-shadow: var(--card-hover-shadow), var(--card-glow); }
+}
+
+.card-proxity {
+  position: relative;
+  border-radius: var(--card-radius);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+.card-proxity::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 200, 255, 0.08) 0%,
+    transparent 40%,
+    transparent 60%,
+    rgba(0, 200, 255, 0.04) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.card-proxity:hover {
+  background: var(--card-hover-bg);
+  border-color: var(--card-hover-border);
+  box-shadow: var(--card-hover-shadow);
+  animation: card-glow-pulse 2.5s ease-in-out infinite;
+}
+.card-proxity:hover::before {
+  opacity: 1;
+}
+.card-proxity-inner {
+  background: rgba(8, 20, 32, 0.5);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  backdrop-filter: blur(8px);
+}
+
+/* Кнопки Proxity: единый стиль для CTA, Hero, карточек, навигации */
+.btn-proxity-base {
+  border-radius: var(--btn-radius);
+  font-weight: 500;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease,
+    box-shadow 0.25s ease, transform 0.2s ease;
+  outline: none;
+}
+.btn-proxity-base:focus-visible {
+  box-shadow: 0 0 0 var(--focus-ring-offset) var(--bg-primary), 0 0 0 calc(var(--focus-ring-offset) + 2px) var(--accent-primary);
+}
+.btn-proxity-primary {
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+  border: none;
+}
+.btn-proxity-primary:hover {
+  background: var(--btn-primary-hover-bg);
+  box-shadow: var(--btn-primary-hover-glow);
+}
+.btn-proxity-primary:active {
+  transform: scale(var(--btn-primary-active-scale));
+}
+.btn-proxity-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+.btn-proxity-primary:disabled:hover {
+  box-shadow: none;
+}
+.btn-proxity-secondary {
+  background: var(--btn-secondary-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--btn-secondary-border);
+}
+.btn-proxity-secondary:hover {
+  border-color: var(--btn-secondary-hover-border);
+  background: var(--btn-secondary-hover-bg);
+}
+.btn-proxity-secondary:active {
+  transform: scale(var(--btn-secondary-active-scale));
+}
+.btn-proxity-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border: none;
+}
+.btn-proxity-ghost:hover {
+  background: var(--btn-ghost-hover-bg);
+  color: var(--accent-primary);
+}
+.btn-proxity-ghost:active {
+  transform: scale(0.97);
+}
+/* Ссылки-кнопки (навигация, футер): плавный hover и единый focus */
+.link-proxity {
+  transition: color 0.25s ease;
+  outline: none;
+}
+.link-proxity:hover {
+  color: var(--accent-primary);
+}
+.link-proxity:focus-visible {
+  border-radius: 4px;
+  box-shadow: 0 0 0 var(--focus-ring-offset) var(--bg-primary), 0 0 0 calc(var(--focus-ring-offset) + 2px) var(--accent-primary);
 }
 
 /* Единый стандарт вертикальных отступов секций: mobile 44px, tablet 56px, desktop 64px */
@@ -51,21 +368,21 @@ body {
   }
 }
 
-/* Заголовок ↔ подзаголовок 12–16px; подзаголовок ↔ контент 20–24px */
+/* Заголовок ↔ подзаголовок; подзаголовок ↔ контент (плотный ритм) */
 .section-header {
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 @media (min-width: 640px) {
   .section-header {
-    margin-bottom: 24px;
+    margin-bottom: 20px;
   }
 }
 .section-title-sub {
-  margin-top: 12px;
+  margin-top: 10px;
 }
 @media (min-width: 640px) {
   .section-title-sub {
-    margin-top: 14px;
+    margin-top: 12px;
   }
 }
 

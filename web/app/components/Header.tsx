@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Container from "./Container";
@@ -12,6 +12,7 @@ import MobileMenu from "./MobileMenu";
 import { CTA_LABEL, CTA_HREF } from "../lib/nav";
 
 const BURGER_ID = "mobile-menu-trigger";
+const REVEAL_PX = 20; /* фон хедера появляется плавно за первые 20px прокрутки */
 
 function isServicesActive(pathname: string) {
   return pathname === "/services" || pathname.startsWith("/services/");
@@ -29,18 +30,51 @@ function isAboutActive(pathname: string) {
 export default function Header() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [bgOpacity, setBgOpacity] = useState(0);
 
+  useEffect(() => {
+    const update = () => {
+      const scrollY = typeof window !== "undefined" ? window.scrollY : 0;
+      setBgOpacity(Math.min(1, Math.max(0, scrollY / REVEAL_PX)));
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, []);
+
+  const isHome = pathname === "/";
+  const atTop = bgOpacity <= 0;
   return (
     <>
       <header
-        className="sticky top-0 z-50 border-b border-[var(--border-subtle)] bg-[var(--bg-primary)]/90 backdrop-blur-md"
+        className={`sticky top-0 z-50 ${atTop ? "header-at-top" : ""}`}
+        style={{
+          backdropFilter: atTop ? "none" : "blur(12px)",
+          WebkitBackdropFilter: atTop ? "none" : "blur(12px)",
+        }}
         role="banner"
       >
-        <Container>
+        {/* Фон хедера: при scrollY > 20px появляется плавно (atTop = полностью прозрачно) */}
+        <div
+          className="header-bg-reveal pointer-events-none absolute inset-0"
+          style={{
+            opacity: bgOpacity,
+            background: isHome
+              ? "rgba(3, 8, 16, 0.5)"
+              : "rgba(3, 8, 16, 0.88)",
+            borderColor: isHome ? "transparent" : "rgba(255, 255, 255, 0.08)",
+          }}
+          aria-hidden="true"
+        />
+        <Container className="relative z-10">
           <div className="flex items-center justify-between py-4">
             <Link
               href="/"
-              className="flex items-center gap-2 text-[var(--text-primary)] hover:text-[var(--accent-primary)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-primary)] rounded"
+              className="link-proxity flex items-center gap-2 rounded-[var(--btn-radius)] px-1 py-1 text-[var(--text-primary)] focus-visible:outline-none"
               aria-label="Багратион — на главную"
             >
               <span className="text-lg font-semibold tracking-[0.12em]">
@@ -95,7 +129,7 @@ export default function Header() {
               id={BURGER_ID}
               type="button"
               onClick={() => setMobileOpen((o) => !o)}
-              className="md:hidden flex items-center justify-center rounded-lg p-2 text-[var(--text-secondary)] hover:bg-[var(--bg-hover)] hover:text-[var(--accent-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-primary)]"
+              className="btn-proxity-base btn-proxity-ghost md:hidden flex items-center justify-center rounded-[var(--btn-radius)] p-2 focus-visible:outline-none"
               aria-expanded={mobileOpen}
               aria-controls="mobile-menu-dialog"
               aria-haspopup="dialog"

@@ -18,7 +18,7 @@ export default function NavLink({
   return (
     <Link
       href={href}
-      className={`relative px-4 py-2 text-sm transition-colors hover:text-[var(--accent-primary)] ${
+      className={`link-proxity relative px-4 py-2 text-sm rounded-[var(--btn-radius)] focus-visible:outline-none ${
         isActive ? "text-[var(--text-primary)]" : "text-[var(--text-secondary)]"
       } ${className}`.trim()}
       aria-current={isActive ? "page" : undefined}

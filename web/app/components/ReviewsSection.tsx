@@ -155,14 +155,14 @@ export default function ReviewsSection() {
                   className="flex-[0_0_16.666%] px-2 sm:px-3"
                   style={{ minWidth: 0 }}
                 >
-                  <article className="flex h-full flex-col rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-secondary)]/60 px-4 py-5 sm:px-5 sm:py-6">
+                  <article className="card-proxity flex h-full flex-col px-4 py-4 sm:px-5 sm:py-5">
                     <p className="text-sm font-medium text-[var(--text-primary)] sm:text-base">
                       {review.author}
                     </p>
-                    <p className="mb-2 text-xs text-[var(--text-muted)] sm:text-sm">
+                    <p className="mb-1.5 text-xs text-[var(--text-muted)] sm:text-sm">
                       {review.level}
                     </p>
-                    <div className="mb-3 flex items-center gap-0.5 text-[var(--text-muted)]" aria-label="Рейтинг: 5 из 5">
+                    <div className="mb-2 flex items-center gap-0.5 text-[var(--text-muted)]" aria-label="Рейтинг: 5 из 5">
                       {[1, 2, 3, 4, 5].map((i) => (
                         <StarIcon
                           key={i}
@@ -184,7 +184,7 @@ export default function ReviewsSection() {
               <button
                 type="button"
                 onClick={goPrev}
-                className="flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-secondary)]/80 text-[var(--text-secondary)] transition-colors hover:border-[var(--accent-primary)]/50 hover:bg-[var(--bg-hover)] hover:text-[var(--text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-primary)]"
+                className="btn-proxity-base btn-proxity-ghost card-proxity flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center focus-visible:outline-none"
                 aria-label="Предыдущий отзыв"
               >
                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -194,7 +194,7 @@ export default function ReviewsSection() {
               <button
                 type="button"
                 onClick={goNext}
-                className="flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-secondary)]/80 text-[var(--text-secondary)] transition-colors hover:border-[var(--accent-primary)]/50 hover:bg-[var(--bg-hover)] hover:text-[var(--text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-primary)]"
+                className="btn-proxity-base btn-proxity-ghost card-proxity flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center focus-visible:outline-none"
                 aria-label="Следующий отзыв"
               >
                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -207,7 +207,7 @@ export default function ReviewsSection() {
               href={YANDEX_REVIEWS_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="yandex-reviews-link group inline-flex h-10 min-w-0 shrink-0 items-center justify-center gap-2 rounded-xl border border-[var(--border-subtle)] bg-transparent py-1.5 px-6 transition-[color,background-color,border-color,box-shadow,transform] duration-200 hover:border-[var(--accent-primary)]/50 hover:bg-[var(--bg-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-primary)] active:scale-[0.98]"
+              className="btn-proxity-base yandex-reviews-link card-proxity group inline-flex h-9 min-w-0 shrink-0 items-center justify-center gap-2 py-1.5 px-5 sm:h-10 sm:px-6 focus-visible:outline-none active:scale-[0.98]"
               aria-label="Яндекс.Отзывы"
               title="Яндекс.Отзывы"
             >

@@ -46,17 +46,17 @@ export default function ApproachSection() {
           </p>
         </header>
 
-        <ol className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-6">
+        <ol className="grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-2 lg:gap-4 xl:gap-5">
           {STEPS.map(({ title, description }, i) => (
             <li key={i}>
-              <article className="flex h-full gap-4 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-secondary)]/60 px-5 py-5 sm:px-6 sm:py-6">
+              <article className="card-proxity flex h-full gap-3 px-4 py-4 sm:gap-4 sm:px-5 sm:py-5">
                 <span
-                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-tertiary)]/80 text-sm font-medium tabular-nums text-[var(--text-muted)] sm:h-11 sm:w-11 sm:text-base"
+                  className="card-proxity-inner flex h-9 w-9 shrink-0 items-center justify-center text-sm font-medium tabular-nums text-[var(--text-muted)] sm:h-10 sm:w-10 sm:text-base"
                   aria-hidden
                 >
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <div className="min-w-0 flex-1 space-y-2 sm:space-y-3">
+                <div className="min-w-0 flex-1 space-y-1.5 sm:space-y-2">
                   <p className="text-base font-medium leading-tight text-[var(--text-primary)] sm:text-lg">
                     {title}
                   </p>
@@ -69,7 +69,7 @@ export default function ApproachSection() {
           ))}
         </ol>
 
-        <p className="mt-6 max-w-2xl text-xs leading-relaxed text-[var(--text-muted)] sm:text-sm">
+        <p className="mt-5 max-w-2xl text-xs leading-relaxed text-[var(--text-muted)] sm:text-sm">
           {FOOTNOTE}
         </p>
       </div>

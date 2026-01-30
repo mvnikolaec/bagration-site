@@ -1,7 +1,12 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Button from "./Button";
 import Container from "./Container";
 import { SERVICES_ITEMS } from "../lib/nav";
+
+const REVEAL_PX = 20; /* фон футера появляется плавно за 20px при входе в viewport */
 
 const FOOTER_NAV = [
   { href: "/", label: "Главная" },
@@ -24,9 +29,40 @@ const DISCLAIMER_2 =
   "Адвокатская тайна и конфиденциальность соблюдаются.";
 
 export default function Footer() {
+  const footerRef = useRef<HTMLElement>(null);
+  const [bgOpacity, setBgOpacity] = useState(0);
+
+  useEffect(() => {
+    const footer = footerRef.current;
+    if (!footer) return;
+    const update = () => {
+      const rect = footer.getBoundingClientRect();
+      const vh = typeof window !== "undefined" ? window.innerHeight : 0;
+      const progress = vh - rect.top;
+      setBgOpacity(Math.min(1, Math.max(0, progress / REVEAL_PX)));
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, []);
+
   return (
-    <footer className="border-t border-[var(--border-subtle)] bg-[var(--bg-secondary)]/60" role="contentinfo">
-      <Container className="py-10 sm:py-11 lg:py-12">
+    <footer
+      ref={footerRef}
+      className="relative border-t border-transparent bg-transparent"
+      role="contentinfo"
+    >
+      {/* Фон футера: изначально нет, появляется плавно за 20px при входе футера в viewport */}
+      <div
+        className="footer-bg-reveal pointer-events-none absolute inset-0 border-t border-[var(--border-subtle)]/40"
+        style={{ opacity: bgOpacity }}
+        aria-hidden="true"
+      />
+      <Container className="relative z-10 py-10 sm:py-11 lg:py-12">
         {/* Верхний уровень — 3 колонки на desktop */}
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-10">
           {/* Колонка A — Бренд, реквизиты, контакты, CTA */}
@@ -42,7 +78,7 @@ export default function Footer() {
                 Телефон:{" "}
                 <a
                   href="tel:+74954106600"
-                  className="text-[var(--text-primary)] transition-colors hover:text-[var(--accent-primary)]"
+                  className="link-proxity text-[var(--text-primary)] rounded-[4px] focus-visible:outline-none"
                 >
                   +7 (495) 410-66-00
                 </a>
@@ -51,7 +87,7 @@ export default function Footer() {
                 Email:{" "}
                 <a
                   href="mailto:info@bagrationlegal.ru"
-                  className="text-[var(--text-primary)] transition-colors hover:text-[var(--accent-primary)]"
+                  className="link-proxity text-[var(--text-primary)] rounded-[4px] focus-visible:outline-none"
                 >
                   info@bagrationlegal.ru
                 </a>
@@ -74,7 +110,7 @@ export default function Footer() {
                 <li key={href}>
                   <Link
                     href={href}
-                    className="text-sm text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-primary)] sm:text-base"
+                    className="link-proxity text-sm text-[var(--text-secondary)] rounded-[4px] focus-visible:outline-none sm:text-base"
                   >
                     {label}
                   </Link>
@@ -94,7 +130,7 @@ export default function Footer() {
                   <li key={href}>
                     <Link
                       href={href}
-                      className="text-sm text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-primary)] sm:text-base"
+                      className="link-proxity text-sm text-[var(--text-secondary)] rounded-[4px] focus-visible:outline-none sm:text-base"
                     >
                       {label}
                     </Link>
@@ -106,7 +142,7 @@ export default function Footer() {
                   <li key={href}>
                     <Link
                       href={href}
-                      className="text-sm text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-primary)] sm:text-base"
+                      className="link-proxity text-sm text-[var(--text-secondary)] rounded-[4px] focus-visible:outline-none sm:text-base"
                     >
                       {label}
                     </Link>
@@ -136,7 +172,7 @@ export default function Footer() {
               <Link
                 key={href}
                 href={href}
-                className="text-xs text-[var(--text-muted)] transition-colors hover:text-[var(--accent-primary)] sm:text-sm"
+                className="link-proxity text-xs text-[var(--text-muted)] rounded-[4px] focus-visible:outline-none sm:text-sm"
               >
                 {label}
               </Link>

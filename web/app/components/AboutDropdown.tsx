@@ -45,7 +45,7 @@ export default function AboutDropdown({
         ref={triggerRef}
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className={`group flex items-center gap-1 px-4 py-2 text-sm transition-colors hover:text-[var(--accent-primary)] ${
+        className={`link-proxity group flex items-center gap-1 rounded-[var(--btn-radius)] px-4 py-2 text-sm focus-visible:outline-none ${
           isActive ? "text-[var(--text-primary)]" : "text-[var(--text-secondary)]"
         }`}
         aria-expanded={open}
@@ -86,7 +86,7 @@ export default function AboutDropdown({
           <Link
             key={href}
             href={href}
-            className="block px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-hover)] hover:text-[var(--accent-primary)]"
+            className="link-proxity block rounded-[4px] px-4 py-2 text-sm text-[var(--text-secondary)] focus-visible:outline-none hover:bg-[var(--bg-hover)]"
             role="menuitem"
             onClick={() => {
               setOpen(false);

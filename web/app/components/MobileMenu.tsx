@@ -76,7 +76,7 @@ export default function MobileMenu({
             ref={closeBtnRef}
             type="button"
             onClick={onClose}
-            className="rounded-lg p-2 text-[var(--text-secondary)] hover:bg-[var(--bg-hover)] hover:text-[var(--accent-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]"
+            className="btn-proxity-base btn-proxity-ghost rounded-[var(--btn-radius)] p-2 focus-visible:outline-none"
             aria-label="Закрыть меню"
           >
             <svg
@@ -111,7 +111,7 @@ export default function MobileMenu({
 
             <Link
               href="/"
-              className="rounded-lg px-4 py-3 text-sm text-[var(--text-primary)] hover:bg-[var(--bg-hover)] hover:text-[var(--accent-primary)]"
+              className="link-proxity rounded-[var(--btn-radius)] px-4 py-3 text-sm text-[var(--text-primary)] focus-visible:outline-none"
               onClick={onClose}
             >
               Главная
@@ -121,7 +121,7 @@ export default function MobileMenu({
               <button
                 type="button"
                 onClick={() => setServicesOpen((o) => !o)}
-                className="flex w-full items-center justify-between rounded-lg px-4 py-3 text-left text-sm text-[var(--text-primary)] hover:bg-[var(--bg-hover)] hover:text-[var(--accent-primary)]"
+                className="btn-proxity-base btn-proxity-ghost flex w-full items-center justify-between rounded-[var(--btn-radius)] px-4 py-3 text-left text-sm text-[var(--text-primary)] focus-visible:outline-none"
                 aria-expanded={servicesOpen}
                 aria-controls="mobile-services-accordion"
                 id="mobile-services-trigger"
@@ -150,7 +150,7 @@ export default function MobileMenu({
               >
                 <Link
                   href="/services"
-                  className="block rounded-lg px-6 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-hover)] hover:text-[var(--accent-primary)]"
+                  className="link-proxity block rounded-[4px] px-6 py-2 text-sm text-[var(--text-secondary)] focus-visible:outline-none hover:bg-[var(--bg-hover)]"
                   onClick={onClose}
                 >
                   Все услуги
@@ -159,7 +159,7 @@ export default function MobileMenu({
                   <Link
                     key={href}
                     href={href}
-                    className="block rounded-lg px-6 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-hover)] hover:text-[var(--accent-primary)]"
+                    className="link-proxity block rounded-[4px] px-6 py-2 text-sm text-[var(--text-secondary)] focus-visible:outline-none hover:bg-[var(--bg-hover)]"
                     onClick={onClose}
                   >
                     {label}
@@ -172,7 +172,7 @@ export default function MobileMenu({
               <button
                 type="button"
                 onClick={() => setAboutOpen((o) => !o)}
-                className="flex w-full items-center justify-between rounded-lg px-4 py-3 text-left text-sm text-[var(--text-primary)] hover:bg-[var(--bg-hover)] hover:text-[var(--accent-primary)]"
+                className="btn-proxity-base btn-proxity-ghost flex w-full items-center justify-between rounded-[var(--btn-radius)] px-4 py-3 text-left text-sm text-[var(--text-primary)] focus-visible:outline-none"
                 aria-expanded={aboutOpen}
                 aria-controls="mobile-about-accordion"
                 id="mobile-about-trigger"
@@ -203,7 +203,7 @@ export default function MobileMenu({
                   <Link
                     key={href}
                     href={href}
-                    className="block rounded-lg px-6 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-hover)] hover:text-[var(--accent-primary)]"
+                    className="link-proxity block rounded-[4px] px-6 py-2 text-sm text-[var(--text-secondary)] focus-visible:outline-none hover:bg-[var(--bg-hover)]"
                     onClick={onClose}
                   >
                     {label}
@@ -214,21 +214,21 @@ export default function MobileMenu({
 
             <Link
               href="/press"
-              className="rounded-lg px-4 py-3 text-sm text-[var(--text-primary)] hover:bg-[var(--bg-hover)] hover:text-[var(--accent-primary)]"
+              className="link-proxity rounded-[var(--btn-radius)] px-4 py-3 text-sm text-[var(--text-primary)] focus-visible:outline-none"
               onClick={onClose}
             >
               Пресс-служба
             </Link>
             <Link
               href="/news"
-              className="rounded-lg px-4 py-3 text-sm text-[var(--text-primary)] hover:bg-[var(--bg-hover)] hover:text-[var(--accent-primary)]"
+              className="link-proxity rounded-[var(--btn-radius)] px-4 py-3 text-sm text-[var(--text-primary)] focus-visible:outline-none"
               onClick={onClose}
             >
               Новости
             </Link>
             <Link
               href="/contacts"
-              className="rounded-lg px-4 py-3 text-sm text-[var(--text-primary)] hover:bg-[var(--bg-hover)] hover:text-[var(--accent-primary)]"
+              className="link-proxity rounded-[var(--btn-radius)] px-4 py-3 text-sm text-[var(--text-primary)] focus-visible:outline-none"
               onClick={onClose}
             >
               Контакты
