@@ -1,36 +1,43 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const REVIEWS = [
   {
     author: "Dronya 96",
     level: "Знаток города 3 уровня",
-    text: "Спасибо большое команде Багратион, обратился с сложным вопросом, как оказалось для них он не сложный был! Быстро разобрались в сути дела и помогли с решением, рекомендую данную компанию, даже Маме и Теще посоветовал Что понравилось, захотел попить и предложили воды или чай!",
+    avatar: "/images/reviews/dronya-96.png",
+    text: "Спасибо большое команде Багратион! Обратился со сложным вопросом, как оказалось — для них он не сложный был. Быстро разобрались в сути дела и помогли с решением, рекомендую данную компанию, даже маме и тёще посоветовал. Что понравилось: захотел попить — и предложили воды или чай!",
   },
   {
     author: "Дмитрий Сергеевич",
     level: "Знаток города 6 уровня",
-    text: "Вопрос решился мгновенно , ребята профессионалы своего дела , рекомендую однозначно ! Спасибо огромное . из минусов не предлагают стейки , но я и не за ними сюда шел ) P.s. про стейки шутка , но я уверен если б предлагали было бы на 2 звезды Мишлен .",
+    avatar: "/images/reviews/dmitry-sergeevich.png",
+    text: "Вопрос решился мгновенно, ребята — профессионалы своего дела, рекомендую однозначно! Спасибо огромное. Из минусов — не предлагают стейки, но я и не за ними сюда шёл). P.S. Про стейки — шутка, но я уверен: если бы предлагали, было бы на 2 звезды Мишлен.",
   },
   {
     author: "JIeXa CAXAPOK",
     level: "Знаток города 6 уровня",
-    text: "Огромное спасибо за консультацию, помогли разобраться в интересующем меня вопросе, быстрая и оперативная работа, все на высшем уровне!",
+    avatar: "/images/reviews/saharok.png",
+    text: "Огромное спасибо за консультацию, помогли разобраться в интересующем меня вопросе. Быстрая и оперативная работа, всё на высшем уровне!",
   },
   {
     author: "Siemens",
     level: "Знаток города 5 уровня",
-    text: "Работа Багратион на высшем уровне — всё прошло идеально, остались только положительные впечатления! Все грамотно и оперативно.",
+    avatar: "/images/reviews/siemens.png",
+    text: "Работа Багратион на высшем уровне — всё прошло идеально, остались только положительные впечатления! Всё грамотно и оперативно.",
   },
   {
     author: "Руслана Морозова",
     level: "Знаток города 3 уровня",
+    avatar: "/images/reviews/morozova.png",
     text: "Помогли взыскать долг с недобросовестного контрагента быстро и эффективно. Цены абсолютно адекватные за такое качество.",
   },
   {
     author: "Магасумов Дамир",
     level: "Знаток города 2 уровня",
+    avatar: "/images/reviews/damir.png",
     text: "Качественная юридическая помощь и уверенность в положительном исходе. Спасибо за решение моего корпоративного спора. Теперь только к вам.",
   },
 ] as const;
@@ -51,12 +58,13 @@ function StarIcon({ className }: { className?: string }) {
 }
 
 const YANDEX_LOGO_SRC = "/icons/yandex-reviews.svg";
-const MD_BREAKPOINT = 768;
+/** Breakpoint: ≥1024px = 2 cards (desktop, tablet horizontal), <1024px = 1 card (tablet vertical, mobile) */
+const LG_BREAKPOINT = 1024;
 
 export default function ReviewsSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [maxSlide, setMaxSlide] = useState(2);
-  const [isMd, setIsMd] = useState(true);
+  const [isLg, setIsLg] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
   const [yandexLogoSvg, setYandexLogoSvg] = useState<string | null>(null);
   const [yandexLogoError, setYandexLogoError] = useState(false);
@@ -73,14 +81,14 @@ export default function ReviewsSection() {
 
   const updateBreakpoint = useCallback(() => {
     if (typeof window === "undefined") return;
-    const md = window.matchMedia(`(min-width: ${MD_BREAKPOINT}px)`).matches;
-    setIsMd(md);
-    setMaxSlide(md ? 2 : 5);
+    const lg = window.matchMedia(`(min-width: ${LG_BREAKPOINT}px)`).matches;
+    setIsLg(lg);
+    setMaxSlide(lg ? 2 : 5);
   }, []);
 
   useEffect(() => {
     updateBreakpoint();
-    const mql = window.matchMedia(`(min-width: ${MD_BREAKPOINT}px)`);
+    const mql = window.matchMedia(`(min-width: ${LG_BREAKPOINT}px)`);
     const handler = () => {
       updateBreakpoint();
       setCurrentSlide((s) => Math.min(s, mql.matches ? 2 : 5));
@@ -114,12 +122,23 @@ export default function ReviewsSection() {
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+    e.preventDefault();
+    if (e.key === "ArrowLeft") goPrev();
+    else goNext();
+  };
+
   return (
     <section
+      data-reviews-section-root
       className="section-py"
       aria-labelledby="reviews-heading"
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div
+        data-reviews-inner
+        className="mx-auto max-w-7xl px-3 min-[480px]:px-4 sm:px-6 lg:px-8"
+      >
         <header className="section-header max-w-3xl">
           <h2
             id="reviews-heading"
@@ -133,35 +152,60 @@ export default function ReviewsSection() {
         </header>
 
         <div
-          className="relative"
+          data-reviews-slider
+          className="relative mt-4 min-[480px]:mt-5 sm:mt-6 md:mt-6 bg-transparent"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
+          onKeyDown={handleKeyDown}
+          tabIndex={0}
+          role="region"
+          aria-label="Слайдер отзывов"
         >
           <div
-            className="overflow-hidden"
+            data-reviews-viewport
+            className="overflow-hidden bg-transparent"
+            style={{ touchAction: "pan-y" }}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
             <div
               ref={trackRef}
-              className="flex transition-transform duration-500 ease-out md:w-[300%] w-[600%]"
+              data-reviews-track
+              className="flex items-stretch transition-transform duration-[350ms] ease-out bg-transparent lg:w-[300%] w-[600%]"
               style={{
-                transform: `translateX(-${currentSlide * (isMd ? 100 / 3 : 100 / 6)}%)`,
+                transform: `translateX(-${currentSlide * (isLg ? 100 / 3 : 100 / 6)}%)`,
               }}
             >
               {REVIEWS.map((review, idx) => (
                 <div
                   key={idx}
-                  className="flex-[0_0_16.666%] px-2 sm:px-3"
+                  data-reviews-slide
+                  className="flex flex-[0_0_16.666%] flex-col bg-transparent px-2 min-[480px]:px-2.5 sm:px-3 lg:px-3"
                   style={{ minWidth: 0 }}
                 >
-                  <article className="card-proxity flex h-full flex-col px-4 py-4 sm:px-5 sm:py-5">
-                    <p className="text-sm font-medium text-[var(--text-primary)] sm:text-base">
-                      {review.author}
-                    </p>
-                    <p className="mb-1.5 text-xs text-[var(--text-muted)] sm:text-sm">
-                      {review.level}
-                    </p>
+                  <article className="card-proxity group flex h-full flex-col px-3 py-3 min-[480px]:px-4 min-[480px]:py-4 sm:px-5 sm:py-5 md:px-4 md:py-4 lg:px-5 lg:py-5">
+                    <div className="mb-2 flex items-center gap-3">
+                      {(review as { avatar?: string }).avatar && (
+                        <div className="group/avatar relative h-10 w-10 shrink-0 overflow-hidden rounded-lg sm:h-11 sm:w-11">
+                          <Image
+                            src={(review as { avatar?: string }).avatar!}
+                            alt=""
+                            fill
+                            className="object-cover opacity-95 transition-opacity duration-200 group-hover/avatar:opacity-90"
+                            style={{ filter: "blur(2px)" }}
+                            sizes="44px"
+                          />
+                        </div>
+                      )}
+                      <div className="min-w-0">
+                        <p className="text-sm font-medium text-[var(--text-primary)] sm:text-base">
+                          {review.author}
+                        </p>
+                        <p className="text-xs text-[var(--text-muted)] sm:text-sm">
+                          {review.level}
+                        </p>
+                      </div>
+                    </div>
                     <div className="mb-2 flex items-center gap-0.5 text-[var(--text-muted)]" aria-label="Рейтинг: 5 из 5">
                       {[1, 2, 3, 4, 5].map((i) => (
                         <StarIcon
@@ -170,7 +214,7 @@ export default function ReviewsSection() {
                         />
                       ))}
                     </div>
-                    <p className="text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base flex-1">
+                    <p className="text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base flex-1 min-h-0 line-clamp-6">
                       {review.text}
                     </p>
                   </article>
@@ -179,7 +223,10 @@ export default function ReviewsSection() {
             </div>
           </div>
 
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-4 sm:gap-5">
+          <div
+            data-reviews-controls
+            className="mt-4 flex flex-wrap items-center justify-center gap-3 min-[480px]:mt-5 min-[480px]:gap-4 sm:mt-6 sm:gap-5 md:mt-6"
+          >
             <div className="flex items-center gap-2">
               <button
                 type="button"

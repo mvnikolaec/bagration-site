@@ -376,6 +376,30 @@ body {
   }
 }
 
+/* Слайдер отзывов: контейнеры без собственного фона, сквозь них виден фон страницы.
+   Убираем background, box-shadow, backdrop-filter, pseudo-элементы — только у обёрток, не у карточек. */
+[data-reviews-inner],
+[data-reviews-slider],
+[data-reviews-viewport],
+[data-reviews-track],
+[data-reviews-slide],
+[data-reviews-controls] {
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+}
+[data-reviews-slider]::before,
+[data-reviews-slider]::after,
+[data-reviews-viewport]::before,
+[data-reviews-viewport]::after,
+[data-reviews-track]::before,
+[data-reviews-track]::after {
+  content: none !important;
+  display: none !important;
+}
+
 /* Кнопка Яндекс.Отзывы */
 .yandex-reviews-link {
   color: #ffffff;

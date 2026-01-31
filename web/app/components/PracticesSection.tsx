@@ -39,8 +39,10 @@ const ICONS: Record<string, ReactNode> = {
   ),
   land: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 2c-3.3 0-6 2.7-6 6 0 4 6 10 6 10s6-6 6-10c0-3.3-2.7-6-6-6z" />
-      <circle cx="12" cy="8" r="2" />
+      <g transform="translate(12,12) scale(1.15) translate(-12,-12) translate(0,2)">
+        <path d="M12 2c-3.3 0-6 2.7-6 6 0 4 6 10 6 10s6-6 6-10c0-3.3-2.7-6-6-6z" />
+        <circle cx="12" cy="8" r="2" />
+      </g>
     </svg>
   ),
   copyright: (
@@ -51,8 +53,7 @@ const ICONS: Record<string, ReactNode> = {
   ),
   corporate: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="8" />
-      <path d="M14 10L20 12M14 10L12 4" />
+      <path d="M5 20V12h4v8M11 20V8h4v12M17 20V4h4v16" />
     </svg>
   ),
   criminal: (
@@ -81,7 +82,7 @@ export default function PracticesSection() {
       className="section-py"
       aria-labelledby="practices-heading"
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-3 min-[480px]:px-4 sm:px-6 lg:px-8">
         <header className="section-header max-w-3xl">
           <h2
             id="practices-heading"
@@ -94,24 +95,26 @@ export default function PracticesSection() {
           </p>
         </header>
 
-        <ul className="grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-4 xl:grid-cols-4 xl:gap-5">
+        <ul className="grid grid-cols-1 gap-3 min-[480px]:gap-4 sm:gap-4 md:grid-cols-2 md:gap-4 lg:grid-cols-3 lg:gap-5 xl:grid-cols-4 xl:gap-5 2xl:gap-6">
           {PRACTICES.map(({ title, description, href, icon }) => (
             <li key={href}>
               <Link
                 href={href}
-                className="card-proxity group flex h-full flex-col p-4 sm:p-5"
+                className="card-proxity group flex h-full min-h-0 flex-col p-3 min-[480px]:p-4 sm:p-5 md:p-4 lg:p-5"
               >
-                <span className="mb-2 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[var(--card-hover-bg)] text-[var(--accent-primary)] transition-colors duration-200 group-hover:bg-[var(--card-bg)] group-hover:text-[var(--accent-primary)]" aria-hidden>
-                  <span className="h-5 w-5">{ICONS[icon]}</span>
-                </span>
-                <h3 className="text-base font-medium leading-tight text-[var(--text-primary)] transition-colors duration-200 group-hover:text-[var(--accent-primary)] sm:text-lg">
-                  {title}
-                </h3>
-                <p className="mt-1.5 flex-1 text-sm leading-snug text-[var(--text-secondary)] line-clamp-2 sm:mt-2">
+                <div className="mb-1.5 flex min-w-0 items-center justify-between gap-2 min-[480px]:mb-2 min-[480px]:gap-3 sm:gap-3">
+                  <h3 className="min-w-0 flex-1 truncate text-sm font-medium leading-tight text-[var(--text-primary)] transition-colors duration-200 group-hover:text-[var(--accent-primary)] min-[480px]:text-base sm:text-lg">
+                    {title}
+                  </h3>
+                  <span className="flex h-9 w-9 shrink-0 translate-y-0.5 items-center justify-center rounded-lg bg-[var(--card-hover-bg)] text-[var(--accent-primary)] transition-colors duration-200 group-hover:bg-[var(--card-bg)] group-hover:text-[var(--accent-primary)]" aria-hidden>
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center [&>svg]:h-5 [&>svg]:w-5 [&>svg]:shrink-0">{ICONS[icon]}</span>
+                  </span>
+                </div>
+                <p className="mt-1 flex-1 text-xs leading-snug text-[var(--text-secondary)] line-clamp-2 min-[480px]:mt-1.5 min-[480px]:text-sm sm:mt-2">
                   {description}
                 </p>
                 <span
-                  className="mt-2 inline-flex w-fit items-center gap-1 text-xs font-medium text-[var(--accent-primary)] sm:mt-3"
+                  className="mt-1.5 inline-flex w-fit items-center gap-1 text-xs font-medium text-[var(--accent-primary)] min-[480px]:mt-2 sm:mt-3"
                   aria-hidden
                 >
                   Подробнее
