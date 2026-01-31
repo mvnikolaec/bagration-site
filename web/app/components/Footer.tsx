@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Button from "./Button";
 import Container from "./Container";
 import { SERVICES_ITEMS } from "../lib/nav";
@@ -29,8 +30,10 @@ const DISCLAIMER_2 =
   "Адвокатская тайна и конфиденциальность соблюдаются.";
 
 export default function Footer() {
+  const pathname = usePathname();
   const footerRef = useRef<HTMLElement>(null);
   const [bgOpacity, setBgOpacity] = useState(0);
+  const isHome = pathname === "/";
 
   useEffect(() => {
     const footer = footerRef.current;
@@ -54,12 +57,20 @@ export default function Footer() {
     <footer
       ref={footerRef}
       className="relative border-t border-transparent bg-transparent"
+      style={{
+        backdropFilter: bgOpacity > 0 ? "blur(12px)" : "none",
+        WebkitBackdropFilter: bgOpacity > 0 ? "blur(12px)" : "none",
+      }}
       role="contentinfo"
     >
-      {/* Фон футера: изначально нет, появляется плавно за 20px при входе футера в viewport */}
+      {/* Фон футера: как у хедера — прозрачность, цвет, blur */}
       <div
-        className="footer-bg-reveal pointer-events-none absolute inset-0 border-t border-[var(--border-subtle)]/40"
-        style={{ opacity: bgOpacity }}
+        className="footer-bg-reveal pointer-events-none absolute inset-0 border-t"
+        style={{
+          opacity: bgOpacity,
+          background: isHome ? "rgba(7, 25, 35, 0.6)" : "rgba(7, 25, 35, 0.88)",
+          borderColor: isHome ? "transparent" : "rgba(255, 255, 255, 0.08)",
+        }}
         aria-hidden="true"
       />
       <Container className="relative z-10 py-10 sm:py-11 lg:py-12">

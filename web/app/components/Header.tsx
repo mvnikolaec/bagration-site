@@ -64,8 +64,8 @@ export default function Header() {
           style={{
             opacity: bgOpacity,
             background: isHome
-              ? "rgba(3, 8, 16, 0.5)"
-              : "rgba(3, 8, 16, 0.88)",
+              ? "rgba(7, 25, 35, 0.6)"
+              : "rgba(7, 25, 35, 0.88)",
             borderColor: isHome ? "transparent" : "rgba(255, 255, 255, 0.08)",
           }}
           aria-hidden="true"

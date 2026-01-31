@@ -11,8 +11,8 @@
   --text-primary: rgba(255, 255, 255, 0.92);
   --text-secondary: rgba(255, 255, 255, 0.72);
   --text-muted: rgba(255, 255, 255, 0.48);
-  --accent-primary: #00c8ff;
-  --accent-hover: #00a8dd;
+  --accent-primary: #42C8F5;
+  --accent-hover: #38B5E8;
   --border-subtle: rgba(255, 255, 255, 0.07);
   --header-h: 64px;
   --hero-gap: 24px;
@@ -24,31 +24,31 @@
   --section-py-desktop: 56px;
   /* Карточки по референсу: стекло, мягкие радиусы */
   --card-radius: 16px;
-  --card-bg: rgba(5, 14, 24, 0.45);
+  --card-bg: rgba(15, 45, 66, 0.5);
   --card-border: rgba(255, 255, 255, 0.06);
   --card-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.25);
-  --card-hover-bg: rgba(10, 24, 40, 0.5);
-  --card-hover-border: rgba(0, 200, 255, 0.18);
-  --card-hover-shadow: 0 8px 32px -4px rgba(0, 200, 255, 0.1);
-  --card-glow: 0 0 40px -8px rgba(0, 200, 255, 0.15);
-  /* Кнопки по референсу Proxity */
+  --card-hover-bg: rgba(25, 65, 95, 0.55);
+  --card-hover-border: rgba(66, 200, 245, 0.25);
+  --card-hover-shadow: 0 8px 32px -4px rgba(66, 200, 245, 0.15);
+  --card-glow: 0 0 40px -8px rgba(66, 200, 245, 0.2);
+  /* Кнопки */
   --btn-radius: 12px;
   --btn-primary-bg: var(--accent-primary);
   --btn-primary-text: #030810;
   --btn-primary-hover-bg: var(--accent-hover);
-  --btn-primary-hover-glow: 0 4px 24px -2px rgba(0, 200, 255, 0.4);
+  --btn-primary-hover-glow: 0 4px 24px -2px rgba(66, 200, 245, 0.5);
   --btn-primary-active-scale: 0.98;
-  --btn-secondary-border: rgba(255, 255, 255, 0.15);
-  --btn-secondary-bg: transparent;
-  --btn-secondary-hover-border: rgba(0, 200, 255, 0.45);
-  --btn-secondary-hover-bg: var(--bg-hover);
+  --btn-secondary-border: var(--card-border);
+  --btn-secondary-bg: var(--card-hover-bg);
+  --btn-secondary-hover-border: var(--card-hover-border);
+  --btn-secondary-hover-bg: var(--card-bg);
   --btn-secondary-active-scale: 0.98;
   --btn-ghost-hover-bg: var(--bg-hover);
   --focus-ring: 2px solid var(--accent-primary);
   --focus-ring-offset: 2px;
-  /* Световые пятна по референсу: cyan-засветления */
-  --spot-light: rgba(0, 200, 255, 0.1);
-  --spot-light-soft: rgba(0, 200, 255, 0.05);
+  /* Световые пятна */
+  --spot-light: rgba(66, 200, 245, 0.12);
+  --spot-light-soft: rgba(66, 200, 245, 0.06);
   --spot-dark: rgba(8, 20, 32, 0.5);
 }
 
@@ -57,47 +57,22 @@
   --color-foreground: var(--foreground);
 }
 
-/* Фон: яркий, сочный с цветными радиальными градиентами как на Proxity */
+/* Фон: статичный, светлее #071923 */
 body {
   min-height: 100vh;
   color: var(--text-primary);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
-  background-color: #0a1420;
-  background-image: 
-    radial-gradient(
-      ellipse 150% 140% at 50% -10%,
-      rgba(10, 45, 75, 0.8) 0%,
-      rgba(8, 35, 60, 0.5) 35%,
-      transparent 65%
-    ),
-    radial-gradient(
-      ellipse 120% 100% at 90% 50%,
-      rgba(12, 50, 80, 0.6) 0%,
-      rgba(8, 38, 65, 0.35) 40%,
-      transparent 60%
-    ),
-    radial-gradient(
-      ellipse 100% 120% at 10% 45%,
-      rgba(8, 42, 70, 0.55) 0%,
-      transparent 55%
-    ),
-    linear-gradient(
-      180deg,
-      #0a1420 0%,
-      #0c1e30 30%,
-      #0a1828 60%,
-      #081420 100%
-    );
+  background: #153a52;
+  background-image: none;
 }
 
-/* Hero без отдельного фона — используется общий фон body */
 .hero-flow-bg {
   background: transparent;
 }
 
-/* Плавающие световые пятна: слой поверх страницы, не блокирует клики */
-.floating-spots {
+/* 3 анимированных градиента на фоне — медленное движение */
+.floating-gradients {
   position: fixed;
   inset: 0;
   z-index: 0;
@@ -105,149 +80,92 @@ body {
   overflow: hidden;
 }
 
-/* Wandering gradient blobs: очень яркие, сочные teal/cyan/blue с усиленным свечением */
-.floating-spot {
+.floating-gradient {
   position: absolute;
   border-radius: 50%;
-  filter: blur(85px) brightness(1.15) saturate(1.3);
+  filter: blur(60px) brightness(1.25) saturate(1.4);
   will-change: transform, opacity;
+}
+
+.floating-gradient-1 {
+  width: 84vmax;
+  height: 72vmax;
+  left: -30%;
+  top: -10%;
+  filter: blur(65px) brightness(1.01) saturate(1.5);
   mix-blend-mode: screen;
-}
-
-/* Пятно 1: teal (верхний левый) — максимально сочный */
-.floating-spot-1 {
-  width: 85vmax;
-  height: 70vmax;
-  left: -22%;
-  top: -12%;
   background: radial-gradient(
     ellipse 50% 50% at 50% 50%,
-    rgba(50, 220, 200, 0.65) 0%,
-    rgba(0, 240, 255, 0.42) 25%,
-    rgba(20, 180, 220, 0.18) 50%,
+    rgba(50, 150, 255, 0.95) 0%,
+    rgba(0, 170, 255, 0.75) 30%,
+    rgba(80, 190, 255, 0.45) 50%,
     transparent 70%
   );
-  animation: wander-1 35s ease-in-out infinite;
+  animation: gradient-wander-1 60s ease-in-out infinite;
 }
 
-/* Пятно 2: cyan (правый центр) — максимально сочный */
-.floating-spot-2 {
-  width: 80vmax;
-  height: 75vmax;
-  left: 48%;
-  top: 18%;
+.floating-gradient-2 {
+  width: 66vmax;
+  height: 72vmax;
+  left: 65%;
+  top: 20%;
+  filter: blur(80px) brightness(0.85);
   background: radial-gradient(
     ellipse 50% 50% at 50% 50%,
-    rgba(0, 240, 255, 0.7) 0%,
-    rgba(70, 180, 255, 0.45) 25%,
-    rgba(30, 200, 255, 0.2) 50%,
-    transparent 70%
+    rgba(0, 200, 255, 0.7) 0%,
+    rgba(34, 184, 242, 0.5) 35%,
+    rgba(80, 220, 255, 0.25) 55%,
+    transparent 75%
   );
-  animation: wander-2 40s ease-in-out infinite 2s;
+  animation: gradient-wander-2 55s ease-in-out infinite 8s;
 }
 
-/* Пятно 3: blue (нижний левый) — максимально сочный */
-.floating-spot-3 {
-  width: 75vmax;
-  height: 65vmax;
-  left: -12%;
-  top: 58%;
+.floating-gradient-3 {
+  width: 72vmax;
+  height: 66vmax;
+  left: -20%;
+  top: 55%;
+  filter: blur(80px);
   background: radial-gradient(
     ellipse 50% 50% at 50% 50%,
-    rgba(70, 180, 255, 0.6) 0%,
-    rgba(50, 220, 200, 0.38) 25%,
-    rgba(40, 160, 240, 0.15) 50%,
-    transparent 70%
+    rgba(45, 212, 255, 0.68) 0%,
+    rgba(0, 180, 240, 0.48) 35%,
+    rgba(60, 200, 255, 0.22) 55%,
+    transparent 75%
   );
-  animation: wander-3 30s ease-in-out infinite 1s;
+  animation: gradient-wander-3 58s ease-in-out infinite 4s;
 }
 
-/* Пятно 4: teal/cyan mix (верхний центр) — максимально сочный */
-.floating-spot-4 {
-  width: 70vmax;
-  height: 60vmax;
-  left: 38%;
-  top: -18%;
-  background: radial-gradient(
-    ellipse 50% 50% at 50% 50%,
-    rgba(45, 210, 190, 0.55) 0%,
-    rgba(0, 230, 255, 0.55) 25%,
-    rgba(30, 190, 220, 0.22) 50%,
-    transparent 70%
-  );
-  animation: wander-4 38s ease-in-out infinite 3s;
+/* Spot 1: top-left zone — +20% amplitude, stays left/upper */
+@keyframes gradient-wander-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 1; }
+  20% { transform: translate(26%, -14%) scale(1.05); opacity: 1; }
+  40% { transform: translate(14%, 22%) scale(1.08); opacity: 1; }
+  60% { transform: translate(-10%, 10%) scale(1.03); opacity: 1; }
+  80% { transform: translate(10%, -6%) scale(1.06); opacity: 1; }
 }
 
-/* Wandering animations: плавное движение + изменение размера/прозрачности */
-@keyframes wander-1 {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-    opacity: 0.85;
-  }
-  33% {
-    transform: translate(5%, -3%) scale(1.1);
-    opacity: 1;
-  }
-  66% {
-    transform: translate(-4%, 4%) scale(0.95);
-    opacity: 0.9;
-  }
+/* Spot 2: right zone — +20% amplitude, stays right (limited leftward) */
+@keyframes gradient-wander-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.85; }
+  25% { transform: translate(-10%, 14%) scale(1.07); opacity: 1; }
+  50% { transform: translate(-6%, -22%) scale(1.04); opacity: 0.9; }
+  75% { transform: translate(-2%, 10%) scale(1.09); opacity: 1; }
 }
 
-@keyframes wander-2 {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-    opacity: 0.8;
-  }
-  50% {
-    transform: translate(-6%, 3%) scale(1.08);
-    opacity: 0.95;
-  }
+/* Spot 3: bottom zone — +20% amplitude, stays bottom */
+@keyframes gradient-wander-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.9; }
+  30% { transform: translate(30%, -18%) scale(1.06); opacity: 1; }
+  50% { transform: translate(10%, 26%) scale(1.05); opacity: 0.93; }
+  70% { transform: translate(-18%, 6%) scale(1.08); opacity: 1; }
+  90% { transform: translate(6%, 12%) scale(1.03); opacity: 0.9; }
 }
 
-@keyframes wander-3 {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-    opacity: 0.85;
-  }
-  40% {
-    transform: translate(4%, -5%) scale(1.05);
-    opacity: 1;
-  }
-  80% {
-    transform: translate(-3%, 2%) scale(0.98);
-    opacity: 0.88;
-  }
-}
-
-@keyframes wander-4 {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-    opacity: 0.82;
-  }
-  50% {
-    transform: translate(-5%, 4%) scale(1.12);
-    opacity: 0.98;
-  }
-}
-
-/* Уважаем prefers-reduced-motion: отключаем/упрощаем анимацию */
 @media (prefers-reduced-motion: reduce) {
-  .floating-spot {
+  .floating-gradient {
     animation: none !important;
     opacity: 0.9;
-  }
-  .floating-spot-1 {
-    transform: translate(0, 0);
-  }
-  .floating-spot-2 {
-    transform: translate(0, 0);
-  }
-  .floating-spot-3 {
-    transform: translate(0, 0);
-  }
-  .floating-spot-4 {
-    transform: translate(0, 0);
   }
 }
 
@@ -264,14 +182,8 @@ body {
   transition: opacity 0.15s ease-out;
 }
 
-/* Фон футера: изначально нет, появляется плавно за 20px при входе футера в viewport */
+/* Фон футера: прозрачность как у хедера, blur на footer */
 .footer-bg-reveal {
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    rgba(7, 30, 46, 0.5) 15%,
-    rgba(7, 30, 46, 0.85) 100%
-  );
   border-top-width: 1px;
   transition: opacity 0.15s ease-out;
 }
@@ -379,27 +291,41 @@ body {
 }
 .btn-proxity-secondary {
   background: var(--btn-secondary-bg);
-  color: var(--text-primary);
+  color: #ffffff;
   border: 1px solid var(--btn-secondary-border);
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, color 0.2s ease-out;
 }
 .btn-proxity-secondary:hover {
   border-color: var(--btn-secondary-hover-border);
   background: var(--btn-secondary-hover-bg);
+  box-shadow: var(--card-hover-shadow);
+  color: #42C8F5;
+  animation: card-glow-pulse 2.5s ease-in-out infinite;
 }
 .btn-proxity-secondary:active {
-  transform: scale(var(--btn-secondary-active-scale));
+  transform: scale(0.98);
 }
 .btn-proxity-ghost {
-  background: transparent;
-  color: var(--text-secondary);
-  border: none;
+  background: var(--card-hover-bg);
+  color: #ffffff;
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, color 0.2s ease-out;
 }
 .btn-proxity-ghost:hover {
-  background: var(--btn-ghost-hover-bg);
-  color: var(--accent-primary);
+  background: var(--card-bg);
+  border-color: var(--card-hover-border);
+  box-shadow: var(--card-hover-shadow);
+  color: #42C8F5;
+  animation: card-glow-pulse 2.5s ease-in-out infinite;
 }
 .btn-proxity-ghost:active {
-  transform: scale(0.97);
+  transform: scale(0.98);
 }
 /* Ссылки-кнопки (навигация, футер): плавный hover и единый focus */
 .link-proxity {
@@ -450,20 +376,22 @@ body {
   }
 }
 
-/* Кнопка Яндекс.Отзывы: SVG наследует color; только надпись «Отзывы» меняет цвет при hover */
+/* Кнопка Яндекс.Отзывы */
 .yandex-reviews-link {
-  color: var(--text-secondary);
-  transition: color 0.2s ease-out;
+  color: #ffffff;
+  background: var(--card-hover-bg) !important;
+  transition: color 0.2s ease-out, background-color 0.3s ease;
 }
 .yandex-reviews-link:hover {
   color: var(--text-primary);
+  background: var(--card-bg) !important;
 }
 .yandex-reviews-link path,
 .yandex-reviews-link .yandex-reviews-text {
   transition: fill 0.2s ease-out, color 0.2s ease-out;
 }
 .yandex-reviews-link .yandex-reviews-text {
-  color: var(--text-secondary);
+  color: #ffffff;
 }
 .yandex-reviews-link:hover .yandex-reviews-text {
   color: var(--accent-primary);

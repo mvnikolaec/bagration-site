@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Button from "./components/Button";
 import PracticesSection from "./components/PracticesSection";
 import WhyChooseUsSection from "./components/WhyChooseUsSection";
@@ -17,29 +16,6 @@ export default function Home() {
         className="relative flex flex-col overflow-hidden pb-6 sm:pb-7 md:pb-8 min-h-[100dvh] lg:min-h-[100dvh]"
         style={{ boxSizing: "border-box" }}
       >
-        <div
-          className="pointer-events-none absolute inset-0 z-0"
-          aria-hidden="true"
-        >
-          <div className="absolute inset-0 opacity-[0.12]">
-            <Image
-              src="/images/hero/hero-bg.png"
-              alt=""
-              fill
-              priority
-              sizes="(max-width: 640px) 640px, (max-width: 1024px) 1024px, (max-width: 1440px) 1440px, 1920px"
-              className="object-cover object-center"
-              quality={85}
-            />
-          </div>
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(180deg, rgba(3, 8, 16, 0.3) 0%, transparent 40%, transparent 100%)",
-            }}
-          />
-        </div>
         {/* Отступ контента: высота хедера + 30px от нижней границы хедера */}
         <div
           className="relative z-10 w-full shrink-0"
