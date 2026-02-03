@@ -185,14 +185,15 @@ export default function ReviewsSection() {
   return (
     <section
       data-reviews-section-root
-      className="section-py"
+      className="reviews-slider-section section-py w-full"
       aria-labelledby="reviews-heading"
       onClick={inspectBackgroundSource}
     >
       <div
         data-reviews-inner
-        className="mx-auto max-w-7xl px-3 min-[480px]:px-4 sm:px-6 lg:px-8"
+        className="mx-auto w-full max-w-[100vw] px-3 min-[480px]:px-4 sm:px-6 lg:px-8"
       >
+        <div className="mx-auto max-w-7xl">
         <header className="section-header max-w-3xl">
           <h2
             id="reviews-heading"
@@ -322,6 +323,7 @@ export default function ReviewsSection() {
               ) : null}
             </a>
           </div>
+        </div>
         </div>
       </div>
     </section>

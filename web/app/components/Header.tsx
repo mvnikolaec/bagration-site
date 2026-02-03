@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Container from "./Container";
@@ -31,6 +31,10 @@ export default function Header() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [bgOpacity, setBgOpacity] = useState(0);
+  const [logoWidth, setLogoWidth] = useState<number | null>(null);
+  const [letterSpacing, setLetterSpacing] = useState<number>(0);
+  const line2Ref = useRef<HTMLSpanElement>(null);
+  const line1MeasureRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const update = () => {
@@ -43,6 +47,36 @@ export default function Header() {
     return () => {
       window.removeEventListener("scroll", update);
       window.removeEventListener("resize", update);
+    };
+  }, []);
+
+  useEffect(() => {
+    const syncLogoWidth = () => {
+      const line2 = line2Ref.current;
+      const measure = line1MeasureRef.current;
+      if (!line2 || !measure) return;
+      const w2 = line2.offsetWidth;
+      const w1 = measure.offsetWidth;
+      if (w2 > 0 && w1 >= 0) {
+        setLogoWidth(w2);
+        setLetterSpacing((w2 - w1) / 8);
+      }
+    };
+    const runAfterLayout = () => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(syncLogoWidth);
+      });
+    };
+    runAfterLayout();
+    window.addEventListener("resize", runAfterLayout);
+    const observer = new ResizeObserver(runAfterLayout);
+    const tid = setTimeout(() => {
+      if (line2Ref.current) observer.observe(line2Ref.current);
+    }, 0);
+    return () => {
+      clearTimeout(tid);
+      window.removeEventListener("resize", runAfterLayout);
+      observer.disconnect();
     };
   }, []);
 
@@ -74,14 +108,48 @@ export default function Header() {
           <div className="flex items-center justify-between py-4">
             <Link
               href="/"
-              className="link-proxity flex items-center gap-2 rounded-[var(--btn-radius)] px-1 py-1 text-[var(--text-primary)] focus-visible:outline-none"
+              className="link-proxity relative flex items-center rounded-[var(--btn-radius)] px-1 py-1 text-[var(--text-primary)] focus-visible:outline-none"
+              style={{ gap: 10 }}
               aria-label="Багратион — на главную"
             >
-              <span className="text-lg font-semibold tracking-[0.12em]">
+              {/* Логотип: фильтр — цвет акцента #42C8F5 (синий) */}
+              <img
+                src="/images/logo.png"
+                alt=""
+                width={38}
+                height={38}
+                className="shrink-0 w-[38px] h-[38px] object-contain block header-logo-blue"
+                aria-hidden
+              />
+              {/* Скрытый span для измерения естественной ширины «БАГРАТИОН» (без доп. интервала) */}
+              <span
+                ref={line1MeasureRef}
+                className="text-lg font-semibold absolute left-[-9999px] top-0 whitespace-nowrap"
+                aria-hidden
+              >
                 БАГРАТИОН
               </span>
-              <span className="text-[10px] text-[var(--text-muted)] tracking-[0.1em] hidden sm:inline">
-                КОЛЛЕГИЯ АДВОКАТОВ
+              <span
+                className="inline-flex flex-col items-stretch"
+                style={logoWidth != null ? { width: logoWidth } : undefined}
+              >
+                <span
+                  className="text-lg font-semibold whitespace-nowrap"
+                  style={{
+                    letterSpacing:
+                      logoWidth != null && letterSpacing !== 0
+                        ? `${letterSpacing}px`
+                        : "0.12em",
+                  }}
+                >
+                  БАГРАТИОН
+                </span>
+                <span
+                  ref={line2Ref}
+                  className="text-[10px] text-[var(--text-muted)] tracking-[0.1em] whitespace-nowrap"
+                >
+                  КОЛЛЕГИЯ АДВОКАТОВ
+                </span>
               </span>
             </Link>
 

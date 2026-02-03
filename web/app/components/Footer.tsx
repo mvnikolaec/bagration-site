@@ -71,17 +71,17 @@ export default function Footer() {
         aria-hidden="true"
       />
       <Container className="relative z-10 py-10 sm:py-11 lg:py-12">
-        {/* Верхний уровень — 3 колонки на desktop */}
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-10">
-          {/* Колонка A — Бренд, реквизиты, контакты, CTA */}
-          <div className="space-y-4">
-            <p className="text-base font-semibold leading-tight text-[var(--text-primary)] sm:text-lg">
+        {/* Верхний уровень: mobile/portrait — стопка; desktop/landscape (md+) — 4 равные колонки */}
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-4 md:gap-x-8 md:gap-y-8 md:justify-items-stretch">
+          {/* Колонка 1 — Бренд «Багратион», реквизиты, контакты, CTA (интервал 10px) */}
+          <div className="min-w-0 space-y-2.5">
+            <p className="text-base font-semibold leading-[26px] text-[var(--text-primary)] sm:text-lg sm:leading-[28px]">
               Коллегия адвокатов города Москвы «Багратион»
             </p>
-            <p className="text-xs leading-relaxed text-[var(--text-muted)] sm:text-sm">
+            <p className="text-xs leading-[22px] text-[var(--text-muted)] sm:text-sm sm:leading-[24px]">
               ИНН 9705175976 | ОГРН 1227700505757
             </p>
-            <ul className="space-y-1.5 text-sm text-[var(--text-secondary)]">
+            <ul className="space-y-2.5 text-sm leading-[24px] text-[var(--text-secondary)] sm:leading-[26px]">
               <li>
                 Телефон:{" "}
                 <a
@@ -101,21 +101,21 @@ export default function Footer() {
                 </a>
               </li>
             </ul>
-            <div className="pt-1">
+            <div className="pt-2.5">
               <Button href="/contacts" variant="primary" className="w-full sm:w-auto">
                 Записаться на консультацию
               </Button>
             </div>
           </div>
 
-          {/* Колонка B — Навигация */}
-          <div>
-            <h3 className="text-sm font-medium uppercase tracking-wider text-[var(--text-muted)]">
+          {/* Колонка 2 — Навигация (интервал 10px); на ПК/планшете сдвиг 60px вправо */}
+          <div className="min-w-0 md:ml-[60px]">
+            <h3 className="text-sm font-medium uppercase leading-[24px] tracking-wider text-[var(--text-muted)]">
               Навигация
             </h3>
-            <ul className="mt-3 space-y-2">
+            <ul className="mt-2.5 space-y-2.5">
               {FOOTER_NAV.map(({ href, label }) => (
-                <li key={href}>
+                <li key={href} className="leading-[24px] sm:leading-[26px]">
                   <Link
                     href={href}
                     className="link-proxity text-sm text-[var(--text-secondary)] rounded-[4px] focus-visible:outline-none sm:text-base"
@@ -127,60 +127,82 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Колонка C — Практики (2 подколонки на desktop) */}
-          <div className="md:col-span-2 lg:col-span-1">
-            <h3 className="text-sm font-medium uppercase tracking-wider text-[var(--text-muted)]">
-              Практики
+          {/* Колонка 3 — Услуги (интервал 10px) */}
+          <div className="min-w-0">
+            <h3 className="text-sm font-medium uppercase leading-[24px] tracking-wider text-[var(--text-muted)]">
+              Услуги
             </h3>
-            <div className="mt-3 grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-2 lg:grid-cols-1">
-              <ul className="space-y-2">
-                {SERVICES_ITEMS.slice(0, 5).map(({ href, label }) => (
-                  <li key={href}>
-                    <Link
-                      href={href}
-                      className="link-proxity text-sm text-[var(--text-secondary)] rounded-[4px] focus-visible:outline-none sm:text-base"
-                    >
-                      {label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-              <ul className="space-y-2">
-                {SERVICES_ITEMS.slice(5, 10).map(({ href, label }) => (
-                  <li key={href}>
-                    <Link
-                      href={href}
-                      className="link-proxity text-sm text-[var(--text-secondary)] rounded-[4px] focus-visible:outline-none sm:text-base"
-                    >
-                      {label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+            {/* Один список на мобильных и вертикальном планшете */}
+            <ul className="mt-2.5 space-y-2.5 md:hidden">
+              {SERVICES_ITEMS.map(({ href, label }) => (
+                <li key={href} className="leading-[24px] sm:leading-[26px]">
+                  <Link
+                    href={href}
+                    className="link-proxity text-sm text-[var(--text-secondary)] rounded-[4px] focus-visible:outline-none sm:text-base"
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            {/* Первые 5 пунктов на desktop/landscape */}
+            <ul className="mt-2.5 hidden space-y-2.5 md:block">
+              {SERVICES_ITEMS.slice(0, 5).map(({ href, label }) => (
+                <li key={href} className="leading-[24px] sm:leading-[26px]">
+                  <Link
+                    href={href}
+                    className="link-proxity text-sm text-[var(--text-secondary)] rounded-[4px] focus-visible:outline-none sm:text-base"
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Колонка 4 — Услуги, вторые 5 пунктов (интервал 10px) */}
+          <div className="hidden min-w-0 md:block">
+            <div
+              className="text-sm font-medium uppercase leading-[24px] tracking-wider text-[var(--text-muted)] invisible select-none"
+              aria-hidden
+            >
+              Услуги
             </div>
+            <ul className="mt-2.5 space-y-2.5">
+              {SERVICES_ITEMS.slice(5, 10).map(({ href, label }) => (
+                <li key={href} className="leading-[24px] sm:leading-[26px]">
+                  <Link
+                    href={href}
+                    className="link-proxity text-sm text-[var(--text-secondary)] rounded-[4px] focus-visible:outline-none sm:text-base"
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
-        {/* Юридическая оговорка */}
+        {/* Юридическая оговорка (интервал 10px) */}
         <div className="mt-8 border-t border-[var(--border-subtle)]/70 pt-6 sm:mt-8 sm:pt-7">
-          <p className="max-w-2xl text-xs leading-relaxed text-[var(--text-muted)] sm:text-sm">
+          <p className="max-w-2xl text-xs leading-[22px] text-[var(--text-muted)] sm:text-sm sm:leading-[24px]">
             {DISCLAIMER_1}
             <br />
             {DISCLAIMER_2}
           </p>
         </div>
 
-        {/* Нижняя полоса (bottom bar) */}
+        {/* Нижняя полоса (bottom bar), интервал 10px */}
         <div className="mt-6 flex flex-col items-start justify-between gap-3 border-t border-[var(--border-subtle)]/70 pt-6 sm:flex-row sm:items-center sm:gap-4 sm:pt-7">
-          <p className="text-xs text-[var(--text-muted)] sm:text-sm">
+          <p className="text-xs leading-[22px] text-[var(--text-muted)] sm:text-sm sm:leading-[24px]">
             © 2023 КАМ «Багратион»
           </p>
-          <nav aria-label="Юридические документы" className="flex flex-wrap items-center gap-x-6 gap-y-2">
+          <nav aria-label="Юридические документы" className="flex flex-wrap items-center gap-x-6 gap-y-2.5">
             {BOTTOM_LINKS.map(({ href, label }) => (
               <Link
                 key={href}
                 href={href}
-                className="link-proxity text-xs text-[var(--text-muted)] rounded-[4px] focus-visible:outline-none sm:text-sm"
+                className="link-proxity text-xs leading-[22px] text-[var(--text-muted)] rounded-[4px] focus-visible:outline-none sm:text-sm sm:leading-[24px]"
               >
                 {label}
               </Link>

@@ -182,6 +182,12 @@ body {
   transition: opacity 0.15s ease-out;
 }
 
+/* Логотип в хедере — синий цвет акцента (#42C8F5) */
+.header-logo-blue {
+  filter: brightness(0) saturate(100%) invert(79%) sepia(39%) saturate(1000%)
+    hue-rotate(169deg) brightness(101%) contrast(101%);
+}
+
 /* Фон футера: прозрачность как у хедера, blur на footer */
 .footer-bg-reveal {
   border-top-width: 1px;
@@ -355,6 +361,26 @@ body {
   .section-py {
     padding-top: var(--section-py-desktop);
     padding-bottom: var(--section-py-desktop);
+  }
+}
+
+/* Блок отзывов со слайдером: на всю ширину экрана, высота +20px; карточки и кнопка без изменений */
+.reviews-slider-section {
+  width: 100%;
+  max-width: 100vw;
+  box-sizing: border-box;
+}
+.reviews-slider-section.section-py {
+  padding-bottom: calc(var(--section-py-mobile) + 20px);
+}
+@media (min-width: 640px) {
+  .reviews-slider-section.section-py {
+    padding-bottom: calc(var(--section-py-tablet) + 20px);
+  }
+}
+@media (min-width: 1024px) {
+  .reviews-slider-section.section-py {
+    padding-bottom: calc(var(--section-py-desktop) + 20px);
   }
 }
 
