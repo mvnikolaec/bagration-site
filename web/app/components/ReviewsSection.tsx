@@ -61,6 +61,59 @@ const YANDEX_LOGO_SRC = "/icons/yandex-reviews.svg";
 /** Breakpoint: ≥1024px = 2 cards (desktop, tablet horizontal), <1024px = 1 card (tablet vertical, mobile) */
 const LG_BREAKPOINT = 1024;
 
+const IS_DEV = typeof process !== "undefined" && process.env.NODE_ENV === "development";
+
+function inspectBackgroundSource(e: React.MouseEvent) {
+  if (!IS_DEV) return;
+  if (!e.altKey && !e.shiftKey) return;
+  e.preventDefault();
+  e.stopPropagation();
+  const target = e.target as HTMLElement;
+  const sectionRoot = target.closest("[data-reviews-section-root]");
+  const chain: HTMLElement[] = [];
+  let el: HTMLElement | null = target;
+  while (el && el !== document.body) {
+    chain.push(el);
+    el = el.parentElement;
+  }
+  const styles = [
+    "background-color",
+    "background-image",
+    "background",
+    "backdrop-filter",
+    "filter",
+    "box-shadow",
+  ] as const;
+  console.group("[Reviews Inspector] Alt+click — цепочка от target до body");
+  console.log("Target:", target);
+  chain.forEach((node, i) => {
+    const computed = node instanceof Element ? getComputedStyle(node) : null;
+    const dataAttrs: Record<string, string> = {};
+    if (node instanceof Element) {
+      for (const a of node.attributes) {
+        if (a.name.startsWith("data-")) dataAttrs[a.name] = a.value;
+      }
+    }
+    const info: Record<string, unknown> = {
+      index: i,
+      tagName: node.tagName,
+      className: node.className || "(none)",
+      dataAttrs: Object.keys(dataAttrs).length ? dataAttrs : undefined,
+      isSectionRoot: node === sectionRoot,
+    };
+    if (computed) {
+      const s: Record<string, string> = {};
+      styles.forEach((k) => {
+        const v = computed.getPropertyValue(k);
+        if (v && v !== "none" && v !== "rgba(0, 0, 0, 0)") s[k] = v;
+      });
+      if (Object.keys(s).length) info.computed = s;
+    }
+    console.log(`[${i}]`, node, info);
+  });
+  console.groupEnd();
+}
+
 export default function ReviewsSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [maxSlide, setMaxSlide] = useState(2);
@@ -134,6 +187,7 @@ export default function ReviewsSection() {
       data-reviews-section-root
       className="section-py"
       aria-labelledby="reviews-heading"
+      onClick={inspectBackgroundSource}
     >
       <div
         data-reviews-inner

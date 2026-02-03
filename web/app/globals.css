@@ -400,6 +400,29 @@ body {
   display: none !important;
 }
 
+/* Секция отзывов: отключаем псевдоэлементы у корня (возможный источник подложки) */
+[data-reviews-section-root]::before,
+[data-reviews-section-root]::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Страховка: внутри блока отзывов всё прозрачное, кроме .card-proxity и её потомков */
+[data-reviews-section-root],
+[data-reviews-section-root] div:not(.card-proxity):not(.card-proxity *),
+[data-reviews-section-root] section:not(.card-proxity):not(.card-proxity *),
+[data-reviews-section-root] header:not(.card-proxity):not(.card-proxity *),
+[data-reviews-section-root] ul:not(.card-proxity):not(.card-proxity *),
+[data-reviews-section-root] li:not(.card-proxity):not(.card-proxity *),
+[data-reviews-section-root] nav:not(.card-proxity):not(.card-proxity *),
+[data-reviews-section-root] footer:not(.card-proxity):not(.card-proxity *) {
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  filter: none !important;
+}
+
 /* Кнопка Яндекс.Отзывы */
 .yandex-reviews-link {
   color: #ffffff;

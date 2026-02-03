@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import Button from "./Button";
 import Container from "./Container";
 import { SERVICES_ITEMS } from "../lib/nav";
@@ -30,10 +29,8 @@ const DISCLAIMER_2 =
   "Адвокатская тайна и конфиденциальность соблюдаются.";
 
 export default function Footer() {
-  const pathname = usePathname();
   const footerRef = useRef<HTMLElement>(null);
   const [bgOpacity, setBgOpacity] = useState(0);
-  const isHome = pathname === "/";
 
   useEffect(() => {
     const footer = footerRef.current;
@@ -68,8 +65,8 @@ export default function Footer() {
         className="footer-bg-reveal pointer-events-none absolute inset-0 border-t"
         style={{
           opacity: bgOpacity,
-          background: isHome ? "rgba(7, 25, 35, 0.6)" : "rgba(7, 25, 35, 0.88)",
-          borderColor: isHome ? "transparent" : "rgba(255, 255, 255, 0.08)",
+          background: "rgba(7, 25, 35, 0.6)",
+          borderColor: "transparent",
         }}
         aria-hidden="true"
       />
