@@ -19,9 +19,16 @@
 
 # production
 /build
+/dist
 
-# misc
+# turbo / cache
+.turbo/
+.cache/
+
+# IDE / OS
+.vscode-test
 .DS_Store
+Thumbs.db
 *.pem
 
 # debug

@@ -26,7 +26,7 @@ export default function NavLink({
       <span
         className={
           isActive
-            ? "relative inline-block after:absolute after:-bottom-[6px] after:left-0 after:h-[1px] after:w-full after:bg-[#fff] after:content-[''] after:transition-colors hover:after:bg-[var(--accent-primary)]"
+            ? "relative inline-block after:absolute after:-bottom-[6px] after:left-0 after:h-[1px] after:w-full after:bg-[var(--text-primary)] after:content-[''] after:transition-colors hover:after:bg-[var(--accent-primary)]"
             : ""
         }
       >

@@ -34,7 +34,7 @@ export default function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section className="section-py" aria-labelledby="faq-heading">
+    <section className="section-py bg-transparent" aria-labelledby="faq-heading">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <header className="section-header max-w-3xl">
           <h2

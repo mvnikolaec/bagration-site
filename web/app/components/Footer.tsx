@@ -65,7 +65,7 @@ export default function Footer() {
         className="footer-bg-reveal pointer-events-none absolute inset-0 border-t"
         style={{
           opacity: bgOpacity,
-          background: "rgba(7, 25, 35, 0.6)",
+          background: "var(--header-footer-overlay)",
           borderColor: "transparent",
         }}
         aria-hidden="true"

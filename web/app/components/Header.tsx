@@ -98,9 +98,9 @@ export default function Header() {
           style={{
             opacity: bgOpacity,
             background: isHome
-              ? "rgba(7, 25, 35, 0.6)"
-              : "rgba(7, 25, 35, 0.88)",
-            borderColor: isHome ? "transparent" : "rgba(255, 255, 255, 0.08)",
+              ? "var(--header-footer-overlay)"
+              : "var(--header-footer-overlay-solid)",
+            borderColor: isHome ? "transparent" : "var(--header-footer-border)",
           }}
           aria-hidden="true"
         />
@@ -112,7 +112,7 @@ export default function Header() {
               style={{ gap: 10 }}
               aria-label="Багратион — на главную"
             >
-              {/* Логотип: фильтр — цвет акцента #42C8F5 (синий) */}
+              {/* Логотип: фильтр — цвет акцента (--accent-primary) */}
               <img
                 src="/images/logo.png"
                 alt=""
