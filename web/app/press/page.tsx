@@ -300,6 +300,8 @@ function Pad2(n: number) {
 }
 
 function PressItemCard({ item }: { item: PressItem }) {
+  const [imgError, setImgError] = useState(false);
+  const imageSrc = `/press/${item.id}.jpg`;
   return (
     <a
       href={item.url}
@@ -310,13 +312,22 @@ function PressItemCard({ item }: { item: PressItem }) {
       title={item.title}
     >
       <div className="relative aspect-video w-full overflow-hidden">
-        <Image
-          src={item.image}
-          alt=""
-          fill
-          sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-          className="object-cover opacity-95 transition-opacity duration-200 group-hover:opacity-90"
-        />
+        {imgError ? (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="card-proxity-inner rounded-[12px] px-4 py-2 text-xs font-medium text-[var(--text-muted)]">
+              Сюжет №{Pad2(item.id)}
+            </div>
+          </div>
+        ) : (
+          <Image
+            src={imageSrc}
+            alt=""
+            fill
+            sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+            className="object-cover object-center opacity-95 transition-opacity duration-200 group-hover:opacity-90"
+            onError={() => setImgError(true)}
+          />
+        )}
         <div className="pointer-events-none absolute left-3 top-3 flex items-center gap-2">
           <span className="card-proxity-inner rounded-full px-2.5 py-1 text-[11px] leading-none text-[var(--text-primary)]">
             {item.sourceLabel}
