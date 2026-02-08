@@ -1,8 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import Link from "next/link";
+import { useMemo, useState, useEffect } from "react";
 import Button from "../components/Button";
+
+const SITE_URL = "https://bagrationlegal.ru";
 
 type PressSource = "1tv" | "vesti" | "m24" | "smotrim" | "rentv" | "tvzvezda" | "youtube";
 
@@ -361,10 +364,271 @@ function PressItemCard({ item }: { item: PressItem }) {
   );
 }
 
+function buildPressPageJsonLd() {
+  const organization = {
+    "@type": "LegalService",
+    name: "Коллегия адвокатов города Москвы «Багратион»",
+    url: SITE_URL,
+    telephone: "+7 (495) 410-66-00",
+    email: "info@bagrationlegal.ru",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "улица Арбат, дом 35, этаж 6, офис 652",
+      addressLocality: "Москва",
+      postalCode: "119002",
+      addressCountry: "RU",
+    },
+  };
+
+  const personNikolaets = {
+    "@type": "Person",
+    name: "Михаил Николаец",
+    jobTitle: "Председатель коллегии адвокатов",
+    worksFor: organization,
+  };
+
+  const personNemtseva = {
+    "@type": "Person",
+    name: "Ольга Немцева",
+    jobTitle: "Заместитель председателя коллегии адвокатов",
+    worksFor: organization,
+  };
+
+  const itemListElements = pressItems.map((item) => {
+    const author = item.id % 2 === 1 ? personNikolaets : personNemtseva;
+    const imagePath = item.image ?? `/press/${item.id}.jpg`;
+    const normalizedImagePath = imagePath.startsWith("/") ? imagePath : `/${imagePath}`;
+    const imageUrl = `${SITE_URL}${normalizedImagePath}`;
+    return {
+      "@type": "ListItem",
+      position: item.id,
+      item: {
+        "@type": "Article",
+        headline: item.title,
+        url: item.url,
+        image: imageUrl,
+        author,
+        publisher: organization,
+        mainEntityOfPage: item.url,
+      },
+    };
+  });
+
+  const mainEntity = {
+    "@type": "ItemList",
+    itemListOrder: "https://schema.org/ItemListOrderAscending",
+    numberOfItems: pressItems.length,
+    itemListElement: itemListElements,
+  };
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Пресс-служба",
+    description:
+      "Публичные комментарии, экспертные разборы и сюжеты с участием адвокатов коллегии «Багратион» в СМИ.",
+    url: `${SITE_URL}/press`,
+    publisher: organization,
+    mainEntity,
+  };
+}
+
+function validatePressJsonLd(jsonLd: ReturnType<typeof buildPressPageJsonLd>) {
+  const errors: Array<{
+    id: number;
+    position: number;
+    title: string;
+    problem: string;
+    value: unknown;
+  }> = [];
+
+  // Проверка корневого объекта
+  if (jsonLd["@type"] !== "CollectionPage") {
+    errors.push({
+      id: 0,
+      position: 0,
+      title: "Root object",
+      problem: "@type должен быть CollectionPage",
+      value: jsonLd["@type"],
+    });
+  }
+
+  if (jsonLd.url !== "https://bagrationlegal.ru/press") {
+    errors.push({
+      id: 0,
+      position: 0,
+      title: "Root object",
+      problem: "url должен быть https://bagrationlegal.ru/press",
+      value: jsonLd.url,
+    });
+  }
+
+  // Проверка mainEntity
+  const mainEntity = jsonLd.mainEntity;
+  if (mainEntity.numberOfItems !== pressItems.length) {
+    errors.push({
+      id: 0,
+      position: 0,
+      title: "mainEntity",
+      problem: `numberOfItems должен быть ${pressItems.length}`,
+      value: mainEntity.numberOfItems,
+    });
+  }
+
+  if (mainEntity.itemListElement.length !== pressItems.length) {
+    errors.push({
+      id: 0,
+      position: 0,
+      title: "mainEntity",
+      problem: `itemListElement.length должен быть ${pressItems.length}`,
+      value: mainEntity.itemListElement.length,
+    });
+  }
+
+  // Проверка каждого элемента
+  mainEntity.itemListElement.forEach((li, index) => {
+    const originalItem = pressItems[index];
+    const itemId = originalItem.id;
+
+    // Проверка position
+    if (typeof li.position !== "number") {
+      errors.push({
+        id: itemId,
+        position: li.position as number,
+        title: originalItem.title.substring(0, 50) + "...",
+        problem: "position должен быть числом",
+        value: li.position,
+      });
+    }
+
+    // Проверка item
+    const article = li.item;
+    if (!article["@type"]) {
+      errors.push({
+        id: itemId,
+        position: li.position as number,
+        title: originalItem.title.substring(0, 50) + "...",
+        problem: "item[@type] отсутствует",
+        value: article["@type"],
+      });
+    }
+
+    // Проверка headline
+    if (!article.headline || typeof article.headline !== "string" || article.headline.trim() === "") {
+      errors.push({
+        id: itemId,
+        position: li.position as number,
+        title: originalItem.title.substring(0, 50) + "...",
+        problem: "headline должен быть непустой строкой",
+        value: article.headline,
+      });
+    }
+
+    // Проверка url
+    if (!article.url || typeof article.url !== "string" || !article.url.startsWith("http")) {
+      errors.push({
+        id: itemId,
+        position: li.position as number,
+        title: originalItem.title.substring(0, 50) + "...",
+        problem: "url должен начинаться с http",
+        value: article.url,
+      });
+    }
+
+    // Проверка image
+    if (
+      !article.image ||
+      typeof article.image !== "string" ||
+      !article.image.startsWith("https://bagrationlegal.ru/") ||
+      article.image.includes("undefined")
+    ) {
+      errors.push({
+        id: itemId,
+        position: li.position as number,
+        title: originalItem.title.substring(0, 50) + "...",
+        problem: "image должен начинаться с https://bagrationlegal.ru/ и не содержать undefined",
+        value: article.image,
+      });
+    }
+
+    // Проверка author
+    if (!article.author || !article.author.name) {
+      errors.push({
+        id: itemId,
+        position: li.position as number,
+        title: originalItem.title.substring(0, 50) + "...",
+        problem: "author.name должен быть задан",
+        value: article.author?.name,
+      });
+    } else {
+      // Проверка правила авторов
+      const expectedAuthorName = itemId % 2 === 1 ? "Михаил Николаец" : "Ольга Немцева";
+      if (article.author.name !== expectedAuthorName) {
+        errors.push({
+          id: itemId,
+          position: li.position as number,
+          title: originalItem.title.substring(0, 50) + "...",
+          problem: `author.name должен быть "${expectedAuthorName}" (id ${itemId} ${itemId % 2 === 1 ? "нечётный" : "чётный"})`,
+          value: article.author.name,
+        });
+      }
+    }
+  });
+
+  return errors;
+}
+
 export default function PressPage() {
   const [query, setQuery] = useState("");
   const [sourceFilter, setSourceFilter] = useState<SourceFilter>("all");
   const [sortMode, setSortMode] = useState<SortMode>("default");
+
+  const jsonLd = useMemo(() => buildPressPageJsonLd(), []);
+
+  const breadcrumbJsonLd = useMemo(
+    () => ({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Главная",
+          item: "https://bagrationlegal.ru/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Пресс-служба",
+          item: "https://bagrationlegal.ru/press",
+        },
+      ],
+    }),
+    []
+  );
+
+  // Dev-only валидация JSON-LD
+  useEffect(() => {
+    if (process.env.NODE_ENV === "development") {
+      const errors = validatePressJsonLd(jsonLd);
+      if (errors.length > 0) {
+        console.group("Press JSON-LD validation");
+        console.table(
+          errors.map((e) => ({
+            id: e.id,
+            position: e.position,
+            title: e.title,
+            problem: e.problem,
+            value: String(e.value).substring(0, 80),
+          }))
+        );
+        console.warn(`Найдено проблем: ${errors.length}`);
+        console.groupEnd();
+      } else {
+        console.info("Press JSON-LD validation: OK", { count: pressItems.length });
+      }
+    }
+  }, [jsonLd]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -393,6 +657,14 @@ export default function PressPage() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-14 bg-transparent">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       {/* Блок A — Hero */}
       <header className="section-header max-w-3xl">
         <h1 className="text-2xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-3xl lg:text-4xl">
@@ -405,6 +677,16 @@ export default function PressPage() {
           Подборка видеосюжетов и публикаций. Для просмотра перейдите по ссылке.
         </p>
       </header>
+
+      {/* SEO-контекст */}
+      <section className="mt-6 max-w-3xl bg-transparent">
+        <h2 className="text-xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-2xl">
+          Экспертные комментарии в СМИ
+        </h2>
+        <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base">
+          Адвокаты коллегии «Багратион» регулярно выступают экспертами в федеральных и региональных СМИ, комментируя вопросы гражданского, семейного, уголовного, корпоративного и арбитражного права. Материалы отражают реальную судебную практику и правовые позиции коллегии.
+        </p>
+      </section>
 
       {/* Блок B — Фильтры и поиск */}
       <div className="card-proxity mt-6 px-4 py-4 sm:px-5 sm:py-5">
@@ -467,17 +749,128 @@ export default function PressPage() {
         </div>
       </section>
 
-      {/* Блок D — CTA */}
-      <section className="mt-8 bg-transparent" aria-label="Контакт для СМИ">
-        <div className="card-proxity mx-auto max-w-3xl px-5 py-8 text-center sm:px-8 sm:py-10">
-          <p className="text-base font-medium text-[var(--text-primary)] sm:text-lg">
-            Нужен комментарий адвоката или правовой разбор ситуации для СМИ?
-          </p>
-          <div className="mt-5 flex justify-center">
-            <Button href="/contacts" variant="primary" className="min-h-12 px-8 py-3 text-base">
-              Связаться с пресс-службой
-            </Button>
-          </div>
+      {/* Блок перелинковки на практики */}
+      <section className="mt-8 bg-transparent" aria-labelledby="practices-heading">
+        <h2
+          id="practices-heading"
+          className="text-xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-2xl"
+        >
+          Практики, по которым адвокаты коллегии дают экспертные комментарии
+        </h2>
+        <ul className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
+          <li>
+            <Link
+              href="/services/civil-disputes"
+              className="card-proxity group flex h-full items-center justify-between p-4 transition-colors"
+            >
+              <span className="text-sm font-medium text-[var(--text-primary)] transition-colors duration-200 group-hover:text-[var(--accent-primary)] sm:text-base">
+                Гражданские споры
+              </span>
+              <svg
+                className="h-4 w-4 shrink-0 text-[var(--text-muted)] transition-transform duration-200 ease-out group-hover:translate-x-1 group-hover:text-[var(--accent-primary)]"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                aria-hidden
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/services/family-disputes"
+              className="card-proxity group flex h-full items-center justify-between p-4 transition-colors"
+            >
+              <span className="text-sm font-medium text-[var(--text-primary)] transition-colors duration-200 group-hover:text-[var(--accent-primary)] sm:text-base">
+                Семейные споры
+              </span>
+              <svg
+                className="h-4 w-4 shrink-0 text-[var(--text-muted)] transition-transform duration-200 ease-out group-hover:translate-x-1 group-hover:text-[var(--accent-primary)]"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                aria-hidden
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/services/criminal-cases"
+              className="card-proxity group flex h-full items-center justify-between p-4 transition-colors"
+            >
+              <span className="text-sm font-medium text-[var(--text-primary)] transition-colors duration-200 group-hover:text-[var(--accent-primary)] sm:text-base">
+                Уголовные дела
+              </span>
+              <svg
+                className="h-4 w-4 shrink-0 text-[var(--text-muted)] transition-transform duration-200 ease-out group-hover:translate-x-1 group-hover:text-[var(--accent-primary)]"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                aria-hidden
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/services/real-estate"
+              className="card-proxity group flex h-full items-center justify-between p-4 transition-colors"
+            >
+              <span className="text-sm font-medium text-[var(--text-primary)] transition-colors duration-200 group-hover:text-[var(--accent-primary)] sm:text-base">
+                Недвижимость
+              </span>
+              <svg
+                className="h-4 w-4 shrink-0 text-[var(--text-muted)] transition-transform duration-200 ease-out group-hover:translate-x-1 group-hover:text-[var(--accent-primary)]"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                aria-hidden
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/services/corporate-disputes"
+              className="card-proxity group flex h-full items-center justify-between p-4 transition-colors"
+            >
+              <span className="text-sm font-medium text-[var(--text-primary)] transition-colors duration-200 group-hover:text-[var(--accent-primary)] sm:text-base">
+                Корпоративные споры
+              </span>
+              <svg
+                className="h-4 w-4 shrink-0 text-[var(--text-muted)] transition-transform duration-200 ease-out group-hover:translate-x-1 group-hover:text-[var(--accent-primary)]"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                aria-hidden
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </li>
+        </ul>
+      </section>
+
+      {/* Блок "Для СМИ" */}
+      <section className="mt-8 bg-transparent" aria-labelledby="media-heading">
+        <h2
+          id="media-heading"
+          className="text-xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-2xl"
+        >
+          Для СМИ
+        </h2>
+        <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base">
+          Адвокаты коллегии «Багратион» открыты к профессиональным комментариям, интервью и правовому анализу резонансных правовых ситуаций.
+        </p>
+        <div className="mt-5">
+          <Button href="/contacts" variant="primary" className="min-h-12 px-8 py-3 text-base">
+            Связаться с пресс-службой
+          </Button>
         </div>
       </section>
     </div>
