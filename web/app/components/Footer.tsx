@@ -1,12 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Button from "./Button";
 import Container from "./Container";
 import { SERVICES_ITEMS } from "../lib/nav";
-
-const REVEAL_PX = 20; /* фон футера появляется плавно за 20px при входе в viewport */
 
 const FOOTER_NAV = [
   { href: "/", label: "Главная" },
@@ -29,42 +26,19 @@ const DISCLAIMER_2 =
   "Адвокатская тайна и конфиденциальность соблюдаются.";
 
 export default function Footer() {
-  const footerRef = useRef<HTMLElement>(null);
-  const [bgOpacity, setBgOpacity] = useState(0);
-
-  useEffect(() => {
-    const footer = footerRef.current;
-    if (!footer) return;
-    const update = () => {
-      const rect = footer.getBoundingClientRect();
-      const vh = typeof window !== "undefined" ? window.innerHeight : 0;
-      const progress = vh - rect.top;
-      setBgOpacity(Math.min(1, Math.max(0, progress / REVEAL_PX)));
-    };
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-    return () => {
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
-    };
-  }, []);
-
   return (
     <footer
-      ref={footerRef}
       className="relative border-t border-transparent bg-transparent"
       style={{
-        backdropFilter: bgOpacity > 0 ? "blur(12px)" : "none",
-        WebkitBackdropFilter: bgOpacity > 0 ? "blur(12px)" : "none",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
       }}
       role="contentinfo"
     >
-      {/* Фон футера: как у хедера — прозрачность, цвет, blur */}
+      {/* Фон футера: статичный, как у хедера */}
       <div
-        className="footer-bg-reveal pointer-events-none absolute inset-0 border-t"
+        className="pointer-events-none absolute inset-0 border-t"
         style={{
-          opacity: bgOpacity,
           background: "var(--header-footer-overlay)",
           borderColor: "transparent",
         }}

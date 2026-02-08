@@ -206,29 +206,10 @@ section {
   }
 }
 
-/* Хедер при scrollY <= 20: полностью прозрачный (переопределяет inline/reveal) */
-.header-at-top {
-  background-color: transparent;
-  border-bottom-color: transparent;
-  box-shadow: none;
-}
-
-/* Фон хедера: появляется плавно за первые 20px прокрутки */
-.header-bg-reveal {
-  border-bottom-width: 1px;
-  transition: opacity 0.15s ease-out;
-}
-
 /* Логотип в хедере — синий цвет акцента (#42C8F5) */
 .header-logo-blue {
   filter: brightness(0) saturate(100%) invert(79%) sepia(39%) saturate(1000%)
     hue-rotate(169deg) brightness(101%) contrast(101%);
-}
-
-/* Фон футера: прозрачность как у хедера, blur на footer */
-.footer-bg-reveal {
-  border-top-width: 1px;
-  transition: opacity 0.15s ease-out;
 }
 
 /* Анимация колеса мыши (scroll indicator) */

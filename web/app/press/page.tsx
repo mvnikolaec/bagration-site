@@ -12,6 +12,7 @@ type PressSource = "1tv" | "vesti" | "m24" | "smotrim" | "rentv" | "tvzvezda" | 
 type PressItem = {
   id: number; // 1..30
   title: string;
+  description: string; // краткое описание сюжета, примерно одинаковая длина по карточкам
   url: string;
   source: PressSource;
   sourceLabel: string;
@@ -33,6 +34,7 @@ const pressItems: PressItem[] = [
     id: 1,
     title:
       "Кто ответит за наши травмы и долгое лечение: непогода, управляющая компания, ТСЖ, дорожные службы или коммерческие организации?",
+    description: "Комментарий адвоката о распределении ответственности за травмы и ущерб от непогоды и действий служб.",
     url: "https://www.1tv.ru/shows/dobroe-utro/reportazh/sosulka-proletela-i-aga-dobroe-utro-fragment-vypuska-ot-23-12-2020",
     source: "1tv",
     sourceLabel: SOURCE_LABEL["1tv"],
@@ -42,6 +44,7 @@ const pressItems: PressItem[] = [
     id: 2,
     title:
       "Почему глава семейства и по совместительству бывший прокурор Сочи пытается отсудить у бывшей любовницы все. «Про любовь»: шекспировские страсти краснодарского розлива.",
+    description: "Судебный спор о разделе имущества и законности требований бывшего прокурора.",
     url: "https://www.1tv.ru/shows/chelovek-i-zakon/syuzhety/pro-lyubov-shekspirovskie-strasti-krasnodarskogo-rozliva-chelovek-i-zakon-fragment-vypuska-ot-26-11-2021",
     source: "1tv",
     sourceLabel: SOURCE_LABEL["1tv"],
@@ -51,6 +54,7 @@ const pressItems: PressItem[] = [
     id: 3,
     title:
       "Почему суд обязал невиновного в ДТП выплатить компенсацию? Законность решения разъяснил адвокат Михаил Николаец.",
+    description: "Разбор судебной практики и правовых оснований взыскания компенсации с участника ДТП.",
     url: "https://www.vesti.ru/article/2443077",
     source: "vesti",
     sourceLabel: SOURCE_LABEL.vesti,
@@ -59,6 +63,7 @@ const pressItems: PressItem[] = [
   {
     id: 4,
     title: "Кому рассказывать о случаях нарушения тишины и как добиться спокойствия?",
+    description: "Адвокат объясняет, куда обращаться при нарушении тишины и как добиться исполнения норм закона.",
     url: "https://www.m24.ru/videos/video/03102017/156189?utm_source=CopyBuf",
     source: "m24",
     sourceLabel: SOURCE_LABEL.m24,
@@ -68,6 +73,7 @@ const pressItems: PressItem[] = [
     id: 5,
     title:
       "Ущерб на полтора миллиарда рублей и почти тысяча покупателей апартаментов в Москве годами не могут добиться правды.",
+    description: "Сюжет о массовых нарушениях прав дольщиков и возможностях защиты через суд.",
     url: "https://player.smotrim.ru/iframe/video/id/2277581/start_zoom/true/showZoomBtn/false/sid/vesti/mute/true/?acc_video_id=2389150",
     source: "vesti",
     sourceLabel: SOURCE_LABEL.vesti,
@@ -76,6 +82,7 @@ const pressItems: PressItem[] = [
   {
     id: 6,
     title: "\"Московский патруль\": подмена генетического материала при ЭКО.",
+    description: "Юридический разбор ситуации с подменой биоматериала в клинике ЭКО и правами пострадавших семей.",
     url: "https://www.m24.ru/shows1/14/159616?utm_source=CopyBuf",
     source: "m24",
     sourceLabel: SOURCE_LABEL.m24,
@@ -85,6 +92,7 @@ const pressItems: PressItem[] = [
     id: 7,
     title:
       "Технологии мошенничества: банковские карты и переводы, СМС-сообщения. Полезные лайфхаки, как избежать уловок мошенников.",
+    description: "Советы адвоката, как защититься от мошенничества с картами и переводами.",
     url: "https://www.1tv.ru/shows/chelovek-i-zakon/syuzhety/tehnologiya-moshennichestva-v-epohu-koronavirusa-i-ne-tolko-chelovek-i-zakon-fragment-vypuska-ot-11-06-2020",
     source: "1tv",
     sourceLabel: SOURCE_LABEL["1tv"],
@@ -93,6 +101,7 @@ const pressItems: PressItem[] = [
   {
     id: 8,
     title: "Квартирный вопрос испортил отношения не в одной семье москвичей.",
+    description: "Споры о разделе и наследовании квартир: как законно разрешать конфликты между родственниками.",
     url: "https://www.1tv.ru/shows/chelovek-i-zakon/syuzhety/metry-razdora-chelovek-i-zakon-fragment-vypuska-ot-03-02-2023",
     source: "1tv",
     sourceLabel: SOURCE_LABEL["1tv"],
@@ -102,6 +111,7 @@ const pressItems: PressItem[] = [
     id: 9,
     title:
       "Левые услуги и липовые квитанции: как не заплатить лишнего за коммунальные услуги. Проверено на собственном опыте.",
+    description: "Что делать, если в квитанциях ЖКХ навязаны услуги или завышены суммы.",
     url: "https://www.1tv.ru/shows/chelovek-i-zakon/syuzhety/obratnaya-storona-zhkh-chelovek-i-zakon-fragment-vypuska-ot-16-10-2020",
     source: "1tv",
     sourceLabel: SOURCE_LABEL["1tv"],
@@ -111,6 +121,7 @@ const pressItems: PressItem[] = [
     id: 10,
     title:
       "В Краснодарском крае целый ряд фирм получил иски от Генпрокуратуры о признании договоров аренды земли ничтожными.",
+    description: "Комментарий о правовых последствиях исков и защите интересов арендаторов.",
     url: "https://www.youtube.com/watch?v=r0MF9HK4WEQ",
     source: "youtube",
     sourceLabel: SOURCE_LABEL.youtube,
@@ -120,6 +131,7 @@ const pressItems: PressItem[] = [
     id: 11,
     title:
       "Можно ли жильцам многоэтажки обустроить стоянку самостоятельно? В интервью на телеканале «Москва 24» рассказал Михаил Николаец.",
+    description: "Правовые условия организации парковки на придомовой территории и согласования с жильцами.",
     url: "https://www.m24.ru/shows1/109/267420",
     source: "m24",
     sourceLabel: SOURCE_LABEL.m24,
@@ -128,6 +140,7 @@ const pressItems: PressItem[] = [
   {
     id: 12,
     title: "Кто заказчик убийства Солоника и где он скрывался 25 лет.",
+    description: "Уголовное дело и судебное расследование: комментарий адвоката о процессе и правовых аспектах.",
     url: "https://smotrim.ru/video/2374341",
     source: "smotrim",
     sourceLabel: SOURCE_LABEL.smotrim,
@@ -137,6 +150,7 @@ const pressItems: PressItem[] = [
     id: 13,
     title:
       "Ливни затопили десятки московских квартир. Кто должен платить по закону? Рассказал Михаил Николаец на телеканале «Москва 24».",
+    description: "Ответственность УК и застройщика за залив квартир и порядок возмещения ущерба.",
     url: "https://www.m24.ru/shows1/109/250581",
     source: "m24",
     sourceLabel: SOURCE_LABEL.m24,
@@ -146,6 +160,7 @@ const pressItems: PressItem[] = [
     id: 14,
     title:
       "Клиенты одной из столичных фирм не могут забрать технику, сданную в ремонт.",
+    description: "Защита прав потребителей: как вернуть технику из ремонта или потребовать компенсацию.",
     url: "https://smotrim.ru/video/1816355",
     source: "smotrim",
     sourceLabel: SOURCE_LABEL.smotrim,
@@ -155,6 +170,7 @@ const pressItems: PressItem[] = [
     id: 15,
     title:
       "Поджигателям Никулинского суда Москвы вынесен приговор, они пытались уничтожить материалы уголовного дела.",
+    description: "Разбор приговора и правовых последствий попытки уничтожения доказательств.",
     url: "https://player.smotrim.ru/iframe/video/id/2222232/start_zoom/true/showZoomBtn/false/sid/russiatv/mute/true/?acc_video_id=episode_id/2442215/video_id/2331457/brand_id/5204",
     source: "smotrim",
     sourceLabel: SOURCE_LABEL.smotrim,
@@ -164,6 +180,7 @@ const pressItems: PressItem[] = [
     id: 16,
     title:
       "Оголенные провода и вздувшийся пол: в новостройке сделали опасный для жильцов ремонт.",
+    description: "Требования к застройщику и УК по качеству ремонта и устранению опасных недостатков.",
     url: "https://ren.tv/news/v-rossii/371744-ogolennye-provoda-i-vzduvshiisia-pol-v-novostroike-sdelali-opasnyi-dlia-zhiltsov-remont",
     source: "rentv",
     sourceLabel: SOURCE_LABEL.rentv,
@@ -173,6 +190,7 @@ const pressItems: PressItem[] = [
     id: 17,
     title:
       "Конец авторазборов: как новые таможенные правила изменят жизнь водителей и бизнеса. Под запрет попадет и установка допоборудования.",
+    description: "Комментарий о правовых ограничениях и рисках для автобизнеса и владельцев авто.",
     url: "https://tvzvezda.ru/news/20207162053-HMP65.html",
     source: "tvzvezda",
     sourceLabel: SOURCE_LABEL.tvzvezda,
@@ -181,6 +199,7 @@ const pressItems: PressItem[] = [
   {
     id: 18,
     title: "\"Московский патруль\": как выбрать мастерскую для гаджета.",
+    description: "На что смотреть в договоре и как защитить права при ремонте техники в сервисном центре.",
     url: "https://www.m24.ru/shows1/14/153651?utm_source=CopyBuf",
     source: "m24",
     sourceLabel: SOURCE_LABEL.m24,
@@ -190,6 +209,7 @@ const pressItems: PressItem[] = [
     id: 19,
     title:
       "Ипотека — как не потерять кровные квадрантные метры. Непридуманные истории.",
+    description: "Типичные риски при ипотеке и способы защитить жильё при спорах с банком или застройщиком.",
     url: "https://www.1tv.ru/shows/chelovek-i-zakon/syuzhety/ipoteka-kak-ne-poteryat-krovnye-kvadrantnye-metry-chelovek-i-zakon-fragment-vypuska-ot-05-08-2022",
     source: "1tv",
     sourceLabel: SOURCE_LABEL["1tv"],
@@ -199,6 +219,7 @@ const pressItems: PressItem[] = [
     id: 20,
     title:
       "Суд над адвокатом в Новороссийске: на чем попался разоблачитель коррупционеров.",
+    description: "Ход процесса и правовая оценка обвинений в отношении адвоката-разоблачителя.",
     url: "https://smotrim.ru/video/2305948",
     source: "smotrim",
     sourceLabel: SOURCE_LABEL.smotrim,
@@ -207,6 +228,7 @@ const pressItems: PressItem[] = [
   {
     id: 21,
     title: "Бизнесвумен тайно сделали директором компании с миллиардным оборотом.",
+    description: "Корпоративный конфликт и незаконное назначение: как защитить права в споре за контроль в компании.",
     url: "https://ren.tv/video/embed/810267#autoplay=1",
     source: "rentv",
     sourceLabel: SOURCE_LABEL.rentv,
@@ -216,6 +238,7 @@ const pressItems: PressItem[] = [
     id: 22,
     title:
       "В Истринском районе Подмосковья полицейские выясняют обстоятельства ЧП на детской площадке.",
+    description: "Разбор инцидента и вопросы ответственности за безопасность на придомовой территории.",
     url: "https://www.m24.ru/shows1/14/150560?utm_source=CopyBuf",
     source: "m24",
     sourceLabel: SOURCE_LABEL.m24,
@@ -225,6 +248,7 @@ const pressItems: PressItem[] = [
     id: 23,
     title:
       "В мессенджерах и социальных сетях – поток объявлений с предложением обмена валюты у частных лиц. Но это незаконно и рискованно!",
+    description: "Почему обмен валюты у физлиц вне банков незаконен и чем это грозит участникам.",
     url: "https://www.1tv.ru/shows/dobroe-utro/pro-dengi/ostorozhno-valyutnye-moshenniki-dobroe-utro-fragment-vypuska-ot-29-03-2022",
     source: "1tv",
     sourceLabel: SOURCE_LABEL["1tv"],
@@ -234,6 +258,7 @@ const pressItems: PressItem[] = [
     id: 24,
     title:
       "В Подмосковье жители многоэтажки пытаются закрыть хостел, который работает в одной из квартир.",
+    description: "Законность использования жилого помещения под хостел и инструменты давления жильцов.",
     url: "https://ren.tv/video/embed/652211#autoplay=1",
     source: "rentv",
     sourceLabel: SOURCE_LABEL.rentv,
@@ -243,6 +268,7 @@ const pressItems: PressItem[] = [
     id: 25,
     title:
       "Кибермошенники «толкают» в циничной паутине свои дорогущие капли и мази со ссылкой на медийных личностей.",
+    description: "Как распознать мошенничество с псевдо-рекомендациями и куда обращаться пострадавшим.",
     url: "https://www.1tv.ru/shows/chelovek-i-zakon/syuzhety/parazity-na-nashem-imeni-chelovek-i-zakon-fragment-vypuska-ot-22-10-2021",
     source: "1tv",
     sourceLabel: SOURCE_LABEL["1tv"],
@@ -252,6 +278,7 @@ const pressItems: PressItem[] = [
     id: 26,
     title:
       "Четыре года колонии получили владельцы нелегального частного детского сада «Полина» в Астрахани.",
+    description: "Уголовное дело за ведение деятельности без лицензии и нарушение прав детей и родителей.",
     url: "https://www.1tv.ru/shows/chelovek-i-zakon/syuzhety/sovremennye-freken-bok-chelovek-i-zakon-fragment-vypuska-ot-29-01-2021",
     source: "1tv",
     sourceLabel: SOURCE_LABEL["1tv"],
@@ -261,6 +288,7 @@ const pressItems: PressItem[] = [
     id: 27,
     title:
       "У жителей целого микрорайона новостроек в Москве больше двух недель из кранов течет ржавая вода.",
+    description: "Требования к застройщику и УК по качеству воды и возмещению ущерба жильцам.",
     url: "https://www.m24.ru/shows1/109/258856?utm_source=CopyBuf",
     source: "m24",
     sourceLabel: SOURCE_LABEL.m24,
@@ -270,6 +298,7 @@ const pressItems: PressItem[] = [
     id: 28,
     title:
       "Кемеровская предподавательница-блогер стала жертвой интернет-похитителей.",
+    description: "Мошенничество в сети: как похищают средства и личные данные и как защитить себя.",
     url: "https://smotrim.ru/video/1924978",
     source: "smotrim",
     sourceLabel: SOURCE_LABEL.smotrim,
@@ -279,6 +308,7 @@ const pressItems: PressItem[] = [
     id: 29,
     title:
       "Почти каждый московский подъезд стал открытым — в Интернет выложили базу данных с кодами домофонов.",
+    description: "Правовые последствия утечки данных и ответственность за незаконное распространение кодов.",
     url: "https://ren.tv/news/v-rossii/468005-bazu-dannykh-s-kodami-domofonov-slili-v-set",
     source: "rentv",
     sourceLabel: SOURCE_LABEL.rentv,
@@ -288,6 +318,7 @@ const pressItems: PressItem[] = [
     id: 30,
     title:
       "Миллиарды потерянных рублей: клиенты \"Финансового брокера\" много лет пытаются вернуть вклады.",
+    description: "Защита прав вкладчиков при банкротстве финансовой компании и взыскание средств.",
     url: "https://player.smotrim.ru/iframe/video/id/2148048/start_zoom/true/showZoomBtn/false/sid/vesti/?acc_video_id=839851",
     source: "vesti",
     sourceLabel: SOURCE_LABEL.vesti,
@@ -297,10 +328,6 @@ const pressItems: PressItem[] = [
 
 type SourceFilter = "all" | "1tv" | "russia" | "m24" | "rentv" | "tvzvezda" | "youtube";
 type SortMode = "default" | "source";
-
-function Pad2(n: number) {
-  return String(n).padStart(2, "0");
-}
 
 function PressItemCard({ item }: { item: PressItem }) {
   const [imgError, setImgError] = useState(false);
@@ -318,7 +345,7 @@ function PressItemCard({ item }: { item: PressItem }) {
         {imgError ? (
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="card-proxity-inner rounded-[12px] px-4 py-2 text-xs font-medium text-[var(--text-muted)]">
-              Сюжет №{Pad2(item.id)}
+              Сюжет
             </div>
           </div>
         ) : (
@@ -326,7 +353,7 @@ function PressItemCard({ item }: { item: PressItem }) {
             src={imageSrc}
             alt=""
             fill
-            sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+            sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
             className="object-cover object-center opacity-95 transition-opacity duration-200 group-hover:opacity-90"
             onError={() => setImgError(true)}
           />
@@ -336,21 +363,19 @@ function PressItemCard({ item }: { item: PressItem }) {
             {item.sourceLabel}
           </span>
         </div>
-        <div className="pointer-events-none absolute right-3 top-3">
-          <span className="card-proxity-inner rounded-full px-2.5 py-1 text-[11px] leading-none text-[var(--text-muted)]">
-            {Pad2(item.id)}
-          </span>
-        </div>
       </div>
 
-      <div className="flex flex-1 flex-col gap-3 px-4 py-4 sm:px-5 sm:py-5">
-        <p className="text-sm font-medium leading-snug text-[var(--text-primary)] sm:text-base">
+      <div className="flex flex-1 flex-col gap-2 px-4 py-4 sm:px-5 sm:py-5">
+        <h3 className="text-sm font-semibold leading-snug text-[var(--text-primary)] sm:text-base">
           {item.title}
+        </h3>
+        <p className="text-xs leading-snug text-[var(--text-secondary)] sm:text-sm">
+          {item.description}
         </p>
-        <div className="mt-auto inline-flex items-center gap-2 text-sm font-medium text-[var(--accent-primary)]">
+        <div className="mt-auto flex items-center gap-2 text-sm font-medium text-[var(--accent-primary)]">
           Смотреть сюжет
           <svg
-            className="h-4 w-4 shrink-0 transition-transform duration-200 ease-out group-hover:translate-x-1"
+            className="relative top-[2px] -ml-[5px] h-4 w-4 transition-transform duration-200 ease-out group-hover:translate-x-1"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -656,7 +681,7 @@ export default function PressPage() {
   }, [query, sourceFilter, sortMode]);
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-14 bg-transparent">
+    <div data-page="press" className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-14 bg-transparent">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -665,51 +690,61 @@ export default function PressPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
-      {/* Блок A — Hero */}
-      <header className="section-header max-w-3xl">
-        <h1 className="text-2xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-3xl lg:text-4xl">
-          Пресс-служба
-        </h1>
-        <p className="section-title-sub text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base">
-          Публичные комментарии, экспертные разборы и сюжеты с участием адвокатов коллегии «Багратион» в федеральных и региональных СМИ.
-        </p>
-        <p className="mt-3 text-xs leading-relaxed text-[var(--text-muted)] sm:text-sm">
-          Подборка видеосюжетов и публикаций. Для просмотра перейдите по ссылке.
-        </p>
-      </header>
-
-      {/* SEO-контекст */}
-      <section className="mt-6 max-w-3xl bg-transparent">
-        <h2 className="text-xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-2xl">
-          Экспертные комментарии в СМИ
-        </h2>
-        <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base">
-          Адвокаты коллегии «Багратион» регулярно выступают экспертами в федеральных и региональных СМИ, комментируя вопросы гражданского, семейного, уголовного, корпоративного и арбитражного права. Материалы отражают реальную судебную практику и правовые позиции коллегии.
-        </p>
-      </section>
-
-      {/* Блок B — Фильтры и поиск */}
-      <div className="card-proxity mt-6 px-4 py-4 sm:px-5 sm:py-5">
-        <div className="grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-3">
-          <div className="md:col-span-2">
-            <label className="block text-xs font-medium text-[var(--text-muted)]">
-              Поиск по заголовкам
-            </label>
-            <input
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Введите часть заголовка…"
-              className="mt-1 w-full rounded-[var(--btn-radius)] border border-[var(--border-subtle)] bg-[var(--bg-secondary)] px-3 py-2 text-sm text-[var(--text-primary)] outline-none placeholder:text-[var(--text-muted)] focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/40"
+      {/* Блок A — Hero: full-bleed фон (100vw); без overflow-hidden, чтобы фон не обрезался «баннером» */}
+      <section className="relative w-full pb-10 sm:pb-12 lg:pb-14">
+        {/* Full-bleed обёртка фона: на всю ширину viewport (w-screen left-1/2 -translate-x-1/2) */}
+        <div className="absolute inset-y-0 left-1/2 z-0 w-screen -translate-x-1/2">
+          {/* z-0: фото */}
+          <div className="absolute inset-0 h-full w-full">
+            <Image
+              src="/images/press/press-hero-bg.jpg"
+              alt=""
+              fill
+              sizes="100vw"
+              className="object-cover object-center"
+              priority
             />
           </div>
-          <div>
-            <label className="block text-xs font-medium text-[var(--text-muted)]">
-              Источник
-            </label>
+          {/* z-1: затемнение */}
+          <div className="absolute inset-0 z-[1] bg-black/40 pointer-events-none" aria-hidden="true" />
+          {/* z-1: мягкий fade в фон страницы (--background-base из globals.css) */}
+          <div
+            className="absolute inset-x-0 bottom-0 z-[1] h-24 sm:h-32 pointer-events-none bg-gradient-to-t from-[var(--background-base)] to-transparent"
+            aria-hidden="true"
+          />
+        </div>
+        {/* Контент Hero: в стандартном контейнере, без full-bleed */}
+        <div className="relative z-10 px-4 sm:px-6 lg:px-8">
+          <header className="section-header max-w-3xl">
+            <h1 className="text-2xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-3xl lg:text-4xl">
+              Пресс-служба
+            </h1>
+            <p className="section-title-sub text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base">
+              Публичные комментарии и видеосюжеты с участием адвокатов коллегии «Багратион» в федеральных и региональных СМИ.
+            </p>
+            <p className="mt-3 text-xs leading-relaxed text-[var(--text-muted)] sm:text-sm">
+              Подборка сюжетов и публикаций — переходите по ссылке для просмотра.
+            </p>
+          </header>
+        </div>
+      </section>
+
+      {/* Блок B — Компактная панель фильтров (filter bar, стекло как карточки) */}
+      <div className="mt-6">
+        <div className="card-proxity flex min-h-12 flex-wrap items-center gap-3 rounded-[var(--card-radius)] px-3 py-2.5 sm:px-4 md:flex-nowrap">
+          <input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Поиск по сюжетам…"
+            className="min-w-0 flex-1 rounded-[var(--btn-radius)] border border-[var(--border-subtle)] bg-[var(--bg-secondary)]/80 px-3 py-2 text-sm text-[var(--text-primary)] outline-none placeholder:text-[var(--text-muted)] focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/40"
+            aria-label="Поиск по сюжетам"
+          />
+          <div className="flex w-full shrink-0 flex-wrap items-center gap-2 sm:w-auto sm:flex-nowrap">
             <select
               value={sourceFilter}
               onChange={(e) => setSourceFilter(e.target.value as SourceFilter)}
-              className="mt-1 w-full rounded-[var(--btn-radius)] border border-[var(--border-subtle)] bg-[var(--bg-secondary)] px-3 py-2 text-sm text-[var(--text-primary)] outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/40"
+              aria-label="Источник"
+              className="rounded-[var(--btn-radius)] border border-[var(--border-subtle)] bg-[var(--bg-secondary)]/80 px-3 py-2 text-sm text-[var(--text-primary)] outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/40"
             >
               <option value="all">Все источники</option>
               <option value="1tv">Первый канал</option>
@@ -719,30 +754,25 @@ export default function PressPage() {
               <option value="tvzvezda">ТВ Звезда</option>
               <option value="youtube">YouTube</option>
             </select>
-          </div>
-        </div>
-
-        <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
-          <p className="text-xs text-[var(--text-muted)] sm:text-sm">
-            Найдено: <span className="text-[var(--text-primary)]">{filtered.length}</span>
-          </p>
-          <div className="flex items-center gap-2">
-            <label className="text-xs text-[var(--text-muted)]">Сортировка</label>
             <select
               value={sortMode}
               onChange={(e) => setSortMode(e.target.value as SortMode)}
-              className="rounded-[var(--btn-radius)] border border-[var(--border-subtle)] bg-[var(--bg-secondary)] px-3 py-2 text-xs text-[var(--text-primary)] outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/40"
+              aria-label="Сортировка"
+              className="rounded-[var(--btn-radius)] border border-[var(--border-subtle)] bg-[var(--bg-secondary)]/80 px-3 py-2 text-sm text-[var(--text-primary)] outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/40"
             >
               <option value="default">По умолчанию (1→30)</option>
               <option value="source">По источнику</option>
             </select>
           </div>
         </div>
+        <p className="mt-1.5 text-xs text-[var(--text-muted)]">
+          Показано: {filtered.length}
+        </p>
       </div>
 
-      {/* Блок C — Сетка карточек */}
+      {/* Блок C — Сетка карточек: вертикальные телефоны 1, горизонтальные/верт. планшет 2, гориз. планшет 3, ПК 4 */}
       <section className="mt-6 bg-transparent" aria-label="Сюжеты пресс-службы">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-4 md:grid-cols-3 md:gap-5 lg:grid-cols-4 lg:gap-6">
           {filtered.map((item) => (
             <PressItemCard key={item.id} item={item} />
           ))}

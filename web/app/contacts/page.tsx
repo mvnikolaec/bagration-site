@@ -131,7 +131,7 @@ export default function ContactsPage() {
           aria-label="Банковские реквизиты"
         >
           <div
-            className="card-proxity relative max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 z-[10000]"
+            className="card-proxity relative max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 z-[10000] bg-white"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Кнопка закрытия */}
