@@ -12,6 +12,7 @@ import MobileMenu from "./MobileMenu";
 import { CTA_LABEL, CTA_HREF } from "../lib/nav";
 
 const BURGER_ID = "mobile-menu-trigger";
+const REVEAL_PX = 20; /* фон хедера появляется плавно за первые 20px прокрутки */
 
 function isServicesActive(pathname: string) {
   return pathname === "/services" || pathname.startsWith("/services/");
@@ -29,10 +30,25 @@ function isAboutActive(pathname: string) {
 export default function Header() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [bgOpacity, setBgOpacity] = useState(0);
   const [logoWidth, setLogoWidth] = useState<number | null>(null);
   const [letterSpacing, setLetterSpacing] = useState<number>(0);
   const line2Ref = useRef<HTMLSpanElement>(null);
   const line1MeasureRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const update = () => {
+      const scrollY = typeof window !== "undefined" ? window.scrollY : 0;
+      setBgOpacity(Math.min(1, Math.max(0, scrollY / REVEAL_PX)));
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, []);
 
   useEffect(() => {
     const syncLogoWidth = () => {
@@ -64,20 +80,23 @@ export default function Header() {
     };
   }, []);
 
+  const atTop = bgOpacity <= 0;
+
   return (
     <>
       <header
-        className="sticky top-0 z-50"
+        className={`fixed left-0 right-0 top-0 z-50 ${atTop ? "header-at-top" : ""}`}
         style={{
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
+          backdropFilter: atTop ? "none" : "blur(12px)",
+          WebkitBackdropFilter: atTop ? "none" : "blur(12px)",
         }}
         role="banner"
       >
-        {/* Фон хедера: статичный, как у футера */}
+        {/* Фон хедера: появляется при прокрутке за первые 20px */}
         <div
-          className="pointer-events-none absolute inset-0"
+          className="pointer-events-none absolute inset-0 transition-opacity duration-150 ease-out"
           style={{
+            opacity: bgOpacity,
             background: "var(--header-footer-overlay)",
             borderColor: "transparent",
           }}

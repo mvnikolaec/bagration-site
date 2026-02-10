@@ -681,7 +681,7 @@ export default function PressPage() {
   }, [query, sourceFilter, sortMode]);
 
   return (
-    <div data-page="press" className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-14 bg-transparent">
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -690,14 +690,13 @@ export default function PressPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
-      {/* Блок A — Hero: full-bleed фон (100vw); без overflow-hidden, чтобы фон не обрезался «баннером» */}
-      <section className="relative w-full pb-10 sm:pb-12 lg:pb-14">
-        {/* Full-bleed обёртка фона: на всю ширину viewport (w-screen left-1/2 -translate-x-1/2) */}
-        <div className="absolute inset-y-0 left-1/2 z-0 w-screen -translate-x-1/2">
-          {/* z-0: фото */}
+      {/* Hero: 70vh, title + lead + search form, full-bleed background — без обёртки, чтобы начинался от верха */}
+      <section className="relative flex min-h-[70vh] w-full flex-col justify-center">
+        {/* Full-bleed background, 10% opacity */}
+        <div className="absolute inset-0 left-1/2 z-0 w-screen -translate-x-1/2 opacity-10">
           <div className="absolute inset-0 h-full w-full">
             <Image
-              src="/images/press/press-hero-bg.jpg"
+              src="/images/press/press-hero-bg.png"
               alt=""
               fill
               sizes="100vw"
@@ -705,71 +704,89 @@ export default function PressPage() {
               priority
             />
           </div>
-          {/* z-1: затемнение */}
           <div className="absolute inset-0 z-[1] bg-black/40 pointer-events-none" aria-hidden="true" />
-          {/* z-1: мягкий fade в фон страницы (--background-base из globals.css) */}
           <div
             className="absolute inset-x-0 bottom-0 z-[1] h-24 sm:h-32 pointer-events-none bg-gradient-to-t from-[var(--background-base)] to-transparent"
             aria-hidden="true"
           />
         </div>
-        {/* Контент Hero: в стандартном контейнере, без full-bleed */}
-        <div className="relative z-10 px-4 sm:px-6 lg:px-8">
-          <header className="section-header max-w-3xl">
+        {/* Content: title, lead, search form */}
+        <div className="relative z-10 flex flex-col gap-[30px] sm:gap-10 px-4 pt-[70px] pb-10 sm:px-6 sm:pt-[78px] sm:pb-12 lg:px-8 lg:pt-[86px] lg:pb-14">
+          <header className="max-w-3xl flex flex-col gap-[30px] sm:gap-10">
             <h1 className="text-2xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-3xl lg:text-4xl">
               Пресс-служба
             </h1>
-            <p className="section-title-sub text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base">
+            <p className="text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base">
               Публичные комментарии и видеосюжеты с участием адвокатов коллегии «Багратион» в федеральных и региональных СМИ.
             </p>
-            <p className="mt-3 text-xs leading-relaxed text-[var(--text-muted)] sm:text-sm">
+            <p className="text-xs leading-relaxed text-[var(--text-secondary)] sm:text-sm">
               Подборка сюжетов и публикаций — переходите по ссылке для просмотра.
             </p>
           </header>
+          {/* Search / filter form inside Hero */}
+          <div className="max-w-3xl">
+            <div className="card-proxity flex min-h-12 flex-wrap items-center gap-3 rounded-[var(--card-radius)] px-3 py-2.5 sm:px-4 md:flex-nowrap">
+              <div className="flex w-full shrink-0 flex-wrap items-center gap-3 sm:w-auto sm:flex-nowrap">
+                <span className="hero-cta-select-wrap inline-block">
+                  <select
+                    value={sourceFilter}
+                    onChange={(e) => {
+                      setSourceFilter(e.target.value as SourceFilter);
+                      (e.target as HTMLSelectElement).blur();
+                    }}
+                    onMouseDown={(e) => {
+                      if (document.activeElement === e.currentTarget) {
+                        (e.currentTarget as HTMLSelectElement).blur();
+                      }
+                    }}
+                    aria-label="Источник"
+                    className="hero-cta-select btn-proxity-base btn-proxity-secondary rounded-[var(--btn-radius)] px-3 py-2 text-sm outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/40"
+                  >
+                    <option value="all">Все источники</option>
+                    <option value="1tv">Первый канал</option>
+                    <option value="russia">Россия (Вести/Смотрим)</option>
+                    <option value="m24">Москва 24</option>
+                    <option value="rentv">РЕН ТВ</option>
+                    <option value="tvzvezda">ТВ Звезда</option>
+                    <option value="youtube">YouTube</option>
+                  </select>
+                </span>
+                <span className="hero-cta-select-wrap inline-block">
+                  <select
+                    value={sortMode}
+                    onChange={(e) => {
+                      setSortMode(e.target.value as SortMode);
+                      (e.target as HTMLSelectElement).blur();
+                    }}
+                    onMouseDown={(e) => {
+                      if (document.activeElement === e.currentTarget) {
+                        (e.currentTarget as HTMLSelectElement).blur();
+                      }
+                    }}
+                    aria-label="Сортировка"
+                    className="hero-cta-select btn-proxity-base btn-proxity-secondary rounded-[var(--btn-radius)] px-3 py-2 text-sm outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/40"
+                  >
+                    <option value="default">По умолчанию (1→30)</option>
+                    <option value="source">По источнику</option>
+                  </select>
+                </span>
+              </div>
+              <input
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Поиск по сюжетам…"
+                className="min-w-0 flex-1 btn-proxity-base btn-proxity-secondary rounded-[var(--btn-radius)] px-3 py-2 text-sm outline-none placeholder:text-[var(--text-muted)] focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/40"
+                aria-label="Поиск по сюжетам"
+              />
+            </div>
+            <p className="mt-1.5 text-xs text-[var(--text-muted)]">
+              Показано: {filtered.length}
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* Блок B — Компактная панель фильтров (filter bar, стекло как карточки) */}
-      <div className="mt-6">
-        <div className="card-proxity flex min-h-12 flex-wrap items-center gap-3 rounded-[var(--card-radius)] px-3 py-2.5 sm:px-4 md:flex-nowrap">
-          <input
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Поиск по сюжетам…"
-            className="min-w-0 flex-1 rounded-[var(--btn-radius)] border border-[var(--border-subtle)] bg-[var(--bg-secondary)]/80 px-3 py-2 text-sm text-[var(--text-primary)] outline-none placeholder:text-[var(--text-muted)] focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/40"
-            aria-label="Поиск по сюжетам"
-          />
-          <div className="flex w-full shrink-0 flex-wrap items-center gap-2 sm:w-auto sm:flex-nowrap">
-            <select
-              value={sourceFilter}
-              onChange={(e) => setSourceFilter(e.target.value as SourceFilter)}
-              aria-label="Источник"
-              className="rounded-[var(--btn-radius)] border border-[var(--border-subtle)] bg-[var(--bg-secondary)]/80 px-3 py-2 text-sm text-[var(--text-primary)] outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/40"
-            >
-              <option value="all">Все источники</option>
-              <option value="1tv">Первый канал</option>
-              <option value="russia">Россия (Вести/Смотрим)</option>
-              <option value="m24">Москва 24</option>
-              <option value="rentv">РЕН ТВ</option>
-              <option value="tvzvezda">ТВ Звезда</option>
-              <option value="youtube">YouTube</option>
-            </select>
-            <select
-              value={sortMode}
-              onChange={(e) => setSortMode(e.target.value as SortMode)}
-              aria-label="Сортировка"
-              className="rounded-[var(--btn-radius)] border border-[var(--border-subtle)] bg-[var(--bg-secondary)]/80 px-3 py-2 text-sm text-[var(--text-primary)] outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/40"
-            >
-              <option value="default">По умолчанию (1→30)</option>
-              <option value="source">По источнику</option>
-            </select>
-          </div>
-        </div>
-        <p className="mt-1.5 text-xs text-[var(--text-muted)]">
-          Показано: {filtered.length}
-        </p>
-      </div>
-
+      <div className="mx-auto max-w-7xl px-4 pt-0 pb-10 sm:px-6 sm:pb-12 lg:px-8 lg:pb-14 bg-transparent">
       {/* Блок C — Сетка карточек: вертикальные телефоны 1, горизонтальные/верт. планшет 2, гориз. планшет 3, ПК 4 */}
       <section className="mt-6 bg-transparent" aria-label="Сюжеты пресс-службы">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-4 md:grid-cols-3 md:gap-5 lg:grid-cols-4 lg:gap-6">
@@ -903,6 +920,7 @@ export default function PressPage() {
           </Button>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }
