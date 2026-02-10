@@ -106,7 +106,7 @@ export default function Header() {
           <div className="flex items-center justify-between py-3">
             <Link
               href="/"
-              className="link-proxity relative flex items-center rounded-[var(--btn-radius)] px-1 py-0.5 text-[var(--text-primary)] focus-visible:outline-none"
+              className="link-proxity relative flex items-center rounded-[var(--btn-radius)] pl-0 pr-1 py-0.5 text-[var(--text-primary)] focus-visible:outline-none"
               style={{ gap: 8 }}
               aria-label="Багратион — на главную"
             >

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Button from "./components/Button";
 import PracticesSection from "./components/PracticesSection";
 import WhyChooseUsSection from "./components/WhyChooseUsSection";
@@ -10,12 +11,26 @@ import FinalCtaSection from "./components/FinalCtaSection";
 export default function Home() {
   return (
     <>
-    {/* Hero: фон общий (body + плавающие пятна), overlay только смягчает изображение — без обрубания */}
+    {/* Hero: общий фон (градиенты) + фото подложка, overlay только смягчает изображение — без обрубания */}
     <div className="hero-flow-bg -mt-[var(--header-h)]">
       <section
-        className="relative flex flex-col overflow-hidden pb-6 sm:pb-7 md:pb-8 min-h-[100dvh] lg:min-h-[100dvh]"
+        className="relative flex flex-col pb-6 sm:pb-7 md:pb-8 min-h-[100dvh] lg:min-h-[100dvh]"
         style={{ boxSizing: "border-box" }}
       >
+        {/* Фоновое фото Hero: 20% видимость, плавное растворение к низу, тёмный overlay */}
+        <div className="absolute inset-0 left-1/2 z-0 w-screen -translate-x-1/2 opacity-20 hero-main-bg">
+          <div className="absolute inset-0 h-full w-full">
+            <Image
+              src="/images/hero/hero-bg.png"
+              alt=""
+              fill
+              sizes="100vw"
+              className="object-cover object-center"
+              priority
+            />
+          </div>
+          <div className="absolute inset-0 z-[1] bg-black/25 pointer-events-none" aria-hidden="true" />
+        </div>
         {/* Отступ контента: высота хедера + 30px от нижней границы хедера */}
         <div
           className="relative z-10 w-full shrink-0"

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import Button from "../components/Button";
 
 const SITE_URL = "https://bagrationlegal.ru";
@@ -28,6 +28,79 @@ const SOURCE_LABEL: Record<PressSource, string> = {
   tvzvezda: "ТВ Звезда",
   youtube: "YouTube",
 };
+
+type SourceFilter = "all" | "1tv" | "russia" | "m24" | "rentv" | "tvzvezda" | "youtube";
+type SortMode = "default" | "source";
+
+type HeroSelectOption = {
+  value: string;
+  label: string;
+};
+
+type HeroCtaSelectProps = {
+  value: string;
+  options: HeroSelectOption[];
+  onChange: (value: string) => void;
+  ariaLabel: string;
+};
+
+function HeroCtaSelect({ value, options, onChange, ariaLabel }: HeroCtaSelectProps) {
+  const [open, setOpen] = useState(false);
+  const wrapRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (!wrapRef.current) return;
+      if (wrapRef.current.contains(event.target as Node)) return;
+      setOpen(false);
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const current = options.find((opt) => opt.value === value);
+  const label = current ? current.label : "";
+
+  return (
+    <div
+      ref={wrapRef}
+      className={`hero-cta-select-wrap inline-block ${open ? "hero-cta-select-wrap--open" : ""}`}
+    >
+      <button
+        type="button"
+        className="hero-cta-select btn-proxity-base btn-proxity-secondary inline-flex items-center rounded-[var(--btn-radius)] px-3 py-2 text-sm outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/40"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-label={ariaLabel}
+        onClick={() => setOpen((o) => !o)}
+      >
+        <span className="truncate">{label}</span>
+      </button>
+      {open && (
+        <div className="hero-cta-dropdown" role="listbox" aria-label={ariaLabel}>
+          {options
+            .filter((opt) => opt.value !== value) // активный пункт не дублируем в списке
+            .map((opt) => (
+              <button
+                key={opt.value}
+                type="button"
+                className="hero-cta-dropdown-item"
+                onClick={() => {
+                  onChange(opt.value);
+                  setOpen(false);
+                }}
+              >
+                {opt.label}
+              </button>
+            ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 const pressItems: PressItem[] = [
   {
@@ -608,6 +681,23 @@ export default function PressPage() {
   const [sourceFilter, setSourceFilter] = useState<SourceFilter>("all");
   const [sortMode, setSortMode] = useState<SortMode>("default");
 
+  const sourceOptions: HeroSelectOption[] = [
+    { value: "all", label: "Все источники" },
+    { value: "1tv", label: SOURCE_LABEL["1tv"] },
+    { value: "russia", label: "Россия (Вести/Смотрим)" },
+    { value: "m24", label: SOURCE_LABEL.m24 },
+    { value: "rentv", label: SOURCE_LABEL.rentv },
+    { value: "tvzvezda", label: SOURCE_LABEL.tvzvezda },
+    { value: "youtube", label: SOURCE_LABEL.youtube },
+  ];
+
+  const sortOptions: HeroSelectOption[] = [
+    { value: "default", label: "По умолчанию (1→30)" },
+    { value: "source", label: "По источнику" },
+  ];
+  const [isSourceArrowOpen, setIsSourceArrowOpen] = useState(false);
+  const [isSortArrowOpen, setIsSortArrowOpen] = useState(false);
+
   const jsonLd = useMemo(() => buildPressPageJsonLd(), []);
 
   const breadcrumbJsonLd = useMemo(
@@ -692,8 +782,8 @@ export default function PressPage() {
       />
       {/* Hero: 70vh, title + lead + search form, full-bleed background — без обёртки, чтобы начинался от верха */}
       <section className="relative flex min-h-[70vh] w-full flex-col justify-center">
-        {/* Full-bleed background, 10% opacity */}
-        <div className="absolute inset-0 left-1/2 z-0 w-screen -translate-x-1/2 opacity-10">
+        {/* Full-bleed background, 20% видимость фото, плавное растворение к низу */}
+        <div className="absolute inset-0 left-1/2 z-0 w-screen -translate-x-1/2 opacity-20 hero-press-bg">
           <div className="absolute inset-0 h-full w-full">
             <Image
               src="/images/press/press-hero-bg.png"
@@ -704,11 +794,7 @@ export default function PressPage() {
               priority
             />
           </div>
-          <div className="absolute inset-0 z-[1] bg-black/40 pointer-events-none" aria-hidden="true" />
-          <div
-            className="absolute inset-x-0 bottom-0 z-[1] h-24 sm:h-32 pointer-events-none bg-gradient-to-t from-[var(--background-base)] to-transparent"
-            aria-hidden="true"
-          />
+          <div className="absolute inset-0 z-[1] bg-black/25 pointer-events-none" aria-hidden="true" />
         </div>
         {/* Content: title, lead, search form */}
         <div className="relative z-10 flex flex-col gap-[30px] sm:gap-10 px-4 pt-[70px] pb-10 sm:px-6 sm:pt-[78px] sm:pb-12 lg:px-8 lg:pt-[86px] lg:pb-14">
@@ -725,51 +811,20 @@ export default function PressPage() {
           </header>
           {/* Search / filter form inside Hero */}
           <div className="max-w-3xl">
-            <div className="card-proxity flex min-h-12 flex-wrap items-center gap-3 rounded-[var(--card-radius)] px-3 py-2.5 sm:px-4 md:flex-nowrap">
+            <div className="card-proxity hero-cta-card flex min-h-12 flex-wrap items-center gap-3 rounded-[var(--card-radius)] px-3 py-2.5 sm:px-4 md:flex-nowrap">
               <div className="flex w-full shrink-0 flex-wrap items-center gap-3 sm:w-auto sm:flex-nowrap">
-                <span className="hero-cta-select-wrap inline-block">
-                  <select
-                    value={sourceFilter}
-                    onChange={(e) => {
-                      setSourceFilter(e.target.value as SourceFilter);
-                      (e.target as HTMLSelectElement).blur();
-                    }}
-                    onMouseDown={(e) => {
-                      if (document.activeElement === e.currentTarget) {
-                        (e.currentTarget as HTMLSelectElement).blur();
-                      }
-                    }}
-                    aria-label="Источник"
-                    className="hero-cta-select btn-proxity-base btn-proxity-secondary rounded-[var(--btn-radius)] px-3 py-2 text-sm outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/40"
-                  >
-                    <option value="all">Все источники</option>
-                    <option value="1tv">Первый канал</option>
-                    <option value="russia">Россия (Вести/Смотрим)</option>
-                    <option value="m24">Москва 24</option>
-                    <option value="rentv">РЕН ТВ</option>
-                    <option value="tvzvezda">ТВ Звезда</option>
-                    <option value="youtube">YouTube</option>
-                  </select>
-                </span>
-                <span className="hero-cta-select-wrap inline-block">
-                  <select
-                    value={sortMode}
-                    onChange={(e) => {
-                      setSortMode(e.target.value as SortMode);
-                      (e.target as HTMLSelectElement).blur();
-                    }}
-                    onMouseDown={(e) => {
-                      if (document.activeElement === e.currentTarget) {
-                        (e.currentTarget as HTMLSelectElement).blur();
-                      }
-                    }}
-                    aria-label="Сортировка"
-                    className="hero-cta-select btn-proxity-base btn-proxity-secondary rounded-[var(--btn-radius)] px-3 py-2 text-sm outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]/40"
-                  >
-                    <option value="default">По умолчанию (1→30)</option>
-                    <option value="source">По источнику</option>
-                  </select>
-                </span>
+                <HeroCtaSelect
+                  value={sourceFilter}
+                  options={sourceOptions}
+                  onChange={(val) => setSourceFilter(val as SourceFilter)}
+                  ariaLabel="Источник"
+                />
+                <HeroCtaSelect
+                  value={sortMode}
+                  options={sortOptions}
+                  onChange={(val) => setSortMode(val as SortMode)}
+                  ariaLabel="Сортировка"
+                />
               </div>
               <input
                 value={query}

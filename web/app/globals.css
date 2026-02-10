@@ -108,6 +108,32 @@ section {
   background: transparent;
 }
 
+/* Плавное «растворение» фона Hero (пресс-служба и главная) к низу — мягкий переход без резкой границы */
+.hero-press-bg,
+.hero-main-bg {
+  /* Верхняя ~60% полностью видна, затем плавный easing к 0% прозрачности */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0,0,0,1) 0%,
+    rgba(0,0,0,1) 60%,
+    rgba(0,0,0,0.6) 78%,
+    rgba(0,0,0,0.25) 90%,
+    rgba(0,0,0,0) 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0,0,0,1) 0%,
+    rgba(0,0,0,1) 60%,
+    rgba(0,0,0,0.6) 78%,
+    rgba(0,0,0,0.25) 90%,
+    rgba(0,0,0,0) 100%
+  );
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
 /* 3 анимированных градиента на фоне — медленное движение */
 .floating-gradients {
   position: fixed;
@@ -245,6 +271,11 @@ section {
   transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   overflow: hidden;
 }
+.hero-cta-card {
+  position: relative;
+  overflow: visible;
+  z-index: 20;
+}
 .card-proxity::before {
   content: "";
   position: absolute;
@@ -300,13 +331,59 @@ section {
   pointer-events: none;
   transition: transform 0.25s ease;
 }
-.hero-cta-select-wrap:focus-within::after {
+.hero-cta-select-wrap.hero-cta-select-wrap--open::after {
   transform: translateY(-50%) rotate(180deg);
 }
 .hero-cta-select {
   appearance: none;
   -webkit-appearance: none;
   padding-right: 2rem;
+}
+/* При открытом меню кнопка и дропдаун выглядят как единый блок (аккордеон) */
+.hero-cta-select-wrap.hero-cta-select-wrap--open .hero-cta-select {
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+/* Внешний вид выпадающего списка hero‑селектов (фон как у самих пунктов) */
+.hero-cta-select option,
+.hero-cta-select optgroup {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.hero-cta-dropdown {
+  position: absolute;
+  top: 100%;
+  margin-top: -1px; /* чтобы граница и фон были единым блоком с кнопкой */
+  left: 0;
+  min-width: 100%;
+  z-index: 50;
+  border-radius: var(--btn-radius);
+  background: var(--btn-secondary-bg);
+  border: 1px solid var(--btn-secondary-border);
+  box-shadow: var(--card-shadow);
+  padding: 4px 0;
+  overflow: hidden;
+}
+.hero-cta-select-wrap.hero-cta-select-wrap--open .hero-cta-dropdown {
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  border-top: none;
+}
+.hero-cta-dropdown-item {
+  width: 100%;
+  padding: 6px 10px;
+  text-align: left;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  background: var(--btn-secondary-bg);
+  border: none;
+  cursor: pointer;
+}
+.hero-cta-dropdown-item:hover {
+  background: var(--btn-secondary-hover-bg);
+  color: var(--accent-primary);
 }
 
 /* Кнопки Proxity: единый стиль для CTA, Hero, карточек, навигации */
