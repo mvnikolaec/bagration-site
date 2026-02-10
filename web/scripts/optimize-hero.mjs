@@ -11,8 +11,8 @@ import { fileURLToPath } from "url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, "..");
 const publicDir = join(root, "public", "images", "hero");
-// Базовый исходник: новый фон главной страницы
-const srcPath = join(publicDir, "home-hero-bg-v2.jpg");
+// Базовый исходник: новый фон главной страницы (PNG)
+const srcPath = join(publicDir, "home-hero-bg-v2.png");
 
 const WIDTHS = [640, 1024, 1440, 1920];
 
@@ -25,7 +25,7 @@ async function main() {
     process.exit(0);
   }
   if (!existsSync(srcPath)) {
-    console.warn("Файл hero-bg.png не найден в public/images/hero/");
+    console.warn("Файл home-hero-bg-v2.png не найден в public/images/hero/");
     process.exit(0);
   }
   const buf = readFileSync(srcPath);

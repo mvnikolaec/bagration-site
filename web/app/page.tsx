@@ -11,17 +11,17 @@ import FinalCtaSection from "./components/FinalCtaSection";
 export default function Home() {
   return (
     <>
-    {/* Hero: общий фон (градиенты) + фото подложка, overlay только смягчает изображение — без обрубания */}
-    <div className="hero-flow-bg -mt-[var(--header-h)]" data-bg-src="/images/hero/home-hero-bg-v2.jpg">
+    {/* Hero: общий фон (градиенты) + фото-подложка */}
+    <div className="hero-flow-bg -mt-[var(--header-h)]">
       <section
         className="relative flex flex-col pb-6 sm:pb-7 md:pb-8 min-h-[100dvh] lg:min-h-[100dvh]"
         style={{ boxSizing: "border-box" }}
       >
-        {/* Фоновое фото Hero: новый файл home-hero-bg-v2.jpg из public/images/hero */}
-        <div className="absolute inset-0 left-1/2 z-0 w-screen -translate-x-1/2 opacity-20 hero-main-bg">
+        {/* Фоновое фото Hero: home-hero-bg-v2.png из public/images/hero */}
+        <div className="absolute inset-0 left-1/2 z-0 w-screen -translate-x-1/2 opacity-[0.15] hero-main-bg">
           <div className="absolute inset-0 h-full w-full">
             <Image
-              src="/images/hero/home-hero-bg-v2.jpg"
+              src="/images/hero/home-hero-bg-v2.png"
               alt=""
               fill
               sizes="100vw"
@@ -30,7 +30,7 @@ export default function Home() {
             />
           </div>
           <div
-            className="absolute inset-0 z-[1] bg-black/25 pointer-events-none"
+            className="absolute inset-0 z-[1] bg-black/10 pointer-events-none"
             aria-hidden="true"
           />
         </div>

@@ -781,23 +781,20 @@ export default function PressPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       {/* Hero: 70vh, title + lead + search form, full-bleed background — без обёртки, чтобы начинался от верха */}
-      <section
-        className="relative flex min-h-[70vh] w-full flex-col justify-center"
-        data-bg-src="/images/hero/press-hero-bg-v2.jpg"
-      >
-        {/* Full-bleed background, 20% видимость фото, плавное растворение к низу */}
-        <div className="absolute inset-0 left-1/2 z-0 w-screen -translate-x-1/2 opacity-20 hero-press-bg">
+      <section className="relative flex min-h-[70vh] w-full flex-col justify-center">
+        {/* Full-bleed background: градиенты + фото-подложка пресс-службы */}
+        <div className="absolute inset-0 left-1/2 z-0 w-screen -translate-x-1/2 opacity-[0.15] hero-press-bg">
           <div className="absolute inset-0 h-full w-full">
             <Image
-              src="/images/hero/press-hero-bg-v2.jpg"
+              src="/images/hero/press-hero-bg-v2.png"
               alt=""
               fill
               sizes="100vw"
-              className="object-cover object-center"
+              className="object-cover object-[center_22%]"
               priority
             />
           </div>
-          <div className="absolute inset-0 z-[1] bg-black/25 pointer-events-none" aria-hidden="true" />
+          <div className="absolute inset-0 z-[1] bg-black/10 pointer-events-none" aria-hidden="true" />
         </div>
         {/* Content: title, lead, search form */}
         <div className="relative z-10 flex flex-col gap-[30px] sm:gap-10 px-4 pt-[70px] pb-10 sm:px-6 sm:pt-[78px] sm:pb-12 lg:px-8 lg:pt-[86px] lg:pb-14">
