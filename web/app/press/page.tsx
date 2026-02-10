@@ -781,12 +781,15 @@ export default function PressPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       {/* Hero: 70vh, title + lead + search form, full-bleed background — без обёртки, чтобы начинался от верха */}
-      <section className="relative flex min-h-[70vh] w-full flex-col justify-center">
+      <section
+        className="relative flex min-h-[70vh] w-full flex-col justify-center"
+        data-bg-src="/images/hero/press-hero-bg-v2.jpg"
+      >
         {/* Full-bleed background, 20% видимость фото, плавное растворение к низу */}
         <div className="absolute inset-0 left-1/2 z-0 w-screen -translate-x-1/2 opacity-20 hero-press-bg">
           <div className="absolute inset-0 h-full w-full">
             <Image
-              src="/images/press/press-hero-bg.png"
+              src="/images/hero/press-hero-bg-v2.jpg"
               alt=""
               fill
               sizes="100vw"

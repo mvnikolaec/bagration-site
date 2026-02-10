@@ -11,7 +11,8 @@ import { fileURLToPath } from "url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, "..");
 const publicDir = join(root, "public", "images", "hero");
-const srcPath = join(publicDir, "hero-bg.png");
+// Базовый исходник: новый фон главной страницы
+const srcPath = join(publicDir, "home-hero-bg-v2.jpg");
 
 const WIDTHS = [640, 1024, 1440, 1920];
 
@@ -33,7 +34,7 @@ async function main() {
   console.log("Источник:", meta.width, "x", meta.height);
 
   for (const w of WIDTHS) {
-    const base = join(publicDir, `hero-bg-${w}`);
+    const base = join(publicDir, `home-hero-bg-v2-${w}`);
     await image
       .clone()
       .resize(w, null, { withoutEnlargement: true })
@@ -47,12 +48,12 @@ async function main() {
     console.log("  ", w, "px: .webp .avif");
   }
 
-  const outJpg = join(publicDir, "hero-bg.jpg");
+  const outJpg = join(publicDir, "home-hero-bg-v2-optimized.jpg");
   await image
     .clone()
     .jpeg({ quality: 85, mozjpeg: true })
     .toFile(outJpg);
-  console.log("hero-bg.jpg (основной fallback) создан.");
+  console.log("home-hero-bg-v2-optimized.jpg (основной fallback) создан.");
 }
 
 main().catch((e) => {

@@ -12,16 +12,16 @@ export default function Home() {
   return (
     <>
     {/* Hero: общий фон (градиенты) + фото подложка, overlay только смягчает изображение — без обрубания */}
-    <div className="hero-flow-bg -mt-[var(--header-h)]">
+    <div className="hero-flow-bg -mt-[var(--header-h)]" data-bg-src="/images/hero/home-hero-bg-v2.jpg">
       <section
         className="relative flex flex-col pb-6 sm:pb-7 md:pb-8 min-h-[100dvh] lg:min-h-[100dvh]"
         style={{ boxSizing: "border-box" }}
       >
-        {/* Фоновое фото Hero: 20% видимость, плавное растворение к низу, тёмный overlay */}
+        {/* Фоновое фото Hero: новый файл home-hero-bg-v2.jpg из public/images/hero */}
         <div className="absolute inset-0 left-1/2 z-0 w-screen -translate-x-1/2 opacity-20 hero-main-bg">
           <div className="absolute inset-0 h-full w-full">
             <Image
-              src="/images/hero/hero-bg.png"
+              src="/images/hero/home-hero-bg-v2.jpg"
               alt=""
               fill
               sizes="100vw"
@@ -29,7 +29,10 @@ export default function Home() {
               priority
             />
           </div>
-          <div className="absolute inset-0 z-[1] bg-black/25 pointer-events-none" aria-hidden="true" />
+          <div
+            className="absolute inset-0 z-[1] bg-black/25 pointer-events-none"
+            aria-hidden="true"
+          />
         </div>
         {/* Отступ контента: высота хедера + 30px от нижней границы хедера */}
         <div
