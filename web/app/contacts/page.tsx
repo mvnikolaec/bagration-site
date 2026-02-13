@@ -12,7 +12,7 @@ const REQUISITES_FULL = `БАНКОВСКИЕ РЕКВИЗИТЫ
 БИК 044525411, КПП 770501001
 Кор. счёт: 30101810145250000411`;
 
-const YANDEX_MAP_URL = "https://yandex.ru/maps/org/kollegiya_advokatov_bagration/126900832699/?ll=37.590800%2C55.752100&z=19";
+const YANDEX_MAP_URL = "https://yandex.com/maps/-/CPQKaB5u";
 
 const TOPIC_OPTIONS = [
   { value: "", label: "Выберите тему" },
@@ -53,8 +53,10 @@ export default function ContactsPage() {
 
   const validateForm = () => {
     const err: Record<string, string> = {};
+    if (!form.name.trim()) err.name = "Укажите имя";
     if (!form.phone.trim()) err.phone = "Укажите контактный телефон";
     else if (!/^[\d\s+()-]{10,}$/.test(form.phone.replace(/\s/g, ""))) err.phone = "Некорректный номер";
+    if (!form.description.trim()) err.description = "Опишите ситуацию";
     if (!form.consent) err.consent = "Необходимо согласие на обработку данных";
     setFormErrors(err);
     return Object.keys(err).length === 0;
@@ -155,15 +157,16 @@ export default function ContactsPage() {
             ) : (
               <form onSubmit={handleSubmit} className="mt-5 flex flex-col gap-4">
                 <div>
-                  <label htmlFor="c-name" className="block text-xs font-medium text-[var(--text-muted)] mb-1">Имя</label>
+                  <label htmlFor="c-name" className="block text-xs font-medium text-[var(--text-muted)] mb-1">Имя <span className="text-[var(--accent-primary)]">*</span></label>
                   <input
                     id="c-name"
                     type="text"
                     value={form.name}
                     onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-                    className={inputBase}
-                    placeholder="Иван Иванов"
+                    className={`${inputBase} ${formErrors.name ? "border-[var(--accent-primary)]" : ""}`}
+                    placeholder="ФИО"
                   />
+                  {formErrors.name && <p className="mt-1 text-xs text-[var(--accent-primary)]">{formErrors.name}</p>}
                 </div>
                 <div>
                   <label htmlFor="c-phone" className="block text-xs font-medium text-[var(--text-muted)] mb-1">Контактный телефон <span className="text-[var(--accent-primary)]">*</span></label>
@@ -192,15 +195,16 @@ export default function ContactsPage() {
                   </select>
                 </div>
                 <div>
-                  <label htmlFor="c-desc" className="block text-xs font-medium text-[var(--text-muted)] mb-1">Краткое описание ситуации</label>
+                  <label htmlFor="c-desc" className="block text-xs font-medium text-[var(--text-muted)] mb-1">Краткое описание ситуации <span className="text-[var(--accent-primary)]">*</span></label>
                   <textarea
                     id="c-desc"
                     value={form.description}
                     onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
                     rows={3}
-                    className={`${inputBase} resize-none min-h-[80px]`}
+                    className={`${inputBase} resize-none min-h-[80px] ${formErrors.description ? "border-[var(--accent-primary)]" : ""}`}
                     placeholder="Опишите ситуацию в нескольких словах"
                   />
+                  {formErrors.description && <p className="mt-1 text-xs text-[var(--accent-primary)]">{formErrors.description}</p>}
                 </div>
                 <div>
                   <label className="flex items-start gap-2 cursor-pointer">
@@ -214,7 +218,7 @@ export default function ContactsPage() {
                       Согласен на{" "}
                       <Link href="/consent" className="text-[var(--accent-primary)] hover:underline">обработку персональных данных</Link>
                       {" "}и с{" "}
-                      <Link href="/privacy" className="text-[var(--accent-primary)] hover:underline">политикой конфиденциальности</Link>.
+                      <Link href="/privacy" className="text-[var(--accent-primary)] hover:underline">политикой конфиденциальности</Link>. <span className="text-[var(--accent-primary)]">*</span>
                     </span>
                   </label>
                   {formErrors.consent && <p className="mt-1 text-xs text-[var(--accent-primary)]">{formErrors.consent}</p>}
@@ -250,7 +254,7 @@ export default function ContactsPage() {
         </p>
         <div className="mt-4 card-proxity overflow-hidden p-0">
           <iframe
-            src="https://yandex.ru/map-widget/v1/?ll=37.5908%2C55.7521&z=19&pt=37.5908%2C55.7521%2Cpm2orgm&l=map"
+            src="https://yandex.com/map-widget/v1/?ll=37.5910%2C55.7499&z=14&l=map&pt=37.5910%2C55.7499%2Cpm2rdm"
             className="w-full h-[280px] sm:h-[320px] md:h-[360px] border-0 rounded-[var(--card-radius)]"
             allowFullScreen
             loading="lazy"
