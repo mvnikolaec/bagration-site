@@ -17,20 +17,5 @@ export const ABOUT_ITEMS = [
   { href: "/about#approach", label: "Подход к работе" },
 ] as const;
 
-export const PRACTICE_ITEMS = [
-  { href: "/cases", label: "Кейсы" },
-  { href: "/practice", label: "Судебная практика" },
-] as const;
-
-export const NAV_ITEMS = [
-  { href: "/", label: "Главная" },
-  { href: "/services", label: "Услуги", dropdown: "services" as const },
-  { href: "#", label: "О коллегии", dropdown: "about" as const },
-  { href: "#", label: "Практика и опыт", dropdown: "practice" as const, hidden: true },
-  { href: "/press", label: "Пресс-служба" },
-  { href: "/news", label: "Новости" },
-  { href: "/contacts", label: "Контакты" },
-] as const;
-
 export const CTA_LABEL = "Получить консультацию";
 export const CTA_HREF = "/contacts";

@@ -20,21 +20,3 @@ export function measureHeroBadge(pathname: string): void {
     `[HeroBadgeMetric] ${pathname} | width=${width} | metric=${metric}`
   );
 }
-
-export function measureHeroBadgeDebounced(pathname: string): () => void {
-  let timeout: ReturnType<typeof setTimeout> | null = null;
-  const delay = 200;
-
-  const run = () => {
-    if (timeout) clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      measureHeroBadge(pathname);
-      timeout = null;
-    }, delay);
-  };
-
-  run();
-  return () => {
-    if (timeout) clearTimeout(timeout);
-  };
-}
