@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import HeroMeasureTrigger from "./components/HeroMeasureTrigger";
 
 export const metadata: Metadata = {
   title: "Багратион — коллегия адвокатов Москвы",
@@ -49,7 +50,8 @@ export default function RootLayout({
         </div>
         <div className="relative z-10">
           <Header />
-          <main className="overflow-x-hidden bg-transparent">{children}</main>
+          <HeroMeasureTrigger />
+          <main className="bg-transparent">{children}</main>
           <Footer />
         </div>
       </body>

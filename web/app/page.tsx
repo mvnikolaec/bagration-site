@@ -14,14 +14,15 @@ export default function Home() {
     {/* Hero: общий фон (градиенты) + фото-подложка */}
     <div className="hero-flow-bg -mt-[var(--header-h)]">
       <section
+        data-hero="section"
         className="relative flex flex-col pb-6 sm:pb-7 md:pb-8 min-h-[100dvh] lg:min-h-[100dvh]"
         style={{ boxSizing: "border-box" }}
       >
-        {/* Фоновое фото Hero: home-hero-bg-v2.png из public/images/hero */}
+        {/* Фоновое фото Hero: home-hero 3.webp из public/images/hero */}
         <div className="absolute inset-0 left-1/2 z-0 w-screen -translate-x-1/2 opacity-[0.15] hero-main-bg">
           <div className="absolute inset-0 h-full w-full">
             <Image
-              src="/images/hero/home-hero-bg-v2.png"
+              src="/images/hero/home-hero%203.webp"
               alt=""
               fill
               sizes="100vw"
@@ -34,33 +35,28 @@ export default function Home() {
             aria-hidden="true"
           />
         </div>
-        {/* Отступ контента: высота хедера + 30px от нижней границы хедера */}
-        <div
-          className="relative z-10 w-full shrink-0"
-          style={{ height: "calc(var(--header-h) + 30px)", minHeight: "calc(var(--header-h) + 30px)" }}
-          aria-hidden="true"
-        />
-        <div className="relative z-10 mx-auto flex min-h-0 w-full max-w-7xl flex-1 flex-col justify-center px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col gap-[30px] sm:gap-10">
-            <div className="inline-flex w-fit items-center gap-2 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-tertiary)]/60 px-3 py-1.5 text-xs font-medium text-[var(--text-secondary)] sm:px-4 sm:py-2 md:text-sm backdrop-blur-sm mt-[30px]">
+        {/* Верхний отступ бейджа как на «Гражданские споры»: секция с -mt-[var(--header-h)], поэтому pt = header-h + отступ (64+64, 72+64, 80+64) */}
+        <div className="relative z-10 flex min-h-0 w-full flex-1 flex-col justify-center container-main pt-[calc(var(--header-h)+var(--header-h))] pb-10 sm:pt-[calc(72px+var(--header-h))] sm:pb-12 lg:pt-[calc(5rem+var(--header-h))] lg:pb-14">
+          <div className="stack-md max-w-[var(--content-max)]">
+            <div data-hero="badge" className="hero-badge inline-flex w-fit items-center gap-2 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-tertiary)]/60 px-3 py-1.5 text-xs font-medium text-[var(--text-secondary)] sm:px-4 sm:py-2 md:text-sm backdrop-blur-sm">
               Москва • регионы России • дистанционный формат
             </div>
-            <h1 className="min-w-0 text-xl font-semibold leading-tight tracking-tight text-[var(--text-primary)] sm:text-2xl md:text-3xl lg:text-4xl xl:text-[2.25rem] 2xl:text-[2.5rem]">
+            <h1 className="type-h1 min-w-0 break-words text-[var(--text-primary)]">
               Юридическая защита интересов частных лиц и бизнеса в Москве и по всей
               России
             </h1>
-            <p className="min-w-0 max-w-3xl text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base md:text-lg">
+            <p className="type-body min-w-0 break-words text-[var(--text-secondary)]">
               Коллегия адвокатов города Москвы «Багратион» оказывает правовую
               помощь частным лицам и бизнесу: очно — в Москве и других регионах
               России, дистанционно — в формате консультаций, правового анализа и
               подготовки документов, а также с представительством интересов в
               судах.
             </p>
-            <div className="flex flex-wrap gap-3">
-              <Button href="/contacts" variant="primary">
+            <div className="cluster flex-col md:flex-row">
+              <Button href="/contacts" variant="primary" className="min-h-[44px] md:min-h-[48px] w-full md:w-auto">
                 Получить консультацию
               </Button>
-              <Button href="/services" variant="secondary">
+              <Button href="/services" variant="secondary" className="min-h-[44px] md:min-h-[48px] w-full md:w-auto">
                 Выбрать услугу
               </Button>
             </div>

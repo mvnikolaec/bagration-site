@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 
 const REQUISITES_FULL = `БАНКОВСКИЕ РЕКВИЗИТЫ
@@ -77,85 +78,104 @@ export default function ContactsPage() {
   };
 
   const inputBase =
-    "w-full rounded-[var(--btn-radius)] px-3 py-2.5 text-sm bg-[var(--surface-glass-hover)] border border-[var(--card-border)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] outline-none focus:border-[var(--card-hover-border)] focus:ring-1 focus:ring-[var(--accent-primary)]/30 transition-colors";
+    "w-full rounded-[var(--btn-radius)] px-3 py-2.5 text-sm bg-[var(--input-bg)] border border-[var(--card-border)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] outline-none focus:border-[var(--card-hover-border)] focus:ring-1 focus:ring-[var(--accent-primary)]/30 transition-colors";
 
   return (
     <>
-      {/* Hero: только градиент (глобальный), без отдельного фона */}
-      <section className="relative w-full bg-transparent pt-[90px] pb-[70px] sm:pt-[96px] sm:pb-[76px] lg:pt-[100px] lg:pb-[80px]">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h1 className="text-2xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-3xl lg:text-4xl">
-            Контакты
-          </h1>
-          <p className="mt-3 max-w-3xl text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base">
-            Свяжитесь с коллегией «Багратион» для получения профессиональной правовой поддержки — очные консультации в Москве и дистанционное сопровождение по всей территории Российской Федерации.
-          </p>
+      {/* Hero: 70vh, фон как на пресс-службе — full-bleed image + overlay */}
+      <section data-hero="section" className="relative flex h-[70vh] min-h-[70vh] w-full flex-col justify-center">
+        <div className="absolute inset-0 left-1/2 z-0 w-screen -translate-x-1/2 opacity-[0.15] hero-press-bg">
+          <div className="absolute inset-0 h-full w-full">
+            <Image
+              src="/images/hero/contacts-hero.webp"
+              alt=""
+              fill
+              sizes="100vw"
+              className="object-cover object-[center_22%]"
+              priority
+            />
+          </div>
+          <div className="absolute inset-0 z-[1] bg-black/10 pointer-events-none" aria-hidden="true" />
+        </div>
+        <div className="relative z-10 container-main hero-content-top-ref pb-10 sm:pb-12 lg:pb-14">
+          <div className="stack-md max-w-[var(--content-max)]">
+            <div data-hero="badge" className="hero-badge inline-flex w-fit items-center gap-2 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-tertiary)]/60 px-3 py-1.5 text-xs font-medium text-[var(--text-secondary)] sm:px-4 sm:py-2 md:text-sm backdrop-blur-sm">
+              Москва и регионы России
+            </div>
+            <h1 className="type-h1 text-[var(--text-primary)]">
+              Контакты
+            </h1>
+            <p className="type-body text-[var(--text-secondary)]">
+              Свяжитесь с коллегией «Багратион» для получения профессиональной правовой поддержки — очные консультации в Москве и дистанционное сопровождение по всей территории Российской Федерации.
+            </p>
+          </div>
         </div>
       </section>
 
       {/* Контактные карточки (3 колонки) + форма */}
-      <div className="mx-auto max-w-7xl px-4 pb-8 sm:px-6 sm:pb-10 lg:px-8 lg:pb-12 bg-transparent">
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
-          {/* Левая колонка: 3 карточки */}
-          <div className="flex flex-col gap-4 sm:grid sm:grid-cols-2 lg:grid-cols-1 lg:grid-rows-3">
-            <div className="card-proxity p-4 sm:p-5 flex flex-col">
-              <h2 className="text-sm font-semibold text-[var(--text-primary)]">Телефон для записи и консультаций</h2>
-              <p className="mt-2 text-base font-medium text-[var(--text-primary)]">+7 (495) 410-66-00</p>
-              <p className="mt-1.5 text-xs leading-snug text-[var(--text-muted)]">
-                Рабочее время: понедельник–пятница, 10:00–19:00. По срочным вопросам возможна индивидуальная договорённость.
-              </p>
-              <a
-                href="tel:+74954106600"
-                className="btn-proxity-base btn-proxity-primary mt-4 inline-flex w-fit items-center justify-center px-4 py-2.5 text-sm"
+      <section id="request" className="section pb-0 bg-transparent">
+        <div className="container-main">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
+            {/* Левая колонка: 3 карточки */}
+            <div className="flex flex-col gap-4 sm:grid sm:grid-cols-2 lg:grid-cols-1 lg:grid-rows-3">
+              <div className="card-proxity p-5 sm:p-6 flex flex-col">
+                <h2 className="text-sm font-semibold text-[var(--text-primary)]">Телефон для записи и консультаций</h2>
+                <p className="mt-2 text-base font-medium text-[var(--text-primary)]">+7 (495) 410-66-00</p>
+                <p className="mt-2 text-xs leading-snug text-[var(--text-muted)]">
+                  Рабочее время: понедельник–пятница, 10:00–19:00. По срочным вопросам возможна индивидуальная договорённость.
+                </p>
+                <a
+                  href="tel:+74954106600"
+className="btn-proxity-base btn-proxity-primary mt-5 inline-flex w-fit items-center justify-center px-4 py-2.5 text-sm"
               >
                 Позвонить
-              </a>
-            </div>
+                </a>
+              </div>
 
-            <div className="card-proxity p-4 sm:p-5 flex flex-col">
-              <h2 className="text-sm font-semibold text-[var(--text-primary)]">Электронная почта</h2>
-              <p className="mt-2 text-base font-medium text-[var(--text-primary)] break-all">info@bagrationlegal.ru</p>
-              <p className="mt-1.5 text-xs leading-snug text-[var(--text-muted)]">
-                Напишите описание ситуации и контактные данные — ответим в кратчайший срок.
-              </p>
-              <a
-                href="mailto:info@bagrationlegal.ru"
-                className="btn-proxity-base btn-proxity-secondary mt-4 inline-flex w-fit items-center justify-center px-4 py-2.5 text-sm"
+              <div className="card-proxity p-5 sm:p-6 flex flex-col">
+                <h2 className="text-sm font-semibold text-[var(--text-primary)]">Электронная почта</h2>
+                <p className="mt-2 text-base font-medium text-[var(--text-primary)] break-all">info@bagrationlegal.ru</p>
+                <p className="mt-2 text-xs leading-snug text-[var(--text-muted)]">
+                  Напишите описание ситуации и контактные данные — ответим в кратчайший срок.
+                </p>
+                <a
+                  href="mailto:info@bagrationlegal.ru"
+className="btn-proxity-base btn-proxity-secondary mt-5 inline-flex w-fit items-center justify-center px-4 py-2.5 text-sm"
               >
                 Написать письмо
-              </a>
-            </div>
+                </a>
+              </div>
 
-            <div className="card-proxity p-4 sm:p-5 flex flex-col sm:col-span-2 lg:col-span-1">
-              <h2 className="text-sm font-semibold text-[var(--text-primary)]">Адрес коллегии</h2>
-              <p className="mt-2 text-base font-medium text-[var(--text-primary)]">г. Москва, ул. Арбат, д. 35</p>
-              <p className="mt-1.5 text-xs leading-snug text-[var(--text-muted)]">
-                Приём осуществляется по предварительной записи.
-              </p>
-              <a
-                href={YANDEX_MAP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-proxity-base btn-proxity-secondary mt-4 inline-flex w-fit items-center justify-center px-4 py-2.5 text-sm"
+              <div className="card-proxity p-5 sm:p-6 flex flex-col sm:col-span-2 lg:col-span-1">
+                <h2 className="text-sm font-semibold text-[var(--text-primary)]">Адрес коллегии</h2>
+                <p className="mt-2 text-base font-medium text-[var(--text-primary)]">г. Москва, ул. Арбат, д. 35</p>
+                <p className="mt-2 text-xs leading-snug text-[var(--text-muted)]">
+                  Приём осуществляется по предварительной записи.
+                </p>
+                <a
+                  href={YANDEX_MAP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+className="btn-proxity-base btn-proxity-secondary mt-5 inline-flex w-fit items-center justify-center px-4 py-2.5 text-sm"
               >
                 Адрес на Яндекс.Картах
-              </a>
+                </a>
+              </div>
             </div>
-          </div>
 
-          {/* Правая колонка: форма */}
-          <div className="card-proxity p-4 sm:p-5 lg:p-6 flex flex-col">
-            <h2 className="text-lg font-semibold text-[var(--text-primary)]">Запрос консультации</h2>
-            <p className="mt-1.5 text-sm leading-snug text-[var(--text-secondary)]">
-              Оставьте краткое описание ситуации — мы свяжемся с вами для уточнения деталей и согласования формата консультации.
-            </p>
-
-            {formSubmitted ? (
-              <p className="mt-6 text-sm text-[var(--text-secondary)]">
-                Спасибо. Запрос отправлен — мы ответим в рабочее время.
+            {/* Правая колонка: форма */}
+            <div className="card-proxity p-5 sm:p-6 lg:p-7 flex flex-col" style={{ background: "var(--surface-form)" }}>
+              <h2 className="text-lg font-semibold text-[var(--text-primary)]">Запрос консультации</h2>
+              <p className="mt-2 text-sm leading-snug text-[var(--text-secondary)]">
+                Оставьте краткое описание ситуации — мы свяжемся с вами для уточнения деталей и согласования формата консультации.
               </p>
-            ) : (
-              <form onSubmit={handleSubmit} className="mt-5 flex flex-col gap-4">
+
+              {formSubmitted ? (
+                <p className="mt-6 text-sm text-[var(--text-secondary)]">
+                  Спасибо. Запрос отправлен — мы ответим в рабочее время.
+                </p>
+              ) : (
+                <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-4">
                 <div>
                   <label htmlFor="c-name" className="block text-xs font-medium text-[var(--text-muted)] mb-1">Имя <span className="text-[var(--accent-primary)]">*</span></label>
                   <input
@@ -223,7 +243,7 @@ export default function ContactsPage() {
                   </label>
                   {formErrors.consent && <p className="mt-1 text-xs text-[var(--accent-primary)]">{formErrors.consent}</p>}
                 </div>
-                <button type="submit" className="btn-proxity-base btn-proxity-primary w-full py-2.5 text-sm font-medium mt-1">
+                <button type="submit" className="btn-proxity-base btn-proxity-primary w-full py-2.5 text-sm font-medium mt-2">
                   Отправить запрос
                 </button>
                 <p className="text-[11px] leading-snug text-[var(--text-muted)]">
@@ -231,28 +251,30 @@ export default function ContactsPage() {
                 </p>
               </form>
             )}
+            </div>
+          </div>
+
+          {/* Кнопка «Банковские реквизиты» */}
+          <div className="mt-4 flex justify-center sm:justify-start">
+            <button
+              type="button"
+              onClick={() => setIsRequisitesOpen(true)}
+              className="btn-proxity-base btn-proxity-secondary px-5 py-2.5 text-sm"
+            >
+              Банковские реквизиты
+            </button>
           </div>
         </div>
-
-        {/* Кнопка «Банковские реквизиты» */}
-        <div className="mt-6 flex justify-center sm:justify-start bg-transparent">
-          <button
-            type="button"
-            onClick={() => setIsRequisitesOpen(true)}
-            className="btn-proxity-base btn-proxity-secondary px-5 py-2.5 text-sm"
-          >
-            Банковские реквизиты
-          </button>
-        </div>
-      </div>
+      </section>
 
       {/* Блок с картой */}
-      <section className="mx-auto max-w-7xl px-4 pb-10 sm:px-6 sm:pb-12 lg:px-8 lg:pb-14 bg-transparent">
-        <h2 className="text-lg font-semibold text-[var(--text-primary)]">Как нас найти</h2>
-        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[var(--text-secondary)]">
-          Коллегия расположена в историческом центре Москвы. Приём осуществляется по предварительной записи. Возможны дистанционные консультации.
-        </p>
-        <div className="mt-4 card-proxity overflow-hidden p-0">
+      <section className="section-pt-tight pb-14 sm:pb-16 lg:pb-20 bg-transparent">
+        <div className="container-main">
+          <h2 className="text-lg font-semibold text-[var(--text-primary)]">Как нас найти</h2>
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[var(--text-secondary)]">
+            Коллегия расположена в историческом центре Москвы. Приём осуществляется по предварительной записи. Возможны дистанционные консультации.
+          </p>
+          <div className="mt-6 card-proxity overflow-hidden p-0">
           <iframe
             src="https://yandex.com/map-widget/v1/?ll=37.5910%2C55.7499&z=14&l=map&pt=37.5910%2C55.7499%2Cpm2rdm"
             className="w-full h-[280px] sm:h-[320px] md:h-[360px] border-0 rounded-[var(--card-radius)]"
@@ -261,6 +283,7 @@ export default function ContactsPage() {
             referrerPolicy="no-referrer-when-downgrade"
             title="Коллегия адвокатов «Багратион», Москва, ул. Арбат, 35"
           />
+          </div>
         </div>
       </section>
 

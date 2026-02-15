@@ -781,12 +781,12 @@ export default function PressPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       {/* Hero: 70vh, title + lead + search form, full-bleed background — без обёртки, чтобы начинался от верха */}
-      <section className="relative flex min-h-[70vh] w-full flex-col justify-center">
+      <section data-hero="section" className="relative flex min-h-[70vh] w-full flex-col justify-center">
         {/* Full-bleed background: градиенты + фото-подложка пресс-службы */}
         <div className="absolute inset-0 left-1/2 z-0 w-screen -translate-x-1/2 opacity-[0.15] hero-press-bg">
           <div className="absolute inset-0 h-full w-full">
             <Image
-              src="/images/hero/press-hero-bg-v2.png"
+              src="/images/hero/press-hero.webp"
               alt=""
               fill
               sizes="100vw"
@@ -797,8 +797,12 @@ export default function PressPage() {
           <div className="absolute inset-0 z-[1] bg-black/10 pointer-events-none" aria-hidden="true" />
         </div>
         {/* Content: title, lead, search form */}
-        <div className="relative z-10 flex flex-col gap-[30px] sm:gap-10 px-4 pt-[70px] pb-10 sm:px-6 sm:pt-[78px] sm:pb-12 lg:px-8 lg:pt-[86px] lg:pb-14">
-          <header className="max-w-3xl flex flex-col gap-[30px] sm:gap-10">
+        <div className="relative z-10 flex flex-col container-main hero-content-top-ref pb-10 sm:pb-12 lg:pb-14">
+          <div className="stack-md max-w-3xl">
+            <div data-hero="badge" className="hero-badge inline-flex w-fit items-center gap-2 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-tertiary)]/60 px-3 py-1.5 text-xs font-medium text-[var(--text-secondary)] sm:px-4 sm:py-2 md:text-sm backdrop-blur-sm">
+              Публикации и видеосюжеты в СМИ
+            </div>
+          <header className="flex flex-col stack-md">
             <h1 className="text-2xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-3xl lg:text-4xl">
               Пресс-служба
             </h1>
@@ -810,7 +814,7 @@ export default function PressPage() {
             </p>
           </header>
           {/* Search / filter form inside Hero */}
-          <div className="max-w-3xl">
+          <div>
             <div className="card-proxity hero-cta-card flex min-h-12 flex-wrap items-center gap-3 rounded-[var(--card-radius)] px-3 py-2.5 sm:px-4 md:flex-nowrap">
               <div className="flex w-full shrink-0 flex-wrap items-center gap-3 sm:w-auto sm:flex-nowrap">
                 <HeroCtaSelect
@@ -838,10 +842,11 @@ export default function PressPage() {
               Показано: {filtered.length}
             </p>
           </div>
+          </div>
         </div>
       </section>
 
-      <div className="mx-auto max-w-7xl px-4 pt-0 pb-10 sm:px-6 sm:pb-12 lg:px-8 lg:pb-14 bg-transparent">
+      <div className="container-main pt-0 pb-10 sm:pb-12 lg:pb-14 bg-transparent">
       {/* Блок C — Сетка карточек: вертикальные телефоны 1, горизонтальные/верт. планшет 2, гориз. планшет 3, ПК 4 */}
       <section className="mt-6 bg-transparent" aria-label="Сюжеты пресс-службы">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-4 md:grid-cols-3 md:gap-5 lg:grid-cols-4 lg:gap-6">

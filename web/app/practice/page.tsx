@@ -4,7 +4,7 @@ export default function PracticePage() {
   return (
     <>
       {/* Hero: 70vh, как на странице Пресс-службы */}
-      <section className="relative flex min-h-[70vh] w-full flex-col justify-center">
+      <section data-hero="section" className="relative flex min-h-[70vh] w-full flex-col justify-center">
         <div className="absolute inset-0 left-1/2 z-0 w-screen -translate-x-1/2 opacity-[0.15] hero-press-bg">
           <div className="absolute inset-0 h-full w-full">
             <Image
@@ -18,19 +18,24 @@ export default function PracticePage() {
           </div>
           <div className="absolute inset-0 z-[1] bg-black/10 pointer-events-none" aria-hidden="true" />
         </div>
-        <div className="relative z-10 flex flex-col gap-[30px] sm:gap-10 px-4 pt-[70px] pb-10 sm:px-6 sm:pt-[78px] sm:pb-12 lg:px-8 lg:pt-[86px] lg:pb-14">
-          <header className="max-w-3xl flex flex-col gap-[30px] sm:gap-10">
-            <h1 className="text-2xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-3xl lg:text-4xl">
+        <div className="relative z-10 flex flex-col container-main hero-content-top-ref pb-10 sm:pb-12 lg:pb-14">
+          <div className="stack-md max-w-3xl">
+            <div data-hero="badge" className="hero-badge inline-flex w-fit items-center gap-2 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-tertiary)]/60 px-3 py-1.5 text-xs font-medium text-[var(--text-secondary)] sm:px-4 sm:py-2 md:text-sm backdrop-blur-sm">
               Судебная практика
-            </h1>
-            <p className="text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base">
-              Скоро.
-            </p>
-          </header>
+            </div>
+            <header className="flex flex-col stack-md">
+              <h1 className="text-2xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-3xl lg:text-4xl">
+                Судебная практика
+              </h1>
+              <p className="text-sm leading-relaxed text-[var(--text-secondary)] sm:text-base">
+                Скоро.
+              </p>
+            </header>
+          </div>
         </div>
       </section>
 
-      <div className="mx-auto max-w-7xl px-4 pt-0 pb-10 sm:px-6 sm:pb-12 lg:px-8 lg:pb-14 bg-transparent">
+      <div className="container-main pt-0 pb-10 sm:pb-12 lg:pb-14 bg-transparent">
         {/* Контент страницы */}
       </div>
     </>

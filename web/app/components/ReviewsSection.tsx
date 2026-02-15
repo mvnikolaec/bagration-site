@@ -288,9 +288,9 @@ export default function ReviewsSection() {
       )}
       <div
         data-reviews-inner
-        className="mx-auto w-full max-w-[100vw] px-3 min-[480px]:px-4 sm:px-6 lg:px-8"
+        className="container-main w-full"
       >
-        <div className="mx-auto max-w-7xl">
+        <div className="w-full">
         <header className="section-header max-w-3xl">
           <h2
             id="reviews-heading"

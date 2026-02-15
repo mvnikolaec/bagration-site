@@ -9,10 +9,10 @@ const FOOTNOTE =
 export default function FinalCtaSection() {
   return (
     <section
-      className="section-py bg-transparent"
+      className="section bg-transparent"
       aria-labelledby="final-cta-heading"
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="container-main">
         <div className="card-proxity mx-auto max-w-2xl px-5 py-8 text-center sm:px-8 sm:py-10 lg:px-10 lg:py-12">
           <h2
             id="final-cta-heading"
