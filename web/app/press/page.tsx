@@ -399,9 +399,6 @@ const pressItems: PressItem[] = [
   },
 ];
 
-type SourceFilter = "all" | "1tv" | "russia" | "m24" | "rentv" | "tvzvezda" | "youtube";
-type SortMode = "default" | "source";
-
 function PressItemCard({ item }: { item: PressItem }) {
   const [imgError, setImgError] = useState(false);
   const imageSrc = `/press/${item.id}.jpg`;
