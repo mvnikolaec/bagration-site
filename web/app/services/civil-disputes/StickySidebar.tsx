@@ -82,20 +82,18 @@ export default function StickySidebar() {
   const [effectiveTop, setEffectiveTop] = useState(0); // реальный top в sticky: max(headerOffset, centerTop)
   const [asideMinHeight, setAsideMinHeight] = useState<number | null>(null);
   const [debug, setDebug] = useState<Record<string, number | string | boolean | BlockerInfo | null>>({});
-  const [showDebug, setShowDebug] = useState(false);
+  const [showDebug] = useState(() => {
+    if (typeof window === "undefined") return false;
+    const params = new URLSearchParams(window.location.search);
+    const debugFlag = DEBUG || params.get("debug") === "1";
+    return !!(debugFlag && process.env.NODE_ENV === "development");
+  });
   const asideRef = useRef<HTMLElement>(null);
   const sentinelRef = useRef<HTMLDivElement>(null); // якорь перед sticky-элементом
   const sidebarRef = useRef<HTMLDivElement>(null);
   const effectiveTopRef = useRef(0); // для scroll: не пересчитываем effectiveTop
   const rafIdRef = useRef<number | null>(null);
   const resizeObserverRef = useRef<ResizeObserver | null>(null);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const params = new URLSearchParams(window.location.search);
-    const debugFlag = DEBUG || params.get("debug") === "1";
-    setShowDebug(debugFlag && process.env.NODE_ENV === "development");
-  }, []);
 
   // recalcEffectiveTop: true = resize/ResizeObserver (пересчитать effectiveTop), false = scroll (только mode/absoluteTop)
   const update = useCallback((recalcEffectiveTop: boolean) => {
@@ -246,11 +244,6 @@ export default function StickySidebar() {
         update(true);
       }
     };
-
-    if (!mq.matches) {
-      setMode("static");
-      setAsideMinHeight(null);
-    }
 
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", scheduleRecalc);

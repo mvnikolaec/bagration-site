@@ -196,8 +196,11 @@ function inspectBackgroundSource(e: React.MouseEvent) {
 
 export default function ReviewsSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [maxSlide, setMaxSlide] = useState(2);
-  const [isLg, setIsLg] = useState(true);
+  const [isLg, setIsLg] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia(`(min-width: ${LG_BREAKPOINT}px)`).matches;
+  });
+  const maxSlide = isLg ? 2 : 5;
   const [isPaused, setIsPaused] = useState(false);
   const [yandexLogoSvg, setYandexLogoSvg] = useState<string | null>(null);
   const [yandexLogoError, setYandexLogoError] = useState(false);
@@ -217,23 +220,15 @@ export default function ReviewsSection() {
       .catch(() => setYandexLogoError(true));
   }, []);
 
-  const updateBreakpoint = useCallback(() => {
-    if (typeof window === "undefined") return;
-    const lg = window.matchMedia(`(min-width: ${LG_BREAKPOINT}px)`).matches;
-    setIsLg(lg);
-    setMaxSlide(lg ? 2 : 5);
-  }, []);
-
   useEffect(() => {
-    updateBreakpoint();
     const mql = window.matchMedia(`(min-width: ${LG_BREAKPOINT}px)`);
-    const handler = () => {
-      updateBreakpoint();
-      setCurrentSlide((s) => Math.min(s, mql.matches ? 2 : 5));
+    const handler = (e: MediaQueryListEvent) => {
+      setIsLg(e.matches);
+      setCurrentSlide((s) => Math.min(s, e.matches ? 2 : 5));
     };
     mql.addEventListener("change", handler);
     return () => mql.removeEventListener("change", handler);
-  }, [updateBreakpoint]);
+  }, []);
 
   useEffect(() => {
     if (isPaused) return;

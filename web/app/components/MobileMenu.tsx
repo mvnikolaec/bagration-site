@@ -27,10 +27,20 @@ export default function MobileMenu({
   const panelRef = useRef<HTMLDivElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
 
+  function resetSubmenus() {
+    setServicesOpen(false);
+    setAboutOpen(false);
+  }
+
+  function handleClose() {
+    resetSubmenus();
+    onClose();
+  }
+
   useEffect(() => {
     if (!open) return;
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") handleClose();
     };
     document.addEventListener("keydown", handleKey);
     document.body.style.overflow = "hidden";
@@ -43,13 +53,6 @@ export default function MobileMenu({
     };
   }, [open, onClose, triggerId]);
 
-  useEffect(() => {
-    if (!open) {
-      setServicesOpen(false);
-      setAboutOpen(false);
-    }
-  }, [open]);
-
   if (!open || typeof document === "undefined") return null;
 
   const content = (
@@ -57,7 +60,7 @@ export default function MobileMenu({
       <div
         className="fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm"
         aria-hidden="true"
-        onClick={onClose}
+        onClick={handleClose}
       />
       <div
         ref={panelRef}
@@ -75,7 +78,7 @@ export default function MobileMenu({
           <button
             ref={closeBtnRef}
             type="button"
-            onClick={onClose}
+            onClick={handleClose}
             className="btn-proxity-base btn-proxity-ghost rounded-[var(--btn-radius)] p-2 focus-visible:outline-none"
             aria-label="Закрыть меню"
           >
@@ -112,7 +115,7 @@ export default function MobileMenu({
             <Link
               href="/"
               className="link-proxity rounded-[var(--btn-radius)] px-4 py-3 text-sm text-[var(--text-primary)] focus-visible:outline-none"
-              onClick={onClose}
+              onClick={handleClose}
             >
               Главная
             </Link>
@@ -151,7 +154,7 @@ export default function MobileMenu({
                 <Link
                   href="/services"
                   className="link-proxity block rounded-[4px] px-6 py-2 text-sm text-[var(--text-secondary)] focus-visible:outline-none hover:bg-[var(--bg-hover)]"
-                  onClick={onClose}
+                  onClick={handleClose}
                 >
                   Все услуги
                 </Link>
@@ -160,7 +163,7 @@ export default function MobileMenu({
                     key={href}
                     href={href}
                     className="link-proxity block rounded-[4px] px-6 py-2 text-sm text-[var(--text-secondary)] focus-visible:outline-none hover:bg-[var(--bg-hover)]"
-                    onClick={onClose}
+                    onClick={handleClose}
                   >
                     {label}
                   </Link>
@@ -204,7 +207,7 @@ export default function MobileMenu({
                     key={href}
                     href={href}
                     className="link-proxity block rounded-[4px] px-6 py-2 text-sm text-[var(--text-secondary)] focus-visible:outline-none hover:bg-[var(--bg-hover)]"
-                    onClick={onClose}
+                    onClick={handleClose}
                   >
                     {label}
                   </Link>
@@ -215,21 +218,21 @@ export default function MobileMenu({
             <Link
               href="/press"
               className="link-proxity rounded-[var(--btn-radius)] px-4 py-3 text-sm text-[var(--text-primary)] focus-visible:outline-none"
-              onClick={onClose}
+              onClick={handleClose}
             >
               Пресс-служба
             </Link>
             <Link
               href="/news"
               className="link-proxity rounded-[var(--btn-radius)] px-4 py-3 text-sm text-[var(--text-primary)] focus-visible:outline-none"
-              onClick={onClose}
+              onClick={handleClose}
             >
               Новости
             </Link>
             <Link
               href="/contacts"
               className="link-proxity rounded-[var(--btn-radius)] px-4 py-3 text-sm text-[var(--text-primary)] focus-visible:outline-none"
-              onClick={onClose}
+              onClick={handleClose}
             >
               Контакты
             </Link>
