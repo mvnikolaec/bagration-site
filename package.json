@@ -1,0 +1,31 @@
+{
+  "name": "bagration-site",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "web/**/*.{ts,tsx,js,jsx}": [
+      "cd web && npx eslint --fix"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mvnikolaec/bagration-site.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/mvnikolaec/bagration-site/issues"
+  },
+  "homepage": "https://github.com/mvnikolaec/bagration-site#readme",
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7"
+  }
+}
