@@ -9,7 +9,7 @@
   },
   "lint-staged": {
     "web/**/*.{ts,tsx,js,jsx}": [
-      "cd web && npx eslint --fix"
+      "npm --prefix web run lint -- --fix"
     ]
   },
   "repository": {
