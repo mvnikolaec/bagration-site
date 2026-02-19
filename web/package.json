@@ -11,7 +11,7 @@
     "clean:cache": "rimraf .next\\dev\\cache .next\\cache",
     "clean": "rimraf .next",
     "clean:all": "rimraf .next node_modules",
-    "prepare": "husky"
+    "prepare": "husky || true"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
