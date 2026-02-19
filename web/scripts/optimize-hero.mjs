@@ -4,7 +4,7 @@
  * + WebP и AVIF. Запуск: node scripts/optimize-hero.mjs
  * Требует: npm install -D sharp
  */
-import { readFileSync, writeFileSync, existsSync } from "fs";
+import { readFileSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 

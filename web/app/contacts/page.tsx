@@ -317,9 +317,11 @@ className="btn-proxity-base btn-proxity-secondary mt-5 inline-flex w-fit items-c
                   {qrError ? (
                     <span className="block w-14 h-14 flex items-center justify-center text-[9px] text-[var(--text-muted)] text-center leading-tight">QR недоступен</span>
                   ) : (
-                    <img
+                    <Image
                       src="https://static.tildacdn.com/tild3432-3638-4161-b764-663439383466/__-__.svg"
                       alt="QR-код для оплаты"
+                      width={56}
+                      height={56}
                       className="w-14 h-14 object-contain"
                       onError={() => setQrError(true)}
                     />

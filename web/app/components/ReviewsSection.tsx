@@ -63,14 +63,6 @@ const LG_BREAKPOINT = 1024;
 
 const IS_DEV = typeof process !== "undefined" && process.env.NODE_ENV === "development";
 
-const STYLES_TO_CHECK = [
-  "backgroundColor",
-  "backgroundImage",
-  "boxShadow",
-  "filter",
-  "backdropFilter",
-] as const;
-
 function isTransparentBg(v: string): boolean {
   if (!v || v === "none") return true;
   if (v === "rgba(0, 0, 0, 0)" || v === "transparent") return true;

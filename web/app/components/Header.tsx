@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Container from "./Container";
@@ -111,7 +112,7 @@ export default function Header() {
               aria-label="Багратион — на главную"
             >
               {/* Логотип: один размер на всех устройствах */}
-              <img
+              <Image
                 src="/images/logo.png"
                 alt=""
                 width={32}

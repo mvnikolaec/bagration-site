@@ -8,7 +8,15 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 });
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "static.tildacdn.com",
+        pathname: "/**",
+      },
+    ],
+  },
 };
 
 export default withBundleAnalyzer(nextConfig);

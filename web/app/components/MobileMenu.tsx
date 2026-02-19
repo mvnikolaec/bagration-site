@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import Button from "./Button";
@@ -27,15 +27,11 @@ export default function MobileMenu({
   const panelRef = useRef<HTMLDivElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
 
-  function resetSubmenus() {
+  const handleClose = useCallback(() => {
     setServicesOpen(false);
     setAboutOpen(false);
-  }
-
-  function handleClose() {
-    resetSubmenus();
     onClose();
-  }
+  }, [onClose]);
 
   useEffect(() => {
     if (!open) return;
@@ -51,7 +47,7 @@ export default function MobileMenu({
       const t = document.getElementById(triggerId);
       if (t instanceof HTMLElement) t.focus();
     };
-  }, [open, onClose, triggerId]);
+  }, [open, handleClose, triggerId]);
 
   if (!open || typeof document === "undefined") return null;
 

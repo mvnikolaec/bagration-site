@@ -692,8 +692,6 @@ export default function PressPage() {
     { value: "default", label: "По умолчанию (1→30)" },
     { value: "source", label: "По источнику" },
   ];
-  const [isSourceArrowOpen, setIsSourceArrowOpen] = useState(false);
-  const [isSortArrowOpen, setIsSortArrowOpen] = useState(false);
 
   const jsonLd = useMemo(() => buildPressPageJsonLd(), []);
 
