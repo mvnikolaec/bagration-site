@@ -7,6 +7,8 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
   openAnalyzer: false,
 });
 
+const isStaging = process.env.SITE_STAGE !== "production";
+
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
@@ -16,6 +18,20 @@ const nextConfig: NextConfig = {
         pathname: "/**",
       },
     ],
+  },
+  async headers() {
+    if (!isStaging) return [];
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, nofollow",
+          },
+        ],
+      },
+    ];
   },
 };
 

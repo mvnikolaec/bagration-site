@@ -5,10 +5,24 @@ import Footer from "./components/Footer";
 import BodyPageMarker from "./components/BodyPageMarker";
 import HeroMeasureTrigger from "./components/HeroMeasureTrigger";
 
+const isStaging = process.env.SITE_STAGE !== "production";
+
 export const metadata: Metadata = {
   title: "Багратион — коллегия адвокатов Москвы",
   description:
     "Коллегия адвокатов города Москвы «Багратион». Гражданские и семейные споры, наследство, недвижимость, арбитраж, корпоративные и уголовные дела.",
+  robots: isStaging
+    ? {
+        index: false,
+        follow: false,
+        noarchive: true,
+        nosnippet: true,
+        noimageindex: true,
+      }
+    : {
+        index: true,
+        follow: true,
+      },
 };
 
 const orgJsonLd = {
