@@ -10,13 +10,7 @@
     "optimize:hero": "node scripts/optimize-hero.mjs",
     "clean:cache": "rimraf .next\\dev\\cache .next\\cache",
     "clean": "rimraf .next",
-    "clean:all": "rimraf .next node_modules",
-    "prepare": "husky || true"
-  },
-  "lint-staged": {
-    "*.{ts,tsx,js,jsx}": [
-      "eslint --fix"
-    ]
+    "clean:all": "rimraf .next node_modules"
   },
   "dependencies": {
     "next": "16.1.6",

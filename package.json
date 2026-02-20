@@ -4,13 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "husky"
-  },
-  "lint-staged": {
-    "web/**/*.{ts,tsx,js,jsx}": [
-      "npm --prefix web run lint -- --fix"
-    ]
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -25,7 +19,5 @@
   },
   "homepage": "https://github.com/mvnikolaec/bagration-site#readme",
   "devDependencies": {
-    "husky": "^9.1.7",
-    "lint-staged": "^16.2.7"
   }
 }
