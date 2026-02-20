@@ -160,7 +160,7 @@ export default function CivilDisputesPage() {
       />
 
       {/* Hero: 70vh, как на странице Пресс-службы — full-bleed фон, фиксированная высота, контент по верху, без наложения на следующий блок */}
-      <section data-hero="section" className="relative flex min-h-[70vh] h-[70vh] w-full flex-col justify-start overflow-hidden">
+      <section data-hero="section" className="relative flex w-full flex-col justify-start overflow-hidden">
         <div className="absolute inset-0 left-1/2 z-0 w-screen -translate-x-1/2 opacity-[0.15] hero-press-bg">
           <div className="absolute inset-0 h-full w-full">
             <Image

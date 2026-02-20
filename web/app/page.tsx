@@ -15,7 +15,7 @@ export default function Home() {
     <div className="hero-flow-bg -mt-[var(--header-h)]">
       <section
         data-hero="section"
-        className="relative flex flex-col pb-6 sm:pb-7 md:pb-8 min-h-[100dvh] lg:min-h-[100dvh]"
+        className="relative flex flex-col pb-6 sm:pb-7 md:pb-8"
         style={{ boxSizing: "border-box" }}
       >
         {/* Фоновое фото Hero: home-hero 3.webp из public/images/hero */}

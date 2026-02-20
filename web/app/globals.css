@@ -24,6 +24,13 @@
   --border-soft: rgba(255, 255, 255, 0.07);
   --border-subtle: rgba(255, 255, 255, 0.07);
   --header-h: 64px;
+  /* Hero height: min/ideal/max по breakpoints, vu = viewport unit (vh → svh → dvh) */
+  --hero-vu: 1vh;
+  --hero-min: 420px;
+  --hero-ideal: 56;
+  --hero-max: 560px;
+  --hero-h: clamp(var(--hero-min), calc(var(--hero-ideal) * var(--hero-vu)), var(--hero-max));
+  --hero-h-inner: calc(var(--hero-h) * 0.8);
   --hero-gap: 24px;
   --hero-gap-mobile: 30px;
   --hero-gap-desktop: 40px;
@@ -89,6 +96,30 @@
   --stack-sm-gap: 10px;
   --stack-md-gap: 14px;
   --stack-lg-gap: 18px;
+}
+@media (min-width: 640px) {
+  :root {
+    --hero-min: 480px;
+    --hero-ideal: 58;
+    --hero-max: 620px;
+  }
+}
+@media (min-width: 1024px) {
+  :root {
+    --hero-min: 560px;
+    --hero-ideal: 62;
+    --hero-max: 760px;
+  }
+}
+@supports (height: 1svh) {
+  :root {
+    --hero-vu: 1svh;
+  }
+}
+@supports (height: 1dvh) {
+  :root {
+    --hero-vu: 1dvh;
+  }
 }
 
 @theme inline {
@@ -310,6 +341,14 @@ section {
 
 .hero-flow-bg {
   background: transparent;
+}
+
+/* Единая высота Hero: главная — --hero-h, внутренние (body[data-page="inner"]) — на 20% ниже */
+[data-hero="section"] {
+  min-height: var(--hero-h);
+}
+body[data-page="inner"] [data-hero="section"] {
+  min-height: var(--hero-h-inner);
 }
 
 /* Эталонный отступ: расстояние от ВЕРХА HERO-СЕКЦИИ до верха бейджа (метрика M). Значения сняты с Главной: default 128px, sm 136px, lg 144px. Только контент Hero. */

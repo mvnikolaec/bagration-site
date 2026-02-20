@@ -4,7 +4,7 @@ export default function AttorneysPage() {
   return (
     <>
       {/* Hero: 70vh, как на странице Пресс-службы */}
-      <section data-hero="section" className="relative flex min-h-[70vh] w-full flex-col justify-center">
+      <section data-hero="section" className="relative flex w-full flex-col justify-center">
         <div className="absolute inset-0 left-1/2 z-0 w-screen -translate-x-1/2 opacity-[0.15] hero-press-bg">
           <div className="absolute inset-0 h-full w-full">
             <Image
