@@ -163,31 +163,27 @@ body {
   overscroll-behavior: none;
 }
 
-/* Фон страницы — локально в .app-shell (не body::before), чтобы не мешать скроллу */
 .app-shell {
   position: relative;
   height: 100%;
   z-index: 1;
 }
 
-.app-shell::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background: var(--background-base);
-}
-
+/* Scroll-container с непрозрачным фоном — убирает просвечивание при первом repaint на touch */
 .app-shell-content {
   height: 100svh;
   overflow-y: auto;
   overflow-x: hidden;
   overscroll-behavior: none;
-  -webkit-overflow-scrolling: touch;
+  -webkit-overflow-scrolling: auto;
   position: relative;
   z-index: 1;
-  background: transparent;
+  background: var(--background-base);
+}
+
+.app-shell-content-inner {
+  position: relative;
+  z-index: 1;
 }
 
 /* Touch (iOS + Android): без fixed/blur/animation у больших слоёв */
@@ -215,6 +211,7 @@ body {
   }
   .app-shell-content {
     overscroll-behavior: none !important;
+    -webkit-overflow-scrolling: touch;
   }
   .floating-gradients,
   .floating-gradients .floating-gradient {
