@@ -28,16 +28,28 @@ function isAboutActive(pathname: string) {
   );
 }
 
+const TOUCH_MEDIA = "(hover: none), (pointer: coarse)";
+
 export default function Header() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [bgOpacity, setBgOpacity] = useState(0);
+  const [isTouch, setIsTouch] = useState(false);
   const [logoWidth, setLogoWidth] = useState<number | null>(null);
   const [letterSpacing, setLetterSpacing] = useState<number>(0);
   const line2Ref = useRef<HTMLSpanElement>(null);
   const line1MeasureRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
+    const mq = window.matchMedia(TOUCH_MEDIA);
+    setIsTouch(mq.matches);
+    const onChange = () => setIsTouch(mq.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  useEffect(() => {
+    if (isTouch) return;
     const scrollContainer = document.querySelector(".app-shell-content");
     const getScrollTop = (): number =>
       scrollContainer ? scrollContainer.scrollTop : (typeof window !== "undefined" ? window.scrollY : 0);
@@ -68,7 +80,7 @@ export default function Header() {
       window.removeEventListener("resize", update);
       if (rafId !== null) cancelAnimationFrame(rafId);
     };
-  }, []);
+  }, [isTouch]);
 
   useEffect(() => {
     const syncLogoWidth = () => {
@@ -100,23 +112,28 @@ export default function Header() {
     };
   }, []);
 
-  const atTop = bgOpacity <= 0;
+  const atTop = !isTouch && bgOpacity <= 0;
+  const headerStaticTouch = isTouch;
 
   return (
     <>
       <header
-        className={`fixed left-0 right-0 top-0 z-50 ${atTop ? "header-at-top" : ""}`}
-        style={{
-          backdropFilter: atTop ? "none" : "blur(12px)",
-          WebkitBackdropFilter: atTop ? "none" : "blur(12px)",
-        }}
+        className={`fixed left-0 right-0 top-0 z-50 ${atTop ? "header-at-top" : ""} ${headerStaticTouch ? "header-static-touch" : ""}`}
+        style={
+          headerStaticTouch
+            ? { background: "var(--header-footer-overlay)" }
+            : {
+                backdropFilter: atTop ? "none" : "blur(12px)",
+                WebkitBackdropFilter: atTop ? "none" : "blur(12px)",
+              }
+        }
         role="banner"
       >
-        {/* Фон хедера: появляется при прокрутке за первые 20px */}
+        {/* Фон хедера: на touch статично (без transition), на desktop — по scroll */}
         <div
-          className="pointer-events-none absolute inset-0 transition-opacity duration-150 ease-out"
+          className={headerStaticTouch ? "pointer-events-none absolute inset-0 header-overlay-touch" : "pointer-events-none absolute inset-0 transition-opacity duration-150 ease-out"}
           style={{
-            opacity: bgOpacity,
+            opacity: headerStaticTouch ? 1 : bgOpacity,
             background: "var(--header-footer-overlay)",
             borderColor: "transparent",
           }}

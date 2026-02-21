@@ -186,7 +186,7 @@ body {
   z-index: 1;
 }
 
-/* Touch (iOS + Android): без fixed/blur/animation у больших слоёв */
+/* Touch (iOS + Android): без fixed/blur/animation у больших слоёв; хедер без scroll-эффектов */
 @media (hover: none), (pointer: coarse) {
   .floating-gradients,
   .floating-gradients .floating-gradient {
@@ -201,6 +201,14 @@ body {
     will-change: auto !important;
     transition: none !important;
     animation: none !important;
+  }
+  .header-static-touch,
+  .header-static-touch *,
+  .header-overlay-touch {
+    transition: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    will-change: auto !important;
   }
 }
 
