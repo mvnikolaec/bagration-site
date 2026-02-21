@@ -64,7 +64,7 @@ export default function RootLayout({
           <div className="floating-gradient floating-gradient-2" />
           <div className="floating-gradient floating-gradient-3" />
         </div>
-        <div className="relative z-10">
+        <div className="relative z-10 bg-transparent">
           <Header />
           <HeroMeasureTrigger />
           <main className="bg-transparent">{children}</main>
