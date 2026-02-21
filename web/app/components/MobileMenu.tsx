@@ -40,10 +40,13 @@ export default function MobileMenu({
     };
     document.addEventListener("keydown", handleKey);
     document.body.style.overflow = "hidden";
+    const scrollContainer = document.querySelector<HTMLElement>(".app-shell-content");
+    if (scrollContainer) scrollContainer.style.overflow = "hidden";
     closeBtnRef.current?.focus();
     return () => {
       document.removeEventListener("keydown", handleKey);
       document.body.style.overflow = "";
+      if (scrollContainer) scrollContainer.style.overflow = "";
       const t = document.getElementById(triggerId);
       if (t instanceof HTMLElement) t.focus();
     };

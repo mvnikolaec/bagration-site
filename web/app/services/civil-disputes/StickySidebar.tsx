@@ -105,7 +105,8 @@ export default function StickySidebar() {
       return;
     }
 
-    const scrollY = window.scrollY;
+    const scrollContainer = document.querySelector<HTMLElement>(".app-shell-content");
+    const scrollY = scrollContainer ? scrollContainer.scrollTop : window.scrollY;
     const asideRect = asideEl.getBoundingClientRect();
     const stopEl = document.getElementById(FAQ_STOP_ID);
     const bottomEl = stopEl ?? faqEl;
@@ -214,7 +215,9 @@ export default function StickySidebar() {
       }
     };
 
-    window.addEventListener("scroll", schedule, { passive: true });
+    const scrollContainer = document.querySelector(".app-shell-content");
+    const scrollTarget = scrollContainer ?? window;
+    scrollTarget.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", scheduleRecalc);
     mq.addEventListener("change", onMediaChange);
 
@@ -233,7 +236,7 @@ export default function StickySidebar() {
     });
 
     return () => {
-      window.removeEventListener("scroll", schedule);
+      scrollTarget.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", scheduleRecalc);
       mq.removeEventListener("change", onMediaChange);
       resizeObserverRef.current?.disconnect();

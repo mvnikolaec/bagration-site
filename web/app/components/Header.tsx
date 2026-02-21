@@ -38,16 +38,35 @@ export default function Header() {
   const line1MeasureRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
+    const scrollContainer = document.querySelector(".app-shell-content");
+    const getScrollTop = (): number =>
+      scrollContainer ? scrollContainer.scrollTop : (typeof window !== "undefined" ? window.scrollY : 0);
+
+    let rafId: number | null = null;
     const update = () => {
-      const scrollY = typeof window !== "undefined" ? window.scrollY : 0;
-      setBgOpacity(Math.min(1, Math.max(0, scrollY / REVEAL_PX)));
+      const scrollTop = getScrollTop();
+      setBgOpacity(Math.min(1, Math.max(0, scrollTop / REVEAL_PX)));
     };
+    const onScroll = () => {
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        update();
+        rafId = null;
+      });
+    };
+
     update();
-    window.addEventListener("scroll", update, { passive: true });
+    if (scrollContainer) {
+      scrollContainer.addEventListener("scroll", onScroll, { passive: true });
+    } else {
+      window.addEventListener("scroll", onScroll, { passive: true });
+    }
     window.addEventListener("resize", update);
     return () => {
-      window.removeEventListener("scroll", update);
+      if (scrollContainer) scrollContainer.removeEventListener("scroll", onScroll);
+      else window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", update);
+      if (rafId !== null) cancelAnimationFrame(rafId);
     };
   }, []);
 
