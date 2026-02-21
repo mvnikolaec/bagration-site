@@ -262,6 +262,7 @@ export default function StickySidebar() {
     <>
       <aside
         ref={asideRef}
+        data-debug="StickySidebar"
         className="relative hidden lg:block lg:pt-[5.75rem]"
         aria-label="Действия и разделы"
         style={asideMinHeight != null ? { minHeight: `${asideMinHeight}px` } : undefined}

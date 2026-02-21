@@ -100,7 +100,7 @@ export default function Footer() {
   const requisitesBtnRef = useRef<HTMLButtonElement>(null);
 
   return (
-    <footer className="relative bg-transparent" role="contentinfo">
+    <footer className="relative bg-transparent" role="contentinfo" data-debug="Footer">
       <Container className="bg-transparent py-10 sm:py-11 lg:py-12">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 lg:gap-6">
           {/* Колонка 1: Коллегия + реквизиты + CTA */}

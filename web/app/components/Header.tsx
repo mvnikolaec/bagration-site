@@ -118,6 +118,7 @@ export default function Header() {
   return (
     <>
       <header
+        data-debug="Header"
         className={`fixed left-0 right-0 top-0 z-50 ${atTop ? "header-at-top" : ""} ${headerStaticTouch ? "header-static-touch" : ""}`}
         style={
           headerStaticTouch

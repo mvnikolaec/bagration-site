@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import BodyPageMarker from "./components/BodyPageMarker";
 import HeroMeasureTrigger from "./components/HeroMeasureTrigger";
+import ScrollCulpritOverlay from "./components/ScrollCulpritOverlay";
 
 const isStaging = process.env.SITE_STAGE !== "production";
 
@@ -61,14 +62,19 @@ export default function RootLayout({
         />
         <div className="app-shell bg-transparent">
           <div className="app-shell-content">
-            <div className="floating-gradients" aria-hidden="true">
+            <div className="floating-gradients" aria-hidden="true" data-debug="FloatingGradients">
               <div className="floating-gradient floating-gradient-1" />
               <div className="floating-gradient floating-gradient-2" />
               <div className="floating-gradient floating-gradient-3" />
             </div>
             <div className="app-shell-content-inner">
+              {process.env.NEXT_PUBLIC_DEBUG_SCROLL === "1" ? (
+                <ScrollCulpritOverlay />
+              ) : null}
               <Header />
-              <HeroMeasureTrigger />
+              <span data-debug="HeroMeasureTrigger" aria-hidden="true" className="hidden">
+                <HeroMeasureTrigger />
+              </span>
               <main className="bg-transparent">{children}</main>
               <Footer />
             </div>
