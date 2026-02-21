@@ -140,10 +140,15 @@
   --shadow-glow: var(--shadow-glow);
 }
 
-/* --- Layout: единый фон в body::before (fixed), секции прозрачные, карточки — стекло --- */
+/* --- Layout: единый фон; html = базовый цвет (без моргания), body::before = слой фона --- */
+html {
+  background: var(--background-base);
+}
+
 body {
   position: relative;
   min-height: 100vh;
+  min-height: 100svh;
   color: var(--text-primary);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -156,16 +161,62 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: 0;
   pointer-events: none;
   background: var(--background-base);
   transform: translate3d(0, 0, 0);
   will-change: transform;
+  animation: none;
+  transition: none;
+}
+
+/* Корневой wrapper контента — выше фонового слоя; min-height для покрытия absolute-фона на touch */
+.app-shell {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+.app-shell-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Touch (iOS + Android): без fixed фонов — убирает дергание при первом скролле */
+@media (hover: none), (pointer: coarse) {
+  body::before {
+    position: absolute !important;
+    inset: 0 !important;
+    transform: none !important;
+    will-change: auto !important;
+    animation: none !important;
+    transition: none !important;
+  }
+  .floating-gradients,
+  .floating-gradients .floating-gradient {
+    filter: none !important;
+    backdrop-filter: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+  .app-shell,
+  .app-shell-content {
+    transform: none !important;
+    will-change: auto !important;
+    transition: none !important;
+    animation: none !important;
+  }
 }
 
 @supports (-webkit-touch-callout: none) {
   body {
     background-attachment: scroll !important;
+  }
+  .floating-gradients,
+  .floating-gradients .floating-gradient {
+    filter: none !important;
+    backdrop-filter: none !important;
   }
 }
 
@@ -410,13 +461,19 @@ body[data-page="inner"] [data-hero="section"] {
   mask-repeat: no-repeat;
 }
 
-/* 3 анимированных градиента на фоне — медленное движение */
+/* 3 анимированных градиента на фоне — по умолчанию absolute (скролл с страницей, без дергания на touch); на desktop — fixed */
 .floating-gradients {
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .floating-gradients {
+    position: fixed;
+  }
 }
 
 .floating-gradient {

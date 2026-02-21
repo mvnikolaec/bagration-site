@@ -59,16 +59,18 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
         />
-        <div className="floating-gradients" aria-hidden="true">
-          <div className="floating-gradient floating-gradient-1" />
-          <div className="floating-gradient floating-gradient-2" />
-          <div className="floating-gradient floating-gradient-3" />
-        </div>
-        <div className="relative z-10 bg-transparent">
-          <Header />
-          <HeroMeasureTrigger />
-          <main className="bg-transparent">{children}</main>
-          <Footer />
+        <div className="app-shell bg-transparent">
+          <div className="floating-gradients" aria-hidden="true">
+            <div className="floating-gradient floating-gradient-1" />
+            <div className="floating-gradient floating-gradient-2" />
+            <div className="floating-gradient floating-gradient-3" />
+          </div>
+          <div className="app-shell-content">
+            <Header />
+            <HeroMeasureTrigger />
+            <main className="bg-transparent">{children}</main>
+            <Footer />
+          </div>
         </div>
       </body>
     </html>
